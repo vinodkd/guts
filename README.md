@@ -9,3 +9,8 @@ Current Status
 ==============
 A swirling vortex of vague ideas dumped into a Freemind mindmap. Expected to be in this half-baked state for a while.
 
+Milestones
+==========
+1. Define Structural Stability for all levels upto application
+
+
