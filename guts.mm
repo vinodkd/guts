@@ -1,8 +1,8 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1329134605664" ID="ID_1305478691" MODIFIED="1329397810247" STYLE="fork" TEXT="The Grand Unified Theory of Software">
-<font NAME="SansSerif" SIZE="12"/>
-<node CREATED="1329361639888" FOLDED="true" ID="ID_1550572140" MODIFIED="1329397373534" POSITION="left" STYLE="fork" TEXT="The big idea">
+<node CREATED="1329134605664" ID="ID_1305478691" MODIFIED="1329408386527" STYLE="fork" TEXT="The Grand Unified Theory of Software">
+<font NAME="SansSerif" SIZE="20"/>
+<node CREATED="1329361639888" FOLDED="true" ID="ID_1550572140" MODIFIED="1329409617911" POSITION="left" STYLE="fork" TEXT="The big idea">
 <icon BUILTIN="idea"/>
 <node CREATED="1329361648288" ID="ID_834525889" MODIFIED="1329388699536" STYLE="fork" TEXT="Define code as structures a la mechanical primitives"/>
 <node CREATED="1329361663328" ID="ID_1639702695" MODIFIED="1329388699536" STYLE="fork" TEXT="Create rules to represent applications as aggregates of such primitives"/>
@@ -11,8 +11,8 @@
 <node CREATED="1329362268365" ID="ID_126440965" MODIFIED="1329388699536" STYLE="fork" TEXT="Model the subjective nature of such a theory by including the human observer within it"/>
 <node CREATED="1329362307465" ID="ID_31566439" MODIFIED="1329388699536" STYLE="fork" TEXT="Model the &quot;Turtles all the way down&quot; nature of software"/>
 </node>
-<node CREATED="1329134649336" ID="ID_1070783728" MODIFIED="1329398942694" POSITION="left" STYLE="fork" TEXT="structure">
-<node BACKGROUND_COLOR="#ffff00" CREATED="1329134653683" ID="ID_987058451" MODIFIED="1329388695816" STYLE="fork" TEXT="what the building blocks of software are"/>
+<node CREATED="1329134649336" FOLDED="true" ID="ID_1070783728" MODIFIED="1329408437407" POSITION="left" STYLE="fork" TEXT="structure">
+<node CREATED="1329134653683" ID="ID_987058451" MODIFIED="1329408416777" STYLE="fork" TEXT="what the building blocks of software are"/>
 <node CREATED="1329134666921" ID="ID_856519527" MODIFIED="1329388695816" STYLE="fork" TEXT="how they&apos;re combined"/>
 <node CREATED="1329134827118" ID="ID_1967589898" MODIFIED="1329388695816" STYLE="fork" TEXT="sw is linked pieces of code">
 <node CREATED="1329134842165" ID="ID_1521901268" MODIFIED="1329388695816" STYLE="fork" TEXT="that can be brittle">
@@ -74,7 +74,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1329134864005" ID="ID_683906679" MODIFIED="1329397813097" STYLE="fork" TEXT="sw can have weight">
+<node CREATED="1329134864005" ID="ID_683906679" MODIFIED="1329400332471" STYLE="fork" TEXT="sw can have weight">
 <node CREATED="1329134872289" ID="ID_1631969535" MODIFIED="1329388695816" STYLE="fork" TEXT="like page weight"/>
 <node CREATED="1329134877235" ID="ID_1632559301" MODIFIED="1329388695816" STYLE="fork" TEXT="or memory size"/>
 </node>
@@ -136,7 +136,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1329362520907" FOLDED="true" ID="ID_1392220180" MODIFIED="1329398941013" POSITION="left" STYLE="fork" TEXT="Questions expected to be answered">
+<node CREATED="1329362520907" FOLDED="true" ID="ID_1392220180" MODIFIED="1329408439026" POSITION="left" STYLE="fork" TEXT="Questions expected to be answered">
 <icon BUILTIN="help"/>
 <node CREATED="1329362530967" ID="ID_203580458" MODIFIED="1329388684476" STYLE="fork" TEXT="Is this piece of software stable? Flexible? Brittle?"/>
 <node CREATED="1329389523317" ID="ID_1484561328" MODIFIED="1329389532897" TEXT="Can I define how complex a system is based on its code?">
@@ -151,7 +151,7 @@
 <node CREATED="1329362584607" ID="ID_1234208980" MODIFIED="1329388684476" STYLE="fork" TEXT="How did it reach its current state of stability/flexibility/brittleness?"/>
 </node>
 <node CREATED="1329298773513" ID="ID_690891581" MODIFIED="1329388684476" POSITION="right" STYLE="fork" TEXT="All definitions are &quot;at a certain level&quot; defined by a human observer called the &quot;user&quot;"/>
-<node CREATED="1329298743240" ID="ID_1248203685" MODIFIED="1329396091778" POSITION="right" STYLE="fork" TEXT="statements are the atoms of software - at a given level">
+<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1329408445156" POSITION="right" STYLE="fork" TEXT="statements are the atoms of software - at a given level">
 <node CREATED="1329298834443" ID="ID_368024794" MODIFIED="1329388684476" STYLE="fork" TEXT="they have context and a user at their level"/>
 <node CREATED="1329298847884" ID="ID_12407724" MODIFIED="1329388684466" STYLE="fork" TEXT="meaning at a level above them"/>
 <node CREATED="1329298854804" ID="ID_632534766" MODIFIED="1329388684466" STYLE="fork" TEXT="implementation at a level below them"/>
@@ -192,7 +192,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1329302096012" FOLDED="true" ID="ID_1824290203" MODIFIED="1329396340518" TEXT="Special Statements">
+<node CREATED="1329302096012" ID="ID_1824290203" MODIFIED="1329400030161" TEXT="Special Statements">
 <node CREATED="1329396047946" ID="ID_1494261248" MODIFIED="1329396060648" TEXT="Input"/>
 <node CREATED="1329396053306" ID="ID_1108604133" MODIFIED="1329396063318" TEXT="Output"/>
 <node CREATED="1329396019036" ID="ID_1497708583" MODIFIED="1329396021018" TEXT="Branch"/>
@@ -207,7 +207,7 @@
 <node CREATED="1329303536887" ID="ID_905807551" MODIFIED="1329388684376" STYLE="fork" TEXT="Eval"/>
 </node>
 </node>
-<node CREATED="1329301597637" ID="ID_1443429226" MODIFIED="1329389641585" POSITION="right" STYLE="fork" TEXT="properties of statements">
+<node CREATED="1329301597637" FOLDED="true" ID="ID_1443429226" MODIFIED="1329408446315" POSITION="right" STYLE="fork" TEXT="properties of statements">
 <node CREATED="1329303908525" FOLDED="true" ID="ID_1350894160" MODIFIED="1329396100478" STYLE="fork" TEXT="static">
 <node CREATED="1329302616557" ID="ID_775908008" MODIFIED="1329392430283" STYLE="fork" TEXT="h: height: distance from the base in count of statements">
 <node CREATED="1329363894983" ID="ID_757283116" MODIFIED="1329388684456" STYLE="fork" TEXT="1 for statements"/>
@@ -319,8 +319,8 @@
 </node>
 </node>
 <node CREATED="1329301746756" ID="ID_777864323" MODIFIED="1329388684376" POSITION="right" STYLE="fork" TEXT="changes on statements"/>
-<node CREATED="1329301788158" ID="ID_726108879" MODIFIED="1329389610936" POSITION="right" STYLE="fork" TEXT="Aggregates of statements">
-<node CREATED="1329299291952" FOLDED="true" ID="ID_26607867" MODIFIED="1329396107037" STYLE="fork" TEXT="Sequence of statements">
+<node CREATED="1329301788158" FOLDED="true" ID="ID_726108879" MODIFIED="1329409724261" POSITION="right" STYLE="fork" TEXT="Aggregates of statements">
+<node CREATED="1329299291952" FOLDED="true" ID="ID_26607867" MODIFIED="1329400210890" STYLE="fork" TEXT="Sequence of statements">
 <node CREATED="1329394885325" ID="ID_857995712" MODIFIED="1329394905467" TEXT="This is a set of statements that are executed in exact order"/>
 <node CREATED="1329299319451" ID="ID_830057011" MODIFIED="1329388684376" STYLE="fork" TEXT="s = s1 , s2 implies">
 <node CREATED="1329299395229" ID="ID_828503570" MODIFIED="1329388684376" STYLE="fork" TEXT="M = M1 &amp; M2">
@@ -372,7 +372,7 @@
 <node CREATED="1329300387058" ID="ID_1481400169" MODIFIED="1329388684376" STYLE="fork" TEXT="extrapolate from binary logic above"/>
 </node>
 </node>
-<node CREATED="1329301832579" FOLDED="true" ID="ID_1054163326" MODIFIED="1329396108016" STYLE="fork" TEXT="Parallel Statements">
+<node CREATED="1329301832579" ID="ID_1054163326" MODIFIED="1329399983281" STYLE="fork" TEXT="Parallel Statements">
 <node CREATED="1329394096183" ID="ID_1500477524" MODIFIED="1329394103425" TEXT="s = s1 || s2"/>
 </node>
 <node CREATED="1329302137233" ID="ID_1614834312" MODIFIED="1329388684376" STYLE="fork" TEXT="Routine - a group of statements">
@@ -381,15 +381,24 @@
 <node CREATED="1329387402101" ID="ID_816669729" MODIFIED="1329388684376" STYLE="fork" TEXT="Component - a group of routines">
 <node CREATED="1329394723804" ID="ID_979766687" MODIFIED="1329394749616" TEXT="this is a collection of related routines that may/not depend on each other"/>
 </node>
-<node CREATED="1329387410259" ID="ID_578452799" MODIFIED="1329388684376" STYLE="fork" TEXT="Application - group of components">
+<node CREATED="1329387410259" FOLDED="true" ID="ID_578452799" MODIFIED="1329400216709" STYLE="fork" TEXT="Application - group of components">
 <node CREATED="1329394801184" ID="ID_494395569" MODIFIED="1329394834246" TEXT="this is a group of components orchestrated together to achieve a set of goals defined in the M domain"/>
 <node CREATED="1329394834864" ID="ID_1400024757" MODIFIED="1329394847746" TEXT="there is a user attached to the sytem"/>
 <node CREATED="1329394848474" ID="ID_853028684" MODIFIED="1329394869626" TEXT="there is a feedback/control loop between user and application"/>
 </node>
+<node CREATED="1329400119779" ID="ID_186182206" MODIFIED="1329400372532" TEXT="What about process or machine boundaries?">
+<node CREATED="1329400130299" ID="ID_1794799504" MODIFIED="1329400260811" TEXT="Well, that&apos;s what the executor is! to be expanded from Seq onwards">
+<arrowlink COLOR="#ff3300" DESTINATION="ID_26607867" ENDARROW="Default" ENDINCLINATION="303;0;" ID="Arrow_ID_852907189" STARTARROW="Default" STARTINCLINATION="303;0;"/>
 </node>
-<node CREATED="1329395667257" ID="ID_1486900774" MODIFIED="1329395673818" POSITION="right" TEXT="Properties of aggregates">
+<node CREATED="1329400269150" ID="ID_1959128742" MODIFIED="1329400349412" TEXT="Todo: When drawing multiple stmts with a single executor, box them together and write the executor on a corner">
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+</node>
+<node CREATED="1329395667257" FOLDED="true" ID="ID_1486900774" MODIFIED="1329409733621" POSITION="right" TEXT="Properties of aggregates">
 <node CREATED="1329395677976" ID="ID_761752636" MODIFIED="1329395705648" TEXT="height is the sum of the child elements&apos; heights"/>
-<node CREATED="1329395705926" ID="ID_1187205767" MODIFIED="1329395716268" TEXT="stability is defined in a ladder">
+<node CREATED="1329395705926" ID="ID_1187205767" MODIFIED="1329400524122" TEXT="stability is defined in a ladder">
+<icon BUILTIN="closed"/>
 <node CREATED="1329395717976" ID="ID_1820195065" MODIFIED="1329395743958" TEXT="straight seq: = exp decrease as height increases"/>
 <node CREATED="1329395744826" ID="ID_955892670" MODIFIED="1329395769738" TEXT="parallel stmts = min(stability of individual stmts)"/>
 <node CREATED="1329395773836" ID="ID_1619155534" MODIFIED="1329395814048" TEXT="routine = compound stability of child elements"/>
@@ -397,7 +406,7 @@
 </node>
 </node>
 <node CREATED="1329301806588" ID="ID_1788415420" MODIFIED="1329388684376" POSITION="right" STYLE="fork" TEXT="Changes on aggregates"/>
-<node CREATED="1329387661360" ID="ID_237796339" MODIFIED="1329391464993" POSITION="left" STYLE="fork" TEXT="notes">
+<node CREATED="1329387661360" FOLDED="true" ID="ID_237796339" MODIFIED="1329408440165" POSITION="left" STYLE="fork" TEXT="notes">
 <icon BUILTIN="edit"/>
 <node CREATED="1329387665319" ID="ID_928161729" MODIFIED="1329388684376" STYLE="fork" TEXT="Can Bob Martin&apos;s SOLID priniciples be included here?"/>
 <node CREATED="1329387682907" ID="ID_1895407319" MODIFIED="1329388684376" STYLE="fork" TEXT="In particular the Stability principle and the &quot;Main Line&quot; concept?"/>
