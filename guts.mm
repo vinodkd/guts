@@ -1,8 +1,8 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1329134605664" ID="ID_1305478691" MODIFIED="1329408386527" STYLE="fork" TEXT="The Grand Unified Theory of Software">
+<node CREATED="1329134605664" ID="ID_1305478691" MODIFIED="1329733452956" STYLE="fork" TEXT="The Grand Unified Theory of Software">
 <font NAME="SansSerif" SIZE="20"/>
-<node CREATED="1329361639888" FOLDED="true" ID="ID_1550572140" MODIFIED="1329409617911" POSITION="left" STYLE="fork" TEXT="The big idea">
+<node CREATED="1329361639888" FOLDED="true" ID="ID_1550572140" MODIFIED="1329503987044" POSITION="left" STYLE="fork" TEXT="The big idea">
 <icon BUILTIN="idea"/>
 <node CREATED="1329361648288" ID="ID_834525889" MODIFIED="1329388699536" STYLE="fork" TEXT="Define code as structures a la mechanical primitives"/>
 <node CREATED="1329361663328" ID="ID_1639702695" MODIFIED="1329388699536" STYLE="fork" TEXT="Create rules to represent applications as aggregates of such primitives"/>
@@ -11,8 +11,43 @@
 <node CREATED="1329362268365" ID="ID_126440965" MODIFIED="1329388699536" STYLE="fork" TEXT="Model the subjective nature of such a theory by including the human observer within it"/>
 <node CREATED="1329362307465" ID="ID_31566439" MODIFIED="1329388699536" STYLE="fork" TEXT="Model the &quot;Turtles all the way down&quot; nature of software"/>
 </node>
-<node CREATED="1329134649336" FOLDED="true" ID="ID_1070783728" MODIFIED="1329408437407" POSITION="left" STYLE="fork" TEXT="structure">
+<node CREATED="1329134649336" FOLDED="true" ID="ID_1070783728" MODIFIED="1329504402323" POSITION="left" STYLE="fork" TEXT="structure">
 <node CREATED="1329134653683" ID="ID_987058451" MODIFIED="1329408416777" STYLE="fork" TEXT="what the building blocks of software are"/>
+<node CREATED="1329371654990" FOLDED="true" ID="ID_1280834606" MODIFIED="1329504243491" STYLE="fork" TEXT="ways of thinking about the building blocks">
+<node CREATED="1329371666760" ID="ID_299040272" MODIFIED="1329388695816" STYLE="fork" TEXT="they are bricks stacked one on top of the other"/>
+<node CREATED="1329371676390" ID="ID_319776305" MODIFIED="1329388695816" STYLE="fork" TEXT="they are pipes connected to each other through which data flows"/>
+<node CREATED="1329372553662" ID="ID_1816357960" MODIFIED="1329388695816" STYLE="fork">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      combination: they are like bricks&#160;for static analysis
+    </p>
+    <p>
+      and pipes for dynamic analysis
+    </p>
+  </body>
+</html></richcontent>
+</node>
+<node CREATED="1329397248014" ID="ID_434693058" MODIFIED="1329397306926" TEXT="it also helps to think of new statements jacking the older ones up&#xa;and the structure being built by continously pushing pieces upwards"/>
+<node CREATED="1329397316584" ID="ID_561717926" MODIFIED="1329397359946">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      This also jives with the notion of &quot;higher up = less stable&quot;&#160;
+    </p>
+    <p>
+      AND that of starting the execution at the top
+    </p>
+  </body>
+</html></richcontent>
+</node>
+</node>
 <node CREATED="1329134666921" ID="ID_856519527" MODIFIED="1329388695816" STYLE="fork" TEXT="how they&apos;re combined"/>
 <node CREATED="1329134827118" ID="ID_1967589898" MODIFIED="1329388695816" STYLE="fork" TEXT="sw is linked pieces of code">
 <node CREATED="1329134842165" ID="ID_1521901268" MODIFIED="1329388695816" STYLE="fork" TEXT="that can be brittle">
@@ -20,10 +55,10 @@
 </node>
 </node>
 <node CREATED="1329361807362" ID="ID_40031544" MODIFIED="1329388695816" STYLE="fork" TEXT="sw can have stability">
-<node CREATED="1329361812432" ID="ID_1157038028" MODIFIED="1329397923597" STYLE="fork" TEXT="Notions of stability">
+<node CREATED="1329361812432" FOLDED="true" ID="ID_1157038028" MODIFIED="1329504400178" STYLE="fork" TEXT="Notions of stability">
 <node CREATED="1329397828395" ID="ID_1058483500" MODIFIED="1329397840087" TEXT="structural stability: will it stay up?"/>
 <node CREATED="1329397840715" ID="ID_1780894444" MODIFIED="1329397863597" TEXT="stability under load: Will it stay up with 1MM hits?"/>
-<node CREATED="1329397864245" ID="ID_569201878" MODIFIED="1329399512205">
+<node CREATED="1329397864245" FOLDED="true" ID="ID_569201878" MODIFIED="1329504398306">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -36,14 +71,13 @@
       Thus, what will NOT cause breakage?
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1329397944335" ID="ID_1650142406" MODIFIED="1329397959777" TEXT="=&gt; Stability = 1 - P(Breakage)"/>
 <node CREATED="1329397984285" ID="ID_1455470515" MODIFIED="1329397995947" TEXT="This definition also allows notions such as:">
 <node CREATED="1329397997515" ID="ID_254151621" MODIFIED="1329398004857" TEXT="Breaking strength of an app"/>
 <node CREATED="1329398005195" ID="ID_1852215685" MODIFIED="1329398014177" TEXT="MTBF definitions"/>
 </node>
-<node CREATED="1329399381223" FOLDED="true" ID="ID_1642355631" MODIFIED="1329399527414" TEXT="The breakage ladder">
+<node CREATED="1329399381223" FOLDED="true" ID="ID_1642355631" MODIFIED="1329503876281" TEXT="The breakage ladder">
 <node CREATED="1329399387913" ID="ID_1504436173" MODIFIED="1329399406745" TEXT="didnt parse"/>
 <node CREATED="1329399407013" ID="ID_1991370124" MODIFIED="1329399410355" TEXT="didnt compile"/>
 <node CREATED="1329399410993" ID="ID_389385197" MODIFIED="1329399413045" TEXT="didnt link"/>
@@ -74,46 +108,9 @@
 </node>
 </node>
 </node>
-<node CREATED="1329134864005" ID="ID_683906679" MODIFIED="1329400332471" STYLE="fork" TEXT="sw can have weight">
+<node CREATED="1329134864005" FOLDED="true" ID="ID_683906679" MODIFIED="1329503944683" STYLE="fork" TEXT="sw can have weight">
 <node CREATED="1329134872289" ID="ID_1631969535" MODIFIED="1329388695816" STYLE="fork" TEXT="like page weight"/>
 <node CREATED="1329134877235" ID="ID_1632559301" MODIFIED="1329388695816" STYLE="fork" TEXT="or memory size"/>
-</node>
-<node CREATED="1329371654990" ID="ID_1280834606" MODIFIED="1329388695816" STYLE="fork" TEXT="ways of thinking about the building blocks">
-<node CREATED="1329371666760" ID="ID_299040272" MODIFIED="1329388695816" STYLE="fork" TEXT="they are bricks stacked one on top of the other"/>
-<node CREATED="1329371676390" ID="ID_319776305" MODIFIED="1329388695816" STYLE="fork" TEXT="they are pipes connected to each other through which data flows"/>
-<node CREATED="1329372553662" ID="ID_1816357960" MODIFIED="1329388695816" STYLE="fork">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      combination: they are like bricks&#160;for static analysis
-    </p>
-    <p>
-      and pipes for dynamic analysis
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node CREATED="1329397248014" ID="ID_434693058" MODIFIED="1329397306926" TEXT="it also helps to think of new statements jacking the older ones up&#xa;and the structure being built by continously pushing pieces upwards"/>
-<node CREATED="1329397316584" ID="ID_561717926" MODIFIED="1329397359946">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      This also jives with the notion of &quot;higher up = less stable&quot;&#160;
-    </p>
-    <p>
-      AND that of starting the execution at the top
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
 </node>
 </node>
 <node CREATED="1329362353999" FOLDED="true" ID="ID_340451030" MODIFIED="1329398933974" POSITION="left" STYLE="fork" TEXT="forces on the structure">
@@ -136,7 +133,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1329362520907" FOLDED="true" ID="ID_1392220180" MODIFIED="1329408439026" POSITION="left" STYLE="fork" TEXT="Questions expected to be answered">
+<node CREATED="1329362520907" FOLDED="true" ID="ID_1392220180" MODIFIED="1329503728849" POSITION="left" STYLE="fork" TEXT="Questions expected to be answered">
 <icon BUILTIN="help"/>
 <node CREATED="1329362530967" ID="ID_203580458" MODIFIED="1329388684476" STYLE="fork" TEXT="Is this piece of software stable? Flexible? Brittle?"/>
 <node CREATED="1329389523317" ID="ID_1484561328" MODIFIED="1329389532897" TEXT="Can I define how complex a system is based on its code?">
@@ -151,25 +148,25 @@
 <node CREATED="1329362584607" ID="ID_1234208980" MODIFIED="1329388684476" STYLE="fork" TEXT="How did it reach its current state of stability/flexibility/brittleness?"/>
 </node>
 <node CREATED="1329298773513" ID="ID_690891581" MODIFIED="1329388684476" POSITION="right" STYLE="fork" TEXT="All definitions are &quot;at a certain level&quot; defined by a human observer called the &quot;user&quot;"/>
-<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1329408445156" POSITION="right" STYLE="fork" TEXT="statements are the atoms of software - at a given level">
+<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1329504670313" POSITION="right" STYLE="fork" TEXT="statements are the atoms of software - at a given level">
 <node CREATED="1329298834443" ID="ID_368024794" MODIFIED="1329388684476" STYLE="fork" TEXT="they have context and a user at their level"/>
 <node CREATED="1329298847884" ID="ID_12407724" MODIFIED="1329388684466" STYLE="fork" TEXT="meaning at a level above them"/>
 <node CREATED="1329298854804" ID="ID_632534766" MODIFIED="1329388684466" STYLE="fork" TEXT="implementation at a level below them"/>
-<node CREATED="1329298864691" FOLDED="true" ID="ID_1994379696" MODIFIED="1329396139867" STYLE="fork" TEXT="so statement can be represented as: s: (M,C,U, B)">
-<node CREATED="1329298922118" ID="ID_32609701" MODIFIED="1329388684466" STYLE="fork" TEXT="M: Meaning - facts/ s^1">
+<node CREATED="1329298864691" FOLDED="true" ID="ID_1994379696" MODIFIED="1329504646983" STYLE="fork" TEXT="so statement can be represented as: s: (M,C,U, B)">
+<node CREATED="1329298922118" FOLDED="true" ID="ID_32609701" MODIFIED="1329504509344" STYLE="fork" TEXT="M: Meaning - facts/ s^1">
 <node CREATED="1329301488392" ID="ID_1879104980" MODIFIED="1329388684466" STYLE="fork" TEXT="meaning is always orthogonal to Base and the set of executors made available"/>
 <node CREATED="1329367096777" ID="ID_1104548130" MODIFIED="1329388684466" STYLE="fork" TEXT="meaning is expressed in an informal way eg, English, to denote that its not directly amenable to mechanical processing"/>
 <node CREATED="1329367124519" ID="ID_1048240758" MODIFIED="1329388684466" STYLE="fork" TEXT="it is possible to ascribe FOPL (or even imperative) semantics to meaning.Some gain in higher-order calculation is obviously possible, but Godel&apos;s limits render it eventually pointless."/>
 <node CREATED="1329367189823" ID="ID_13323861" MODIFIED="1329388684466" STYLE="fork" TEXT="the point of representing meaning is that processes occuring inside the user&apos;s mind can be modeled as being contained in it"/>
 </node>
-<node CREATED="1329298944528" ID="ID_1087983480" MODIFIED="1329388684466" STYLE="fork" TEXT="C: Context: (I, E, O, S)">
+<node CREATED="1329298944528" FOLDED="true" ID="ID_1087983480" MODIFIED="1329504498022" STYLE="fork" TEXT="C: Context: (I, E, O, S)">
 <node CREATED="1329298982502" ID="ID_579882248" MODIFIED="1329388684466" STYLE="fork" TEXT="I: Input: Inputs to the statement"/>
 <node CREATED="1329299054052" ID="ID_866873097" MODIFIED="1329388684466" STYLE="fork" TEXT="E: Executor: the part of the base that knows how to execute the statment"/>
 <node CREATED="1329298992763" ID="ID_452576411" MODIFIED="1329388684466" STYLE="fork" TEXT="O: Output: Outputs from the statement"/>
 <node CREATED="1329299010626" ID="ID_717653547" MODIFIED="1329388684466" STYLE="fork" TEXT="S: Side effects: Impacts to the context as a result of executing the statment"/>
 </node>
 <node CREATED="1329299115185" ID="ID_164678851" MODIFIED="1329388684466" STYLE="fork" TEXT="U: User: who observes, optionally provides input and/or on whose behalf the execution happens"/>
-<node CREATED="1329298954183" ID="ID_1136311919" MODIFIED="1329388684466" STYLE="fork" TEXT="B: Base: (Eb, Sb)">
+<node CREATED="1329298954183" ID="ID_1136311919" MODIFIED="1329504538159" STYLE="fork" TEXT="B: Base: (Eb, Sb)">
 <node CREATED="1329300257297" ID="ID_204877095" MODIFIED="1329388684466" STYLE="fork" TEXT="A Base B is a collection of executors Eb that can execute a set of statements Sb"/>
 <node CREATED="1329303401201" ID="ID_1277440693" MODIFIED="1329388684466" STYLE="fork">
 <richcontent TYPE="NODE"><html>
@@ -187,12 +184,11 @@
       <b>g<sub>B </sub></b>should be used as a measure of comparing two bases.
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>
-<node CREATED="1329302096012" ID="ID_1824290203" MODIFIED="1329400030161" TEXT="Special Statements">
+<node CREATED="1329302096012" FOLDED="true" ID="ID_1824290203" MODIFIED="1329504669449" TEXT="Special Statements">
 <node CREATED="1329396047946" ID="ID_1494261248" MODIFIED="1329396060648" TEXT="Input"/>
 <node CREATED="1329396053306" ID="ID_1108604133" MODIFIED="1329396063318" TEXT="Output"/>
 <node CREATED="1329396019036" ID="ID_1497708583" MODIFIED="1329396021018" TEXT="Branch"/>
@@ -207,8 +203,8 @@
 <node CREATED="1329303536887" ID="ID_905807551" MODIFIED="1329388684376" STYLE="fork" TEXT="Eval"/>
 </node>
 </node>
-<node CREATED="1329301597637" FOLDED="true" ID="ID_1443429226" MODIFIED="1329408446315" POSITION="right" STYLE="fork" TEXT="properties of statements">
-<node CREATED="1329303908525" FOLDED="true" ID="ID_1350894160" MODIFIED="1329396100478" STYLE="fork" TEXT="static">
+<node CREATED="1329301597637" ID="ID_1443429226" MODIFIED="1329505138814" POSITION="right" STYLE="fork" TEXT="properties of statements">
+<node CREATED="1329303908525" FOLDED="true" ID="ID_1350894160" MODIFIED="1329505248481" STYLE="fork" TEXT="static">
 <node CREATED="1329302616557" ID="ID_775908008" MODIFIED="1329392430283" STYLE="fork" TEXT="h: height: distance from the base in count of statements">
 <node CREATED="1329363894983" ID="ID_757283116" MODIFIED="1329388684456" STYLE="fork" TEXT="1 for statements"/>
 <node CREATED="1329370762630" ID="ID_1889767535" MODIFIED="1329388684456" STYLE="fork" TEXT="statement aggregates will obviously have &gt;1 height"/>
@@ -249,8 +245,7 @@
       this has a range of [0,1]
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1329304280307" ID="ID_783685951" MODIFIED="1329388684456" STYLE="fork" TEXT="Measure of how difficult the statement is to understand"/>
 <node CREATED="1329304311925" ID="ID_550333114" MODIFIED="1329388684456" STYLE="fork" TEXT="Less is better"/>
 <node CREATED="1329333227389" ID="ID_594899236" MODIFIED="1329388684466" STYLE="fork" TEXT="Note: fact, function and proc are used below for latent meaning. Statemnts are NOT actually any of these">
@@ -319,8 +314,8 @@
 </node>
 </node>
 <node CREATED="1329301746756" ID="ID_777864323" MODIFIED="1329388684376" POSITION="right" STYLE="fork" TEXT="changes on statements"/>
-<node CREATED="1329301788158" FOLDED="true" ID="ID_726108879" MODIFIED="1329409724261" POSITION="right" STYLE="fork" TEXT="Aggregates of statements">
-<node CREATED="1329299291952" FOLDED="true" ID="ID_26607867" MODIFIED="1329400210890" STYLE="fork" TEXT="Sequence of statements">
+<node CREATED="1329301788158" ID="ID_726108879" MODIFIED="1329505263320" POSITION="right" STYLE="fork" TEXT="Aggregates of statements">
+<node CREATED="1329299291952" FOLDED="true" ID="ID_26607867" MODIFIED="1329505305929" STYLE="fork" TEXT="Sequence of statements">
 <node CREATED="1329394885325" ID="ID_857995712" MODIFIED="1329394905467" TEXT="This is a set of statements that are executed in exact order"/>
 <node CREATED="1329299319451" ID="ID_830057011" MODIFIED="1329388684376" STYLE="fork" TEXT="s = s1 , s2 implies">
 <node CREATED="1329299395229" ID="ID_828503570" MODIFIED="1329388684376" STYLE="fork" TEXT="M = M1 &amp; M2">
@@ -354,8 +349,7 @@
       h =&#160;&#8721; h<sub>i</sub>
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1329392967972" ID="ID_1522886019" MODIFIED="1329392987514" TEXT="ie, height of the sequence is the sum of individual statement heights"/>
 </node>
 <node CREATED="1329392658191" ID="ID_50055452" MODIFIED="1329392689023" TEXT="S">
@@ -387,8 +381,8 @@
 <node CREATED="1329394848474" ID="ID_853028684" MODIFIED="1329394869626" TEXT="there is a feedback/control loop between user and application"/>
 </node>
 <node CREATED="1329400119779" ID="ID_186182206" MODIFIED="1329400372532" TEXT="What about process or machine boundaries?">
-<node CREATED="1329400130299" ID="ID_1794799504" MODIFIED="1329400260811" TEXT="Well, that&apos;s what the executor is! to be expanded from Seq onwards">
-<arrowlink COLOR="#ff3300" DESTINATION="ID_26607867" ENDARROW="Default" ENDINCLINATION="303;0;" ID="Arrow_ID_852907189" STARTARROW="Default" STARTINCLINATION="303;0;"/>
+<node CREATED="1329400130299" ID="ID_1794799504" MODIFIED="1329505305929" TEXT="Well, that&apos;s what the executor is! to be expanded from Seq onwards">
+<arrowlink COLOR="#ff3300" DESTINATION="ID_26607867" ENDARROW="Default" ENDINCLINATION="303;0;" ID="Arrow_ID_852907189" STARTARROW="Default" STARTINCLINATION="419;-76;"/>
 </node>
 <node CREATED="1329400269150" ID="ID_1959128742" MODIFIED="1329400349412" TEXT="Todo: When drawing multiple stmts with a single executor, box them together and write the executor on a corner">
 <icon BUILTIN="button_ok"/>
@@ -406,11 +400,13 @@
 </node>
 </node>
 <node CREATED="1329301806588" ID="ID_1788415420" MODIFIED="1329388684376" POSITION="right" STYLE="fork" TEXT="Changes on aggregates"/>
-<node CREATED="1329387661360" FOLDED="true" ID="ID_237796339" MODIFIED="1329408440165" POSITION="left" STYLE="fork" TEXT="notes">
+<node CREATED="1329387661360" ID="ID_237796339" MODIFIED="1329611932481" POSITION="left" STYLE="fork" TEXT="notes">
 <icon BUILTIN="edit"/>
 <node CREATED="1329387665319" ID="ID_928161729" MODIFIED="1329388684376" STYLE="fork" TEXT="Can Bob Martin&apos;s SOLID priniciples be included here?"/>
 <node CREATED="1329387682907" ID="ID_1895407319" MODIFIED="1329388684376" STYLE="fork" TEXT="In particular the Stability principle and the &quot;Main Line&quot; concept?"/>
 <node CREATED="1329391468933" ID="ID_430344424" MODIFIED="1329391496134" TEXT="Similarly, can equivalents of the McCabe metrics be incorporated?"/>
+<node CREATED="1329611935312" ID="ID_595069496" LINK="http://blog.johanneslink.net/2009/03/06/a-unified-theory-of-software-design/" MODIFIED="1329611981174" TEXT="Nice idea of modeling change as a &quot;probability p of x changing&quot; from this blog post"/>
+<node CREATED="1329613576384" ID="ID_1739068988" LINK="http://research.microsoft.com/pubs/68626/unified_theories.pdf" MODIFIED="1329613606080" TEXT="CAR Hoare&apos;s Theories of Software is also a good source"/>
 </node>
 </node>
 </map>
