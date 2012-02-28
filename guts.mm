@@ -2,7 +2,7 @@
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1329134605664" ID="ID_1305478691" MODIFIED="1330311095560" STYLE="fork" TEXT="The Grand Unified Theory of Software">
 <font NAME="SansSerif" SIZE="20"/>
-<node CREATED="1329361639888" FOLDED="true" ID="ID_1550572140" MODIFIED="1330311487380" POSITION="left" STYLE="fork" TEXT="The big idea">
+<node CREATED="1329361639888" FOLDED="true" ID="ID_1550572140" MODIFIED="1330387836022" POSITION="left" STYLE="fork" TEXT="The big idea">
 <icon BUILTIN="idea"/>
 <node CREATED="1329361648288" ID="ID_834525889" MODIFIED="1329388699536" STYLE="fork" TEXT="Define code as structures a la mechanical primitives"/>
 <node CREATED="1329361663328" ID="ID_1639702695" MODIFIED="1329388699536" STYLE="fork" TEXT="Create rules to represent applications as aggregates of such primitives"/>
@@ -12,19 +12,19 @@
 <node CREATED="1329362307465" ID="ID_31566439" MODIFIED="1329388699536" STYLE="fork" TEXT="Model the &quot;Turtles all the way down&quot; nature of software"/>
 <node CREATED="1329825532146" ID="ID_1380240163" MODIFIED="1330311484802" TEXT="Try to come up with &quot;natural&quot; formulas, ie those that do not need empirical constants to determine their value"/>
 </node>
-<node CREATED="1329134649336" FOLDED="true" ID="ID_1070783728" MODIFIED="1330312634803" POSITION="left" STYLE="fork" TEXT="structure">
+<node CREATED="1329134649336" FOLDED="true" ID="ID_1070783728" MODIFIED="1330387975363" POSITION="left" STYLE="fork" TEXT="structure">
 <node CREATED="1329134653683" ID="ID_987058451" MODIFIED="1329408416777" STYLE="fork" TEXT="what the building blocks of software are"/>
 <node CREATED="1329134666921" ID="ID_856519527" MODIFIED="1329388695816" STYLE="fork" TEXT="how they&apos;re combined"/>
-<node CREATED="1329134827118" FOLDED="true" ID="ID_1967589898" MODIFIED="1330311509686" STYLE="fork" TEXT="sw is linked pieces of code">
-<node CREATED="1329134842165" FOLDED="true" ID="ID_1521901268" MODIFIED="1330311508889" STYLE="fork" TEXT="that can be brittle">
+<node CREATED="1329134827118" FOLDED="true" ID="ID_1967589898" MODIFIED="1330387974021" STYLE="fork" TEXT="sw is linked pieces of code">
+<node CREATED="1329134842165" ID="ID_1521901268" MODIFIED="1330387896440" STYLE="fork" TEXT="that can be brittle">
 <node CREATED="1329134853372" ID="ID_329435738" MODIFIED="1329388695816" STYLE="fork" TEXT="or flexible"/>
 </node>
 </node>
-<node CREATED="1329361807362" FOLDED="true" ID="ID_40031544" MODIFIED="1330312634066" STYLE="fork" TEXT="sw can have stability">
-<node CREATED="1329361812432" FOLDED="true" ID="ID_1157038028" MODIFIED="1330312633253" STYLE="fork" TEXT="Notions of stability">
+<node CREATED="1329361807362" FOLDED="true" ID="ID_40031544" MODIFIED="1330387973268" STYLE="fork" TEXT="sw can have stability">
+<node CREATED="1329361812432" FOLDED="true" ID="ID_1157038028" MODIFIED="1330387935657" STYLE="fork" TEXT="Notions of stability">
 <node CREATED="1329397828395" ID="ID_1058483500" MODIFIED="1329397840087" TEXT="structural stability: will it stay up?"/>
 <node CREATED="1329397840715" ID="ID_1780894444" MODIFIED="1329397863597" TEXT="stability under load: Will it stay up with 1MM hits?"/>
-<node CREATED="1329397864245" ID="ID_569201878" MODIFIED="1329972461895">
+<node CREATED="1329397864245" FOLDED="true" ID="ID_569201878" MODIFIED="1330362619673">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -39,11 +39,11 @@
   </body>
 </html></richcontent>
 <node CREATED="1329397944335" ID="ID_1650142406" MODIFIED="1329397959777" TEXT="=&gt; Stability = 1 - P(Breakage)"/>
-<node CREATED="1329397984285" FOLDED="true" ID="ID_1455470515" MODIFIED="1329972467232" TEXT="This definition also allows notions such as:">
+<node CREATED="1329397984285" FOLDED="true" ID="ID_1455470515" MODIFIED="1330362618527" TEXT="This definition also allows notions such as:">
 <node CREATED="1329397997515" ID="ID_254151621" MODIFIED="1329398004857" TEXT="Breaking strength of an app"/>
 <node CREATED="1329398005195" ID="ID_1852215685" MODIFIED="1329398014177" TEXT="MTBF definitions"/>
 </node>
-<node CREATED="1329399381223" FOLDED="true" ID="ID_1642355631" MODIFIED="1330311526279" TEXT="The breakage ladder">
+<node CREATED="1329399381223" FOLDED="true" ID="ID_1642355631" MODIFIED="1330362617980" TEXT="The breakage ladder">
 <node CREATED="1329399387913" ID="ID_1504436173" MODIFIED="1329399406745" TEXT="didnt parse"/>
 <node CREATED="1329399407013" ID="ID_1991370124" MODIFIED="1329399410355" TEXT="didnt compile"/>
 <node CREATED="1329399410993" ID="ID_389385197" MODIFIED="1329399413045" TEXT="didnt link"/>
@@ -53,7 +53,7 @@
 <node CREATED="1329399430483" ID="ID_1618315255" MODIFIED="1329399439555" TEXT="stopped running over time"/>
 </node>
 </node>
-<node CREATED="1329398946582" ID="ID_1470224447" MODIFIED="1330311561890">
+<node CREATED="1329398946582" FOLDED="true" ID="ID_1470224447" MODIFIED="1330387930735">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -93,25 +93,24 @@
       &#160;&#160;&#160;&#160;and&#160;&#160;build = breakage ladder
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1329973870115" ID="ID_1987956636" MODIFIED="1329973884787" TEXT="adv: this can represent both production and WIP code"/>
 </node>
-<node CREATED="1329973934666" FOLDED="true" ID="ID_1727916442" MODIFIED="1330311555629" TEXT="consider a unit line, box or cube as representing stability">
+<node CREATED="1329973934666" FOLDED="true" ID="ID_1727916442" MODIFIED="1330362653288" TEXT="consider a unit line, box or cube as representing stability">
 <node CREATED="1329973952960" ID="ID_994843769" MODIFIED="1329973977962" TEXT="then 0 or (0,0) or (0,0,0) =&gt; completely stable"/>
 <node CREATED="1329973979644" ID="ID_1653091445" MODIFIED="1329973996117" TEXT="and (1,1,1) =&gt; completely unstable"/>
 <node CREATED="1329973996636" ID="ID_1950030043" MODIFIED="1329974018949" TEXT="alternatively we can take 1/x to get natural meanings"/>
 </node>
 </node>
 </node>
-<node CREATED="1329134864005" ID="ID_683906679" MODIFIED="1330311663002" STYLE="fork" TEXT="sw can have weight">
+<node CREATED="1329134864005" FOLDED="true" ID="ID_683906679" MODIFIED="1330387972394" STYLE="fork" TEXT="sw can have weight">
 <node CREATED="1329134872289" ID="ID_1631969535" MODIFIED="1329388695816" STYLE="fork" TEXT="like page weight"/>
 <node CREATED="1329134877235" ID="ID_1632559301" MODIFIED="1329388695816" STYLE="fork" TEXT="or memory size"/>
-<node CREATED="1329793385540" FOLDED="true" ID="ID_895824341" MODIFIED="1330311667561" TEXT="notions of weight">
+<node CREATED="1329793385540" FOLDED="true" ID="ID_895824341" MODIFIED="1330362660702" TEXT="notions of weight">
 <node CREATED="1329793402220" ID="ID_1999709997" MODIFIED="1329793453332" TEXT="effort to remove a piece of code from its base can be thought of as &quot;escape velocity&quot;"/>
 </node>
 </node>
-<node CREATED="1329371654990" FOLDED="true" ID="ID_1280834606" MODIFIED="1329997535393" STYLE="fork" TEXT="ways of thinking about the building blocks">
+<node CREATED="1329371654990" FOLDED="true" ID="ID_1280834606" MODIFIED="1330387971246" STYLE="fork" TEXT="ways of thinking about the building blocks">
 <node CREATED="1329371666760" ID="ID_299040272" MODIFIED="1329388695816" STYLE="fork" TEXT="they are bricks stacked one on top of the other"/>
 <node CREATED="1329371676390" ID="ID_319776305" MODIFIED="1329388695816" STYLE="fork" TEXT="they are pipes connected to each other through which data flows"/>
 <node CREATED="1329372553662" ID="ID_1816357960" MODIFIED="1329388695816" STYLE="fork">
@@ -147,26 +146,26 @@
 </node>
 </node>
 </node>
-<node CREATED="1329362353999" FOLDED="true" ID="ID_340451030" MODIFIED="1330348991223" POSITION="left" STYLE="fork" TEXT="forces on the structure">
-<node CREATED="1329134682959" FOLDED="true" ID="ID_1600311431" MODIFIED="1329997636035" STYLE="fork" TEXT="change">
+<node CREATED="1329362353999" FOLDED="true" ID="ID_340451030" MODIFIED="1330388033694" POSITION="left" STYLE="fork" TEXT="forces on the structure">
+<node CREATED="1329134682959" FOLDED="true" ID="ID_1600311431" MODIFIED="1330388032823" STYLE="fork" TEXT="change">
 <node CREATED="1329134690834" ID="ID_743650862" MODIFIED="1329388692536" STYLE="fork" TEXT="how software changes"/>
 <node CREATED="1329134697817" ID="ID_888730334" MODIFIED="1329388692536" STYLE="fork" TEXT="how this impacts the structure"/>
 <node CREATED="1329134705554" ID="ID_281651636" MODIFIED="1329388692536" STYLE="fork" TEXT="the agents of change"/>
 </node>
-<node CREATED="1329362368457" FOLDED="true" ID="ID_868700252" MODIFIED="1329824961321" STYLE="fork" TEXT="build-time constraints">
+<node CREATED="1329362368457" FOLDED="true" ID="ID_868700252" MODIFIED="1330388032337" STYLE="fork" TEXT="build-time constraints">
 <node CREATED="1329362414277" ID="ID_669252699" MODIFIED="1329388692536" STYLE="fork" TEXT="functional requirements"/>
 <node CREATED="1329362421137" ID="ID_1706693406" MODIFIED="1329388692536" STYLE="fork" TEXT="non-functional requirements"/>
 <node CREATED="1329362425567" ID="ID_1628002402" MODIFIED="1329388692536" STYLE="fork" TEXT="political forces"/>
 <node CREATED="1329362436257" ID="ID_82476935" MODIFIED="1329388692536" STYLE="fork" TEXT="developer preference"/>
 </node>
-<node CREATED="1329362401317" FOLDED="true" ID="ID_1092078847" MODIFIED="1329824960342" STYLE="fork" TEXT="run-time constraints">
+<node CREATED="1329362401317" FOLDED="true" ID="ID_1092078847" MODIFIED="1330388031769" STYLE="fork" TEXT="run-time constraints">
 <node CREATED="1329362446557" ID="ID_1469375182" MODIFIED="1329388692536" STYLE="fork" TEXT="load"/>
 <node CREATED="1329362450817" ID="ID_723732362" MODIFIED="1329388692536" STYLE="fork" TEXT="capacity"/>
 <node CREATED="1329362482197" ID="ID_894077226" MODIFIED="1329388692536" STYLE="fork" TEXT="more tbd">
 <icon BUILTIN="messagebox_warning"/>
 </node>
 </node>
-<node CREATED="1329997637649" ID="ID_1374608482" MODIFIED="1329997645298" TEXT="notions of forces">
+<node CREATED="1329997637649" FOLDED="true" ID="ID_1374608482" MODIFIED="1330388014106" TEXT="notions of forces">
 <node CREATED="1329997646874" ID="ID_1528099855" MODIFIED="1329997700997" TEXT="they affect the static nature">
 <node CREATED="1329997666616" ID="ID_1642114121" MODIFIED="1329997676007" TEXT="from the outside - as things that change the structure"/>
 </node>
@@ -175,10 +174,10 @@
 </node>
 </node>
 </node>
-<node CREATED="1329362520907" FOLDED="true" ID="ID_1392220180" MODIFIED="1330311139253" POSITION="left" STYLE="fork" TEXT="Questions expected to be answered">
+<node CREATED="1329362520907" FOLDED="true" ID="ID_1392220180" MODIFIED="1330388039666" POSITION="left" STYLE="fork" TEXT="Questions expected to be answered">
 <icon BUILTIN="help"/>
 <node CREATED="1329362530967" ID="ID_203580458" MODIFIED="1329388684476" STYLE="fork" TEXT="Is this piece of software stable? Flexible? Brittle?"/>
-<node CREATED="1329389523317" FOLDED="true" ID="ID_1484561328" MODIFIED="1329824875612" TEXT="Can I define how complex a system is based on its code?">
+<node CREATED="1329389523317" FOLDED="true" ID="ID_1484561328" MODIFIED="1330388038506" TEXT="Can I define how complex a system is based on its code?">
 <node CREATED="1329389534437" ID="ID_1685294786" MODIFIED="1329389548187" TEXT="how can I use this to develop a plan to understand it?">
 <node CREATED="1329389553067" ID="ID_206163394" MODIFIED="1329389557997" TEXT="What is important/core?"/>
 <node CREATED="1329389558527" ID="ID_369668103" MODIFIED="1329389569316" TEXT="What is large in size?"/>
@@ -191,7 +190,7 @@
 </node>
 <node CREATED="1329298773513" ID="ID_690891581" MODIFIED="1329388684476" POSITION="right" STYLE="fork" TEXT="All definitions are &quot;at a certain level&quot; defined by a human observer called the &quot;user&quot;"/>
 <node CREATED="1330084924653" ID="ID_162728351" MODIFIED="1330084951043" POSITION="right" TEXT="code and data are the two basic types of &quot;things&quot; in software"/>
-<node CREATED="1330085166007" FOLDED="true" ID="ID_1095509452" MODIFIED="1330347142155" POSITION="right">
+<node CREATED="1330085166007" FOLDED="true" ID="ID_1095509452" MODIFIED="1330388105467" POSITION="right">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -201,8 +200,7 @@
       <strike>code is active, data is passive</strike>
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1330310598645" ID="ID_78469377" MODIFIED="1330310619443" TEXT="So what about data stored in memory vs disk? Is one active and the other passive?">
 <icon BUILTIN="help"/>
 </node>
@@ -214,7 +212,7 @@
 </node>
 </node>
 <node CREATED="1330346614871" ID="ID_119647970" MODIFIED="1330346617317" POSITION="right" TEXT="code is a structure, a container; data is what is contained or passes through code"/>
-<node CREATED="1330085004511" FOLDED="true" ID="ID_47496484" MODIFIED="1330348960351" POSITION="right" TEXT="code can be changed to data and vice versa">
+<node CREATED="1330085004511" FOLDED="true" ID="ID_47496484" MODIFIED="1330388110543" POSITION="right" TEXT="code can be changed to data and vice versa">
 <node CREATED="1330085117117" ID="ID_54643544" MODIFIED="1330348285988" TEXT="code becomes data when it is ABSTRACTED">
 <node CREATED="1330348237510" ID="ID_972104990" MODIFIED="1330348241753" TEXT="aka quoted"/>
 <node CREATED="1330348292713" ID="ID_92538186" MODIFIED="1330348309240" TEXT="this is akin to making a blueprint from an existing building"/>
@@ -227,7 +225,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1330346272517" POSITION="right" STYLE="fork" TEXT="statements are the atoms of code">
+<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1330388131439" POSITION="right" STYLE="fork" TEXT="statements are the atoms of code">
 <node CREATED="1329298834443" ID="ID_368024794" MODIFIED="1329388684476" STYLE="fork" TEXT="they have context and a user at their level"/>
 <node CREATED="1329298847884" ID="ID_12407724" MODIFIED="1329388684466" STYLE="fork" TEXT="meaning at a level above them"/>
 <node CREATED="1329298854804" ID="ID_632534766" MODIFIED="1329388684466" STYLE="fork" TEXT="implementation at a level below them"/>
@@ -394,7 +392,7 @@
 </node>
 <node CREATED="1329301746756" ID="ID_777864323" MODIFIED="1329388684376" STYLE="fork" TEXT="changes on statements"/>
 </node>
-<node CREATED="1329301788158" FOLDED="true" ID="ID_726108879" MODIFIED="1330348983388" POSITION="right" STYLE="fork" TEXT="statements can be aggregated to increasingly nested superstructures">
+<node CREATED="1329301788158" ID="ID_726108879" MODIFIED="1330388132937" POSITION="right" STYLE="fork" TEXT="statements can be aggregated to increasingly nested superstructures">
 <node CREATED="1330085473690" FOLDED="true" ID="ID_1663733139" MODIFIED="1330311251441" TEXT="For eg:">
 <node CREATED="1329299291952" FOLDED="true" ID="ID_26607867" MODIFIED="1330085486678" STYLE="fork" TEXT="Sequence of statements">
 <node CREATED="1329394885325" ID="ID_857995712" MODIFIED="1329394905467" TEXT="This is a set of statements that are executed in exact order"/>
@@ -482,18 +480,20 @@
 </node>
 <node CREATED="1329301806588" ID="ID_1788415420" MODIFIED="1329388684376" STYLE="fork" TEXT="Changes on aggregates"/>
 </node>
-<node CREATED="1330085576443" FOLDED="true" ID="ID_50351865" MODIFIED="1330348987264" POSITION="right" TEXT="|||ly data can be atomic or aggregate">
+<node CREATED="1330085576443" ID="ID_50351865" MODIFIED="1330388150106" POSITION="right" TEXT="|||ly data can be atomic or aggregate">
 <node CREATED="1330085951364" ID="ID_1458803223" MODIFIED="1330348503650" TEXT="atomic data">
 <node CREATED="1330085995342" ID="ID_1796438867" MODIFIED="1330085998416" TEXT="has a value"/>
 <node CREATED="1330085998788" ID="ID_1843538591" MODIFIED="1330086011708" TEXT="and a base where its valid"/>
 </node>
 <node CREATED="1330085957736" ID="ID_37473761" MODIFIED="1330085960929" TEXT="aggregate data"/>
 </node>
-<node CREATED="1329387661360" FOLDED="true" ID="ID_237796339" MODIFIED="1330311658559" POSITION="left" STYLE="fork" TEXT="notes">
+<node CREATED="1329387661360" FOLDED="true" ID="ID_237796339" MODIFIED="1330388065704" POSITION="left" STYLE="fork" TEXT="notes">
 <icon BUILTIN="edit"/>
 <node CREATED="1329387665319" ID="ID_928161729" MODIFIED="1329388684376" STYLE="fork" TEXT="Can Bob Martin&apos;s SOLID priniciples be included here?"/>
 <node CREATED="1329387682907" ID="ID_1895407319" MODIFIED="1329388684376" STYLE="fork" TEXT="In particular the Stability principle and the &quot;Main Line&quot; concept?"/>
 <node CREATED="1329391468933" ID="ID_430344424" MODIFIED="1329391496134" TEXT="Similarly, can equivalents of the McCabe metrics be incorporated?"/>
+<node CREATED="1329611935312" ID="ID_595069496" LINK="http://blog.johanneslink.net/2009/03/06/a-unified-theory-of-software-design/" MODIFIED="1329611981174" TEXT="Nice idea of modeling change as a &quot;probability p of x changing&quot; from this blog post"/>
+<node CREATED="1329613576384" ID="ID_1739068988" LINK="http://research.microsoft.com/pubs/68626/unified_theories.pdf" MODIFIED="1329613606080" TEXT="CAR Hoare&apos;s Theories of Software is also a good source"/>
 </node>
 </node>
 </map>
