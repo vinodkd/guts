@@ -517,7 +517,7 @@
 </node>
 <node CREATED="1330085957736" ID="ID_37473761" MODIFIED="1330085960929" TEXT="aggregate data"/>
 </node>
-<node CREATED="1329387661360" ID="ID_237796339" MODIFIED="1331003146002" POSITION="left" STYLE="fork" TEXT="notes">
+<node CREATED="1329387661360" FOLDED="true" ID="ID_237796339" MODIFIED="1331003327797" POSITION="left" STYLE="fork" TEXT="notes">
 <icon BUILTIN="edit"/>
 <node CREATED="1329387665319" ID="ID_928161729" MODIFIED="1329388684376" STYLE="fork" TEXT="Can Bob Martin&apos;s SOLID priniciples be included here?"/>
 <node CREATED="1329387682907" ID="ID_1895407319" MODIFIED="1329388684376" STYLE="fork" TEXT="In particular the Stability principle and the &quot;Main Line&quot; concept?"/>
