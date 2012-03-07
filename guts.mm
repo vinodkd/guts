@@ -255,7 +255,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1331002013373" POSITION="right" STYLE="fork" TEXT="statements are the atoms of code">
+<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1331098289184" POSITION="right" STYLE="fork" TEXT="statements are the atoms of code">
 <node CREATED="1329298834443" ID="ID_368024794" MODIFIED="1329388684476" STYLE="fork" TEXT="they have context and a user at their level"/>
 <node CREATED="1329298847884" ID="ID_12407724" MODIFIED="1329388684466" STYLE="fork" TEXT="meaning at a level above them"/>
 <node CREATED="1329298854804" ID="ID_632534766" MODIFIED="1329388684466" STYLE="fork" TEXT="implementation at a level below them"/>
@@ -526,7 +526,7 @@
 <node CREATED="1329613576384" ID="ID_1739068988" LINK="http://research.microsoft.com/pubs/68626/unified_theories.pdf" MODIFIED="1329613606080" TEXT="CAR Hoare&apos;s Theories of Software is also a good source"/>
 <node CREATED="1330483365789" ID="ID_1087075760" MODIFIED="1331003227682" TEXT="Found the wonderful &quot;Grand Unified Theory of Software Engineering&quot; book a week ago. Lots of overlap with my ideas.&#xa;Need to figure out how to merge mine with those. Initial thoughts:&#xa; - GUTSE is a much higher level thought process ie encompasses more.&#xa; - Does NOT want to get down to notation and symbols for valid reasons&#xa; - Has some awesome chapters on applying the theory esp using ACT-R. My theory should reach that level for it to be &quot;done&quot;&#xa;      - to clarify, however: not trying to use ACT-R and such like. I just want to use the theory I come up with.&#xa; - Hadnt heard about ACT-R but seems like that would be an awesome tool in and of itself to understand the human side of software."/>
 </node>
-<node CREATED="1331002039710" FOLDED="true" HGAP="-303" ID="ID_1800943276" MODIFIED="1331002611380" POSITION="right" TEXT="how to read this mindmap" VSHIFT="196">
+<node CREATED="1331002039710" FOLDED="true" HGAP="-145" ID="ID_1800943276" MODIFIED="1331098285553" POSITION="right" TEXT="how to read this mindmap" VSHIFT="188">
 <node CREATED="1331002121210" ID="ID_1676086014" MODIFIED="1331002143869" TEXT="the top level is unfolded to provide the most readable overview (imo)"/>
 <node CREATED="1331002144679" ID="ID_1815434561" MODIFIED="1331002306262" TEXT="each node&apos;s children can be read from top to bottom as a paragraph or cohesive whole"/>
 <node CREATED="1331002175476" ID="ID_586309297" MODIFIED="1331002327130" TEXT="each child node with chidren can be further expanded to read that sub topic in the same top-to-bottom fashion"/>
@@ -534,6 +534,14 @@
 <node CREATED="1331002360603" ID="ID_468218564" MODIFIED="1331002393868" TEXT="The left side of the map is roughly the &quot;ideaspace&quot; where incubation of ideas are added first"/>
 <node CREATED="1331002394470" ID="ID_506788239" MODIFIED="1331002421170" TEXT="The right side is the more concrete side; representing thoughts that have been solidified enough to be called part of the theory"/>
 <node CREATED="1331002424966" ID="ID_532742410" MODIFIED="1331002450801" TEXT="but this is a guideline, mostly. I typically add stuff to the left when I get stuck on the right."/>
+</node>
+<node CREATED="1331098183954" HGAP="-205" ID="ID_523686524" MODIFIED="1331098202085" POSITION="right" TEXT="status" VSHIFT="62">
+<node CREATED="1331098204125" ID="ID_597985630" MODIFIED="1331098218003" TEXT="basic elements for code and data decided"/>
+<node CREATED="1331098218930" ID="ID_1061172486" MODIFIED="1331098259835" TEXT="basic idea of stability still being worked on. was defining subroutine calls as &quot;dense&quot; points, and therefore defining the stability of the app as a volume-based CG-ish concept"/>
+<node CREATED="1331098260434" ID="ID_1752710132" MODIFIED="1331098274146" TEXT="the data hierarchy needs to be expanded"/>
+<node CREATED="1331098294467" ID="ID_1777961427" MODIFIED="1331098299061" TEXT="...as does the dynamic flow"/>
+<node CREATED="1331098300166" ID="ID_1725208290" MODIFIED="1331098329779" TEXT="if you&apos;re reading this months after feb 2012, read the left nodes first, then the &quot;statements are atoms&quot; one.."/>
+<node CREATED="1331098331234" ID="ID_1983185364" MODIFIED="1331098338738" TEXT="... and re-read the GUTSE book"/>
 </node>
 </node>
 </map>
