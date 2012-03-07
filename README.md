@@ -1,16 +1,36 @@
 Grand Unified Theory of Software
 ================================
 
-My attempt at defining an algebra or physics for software.
+GUTS is my attempt at creating a "natural" theory for software much like physics does for the real world. The big ideas are to define the properties of software in terms of building blocks such as the atomic statment and datum; build up towards larger and more complex structures such as modules, components, applications and ecosystems; model their structure as analogues of phsyical constructs and the behavior as dynamic systems.
 
-The idea is to define software as "structures" made up of blocks such as statements, functions, methods, classes, modules and so forth; then assess the impact of things such as load, new requirements (and the associated scope creep) and so forth as "forces" acting on these structures.
+End goal
+========
+
+The output is (a hopefully useful) theory that can be used to answer questions like:
+
+
+- Is this piece of software stable? Flexible? Brittle?
+- Can I define how complex a system is based on its code?
+- how can I use this to develop a plan to understand it?
+- if I change X, what will happen to the software?
+- How much change of X can the software take before it breaks?
+- What is the cost of changing X?
+- How did it reach its current state of stability/flexibility/brittleness?
+
 
 Current Status
 ==============
-A swirling vortex of vague ideas dumped into a Freemind mindmap. Expected to be in this half-baked state for a while.
+
+My current state of thought is captured in a Freemind Mindmap
+
+This is available in two formats:
+
+
+- A [Flash enabled one](http://vinodkd.github.com/guts/out/full/guts.html) that's closest to the Freemind experience
+A (non-flash, clickable image map version)[http://vinodkd.github.com/guts/out/basic/guts.html] that has all the content but is not as directly accessible as the previous one; but works on iPads and such like
 
 Milestones
 ==========
-1. Define Structural Stability for all levels upto application
+1. Define Structural Stability for all levels upto application - TBD
 
 
