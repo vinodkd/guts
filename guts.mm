@@ -535,7 +535,7 @@
 <node CREATED="1331002394470" ID="ID_506788239" MODIFIED="1331002421170" TEXT="The right side is the more concrete side; representing thoughts that have been solidified enough to be called part of the theory"/>
 <node CREATED="1331002424966" ID="ID_532742410" MODIFIED="1331002450801" TEXT="but this is a guideline, mostly. I typically add stuff to the left when I get stuck on the right."/>
 </node>
-<node CREATED="1331098183954" HGAP="-205" ID="ID_523686524" MODIFIED="1331098202085" POSITION="right" TEXT="status" VSHIFT="62">
+<node CREATED="1331098183954" FOLDED="true" HGAP="-205" ID="ID_523686524" MODIFIED="1331098405557" POSITION="right" TEXT="status" VSHIFT="62">
 <node CREATED="1331098204125" ID="ID_597985630" MODIFIED="1331098218003" TEXT="basic elements for code and data decided"/>
 <node CREATED="1331098218930" ID="ID_1061172486" MODIFIED="1331098259835" TEXT="basic idea of stability still being worked on. was defining subroutine calls as &quot;dense&quot; points, and therefore defining the stability of the app as a volume-based CG-ish concept"/>
 <node CREATED="1331098260434" ID="ID_1752710132" MODIFIED="1331098274146" TEXT="the data hierarchy needs to be expanded"/>
