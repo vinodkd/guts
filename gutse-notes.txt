@@ -1,0 +1,130 @@
+ 1. All of software engineering is a translation project from one language to another.
+ 2. There are languages like C/java or machine code/assembly or UML/Design documents
+ 3. a language is a set of specifications
+ 4. a spec is:
+	- a string of symbols or a set of language building blocks (aka compositional units)
+	- and rules to combine them (aka transforms)
+		Eg: Pascal: "procedure begin .... end". whole thing is the spec, each identifier is a CU
+		Eg: English: "This is a sentence". Words are CUs, sentence is the spec; Sentences are CUs,
+			para is the spec, and so forth
+ 5. Transformers define relations between languages; ie, they convert one set of specs into another.
+	Eg: compiler, human programmer (who xforms Design into code)
+ 6. The meaning of a language is its semantics
+ 7. A language has meaning when we're able to map from it to another language that has been semantically defined.
+ 8. Semantic Diagram: Pictorial depiction of the semantic xformation.
+ 9. Semantic Domain: Target set of the semantic mapping.
+10. Semantically defined means defined in terms of itself., ie the syntax and semantics are the same.
+11. Better: General Semantic Domain:
+	if to_mc(java) = to_mc(pascal), mc code is a semantic domain.
+	for all such languages if to_mc(lang1) = to_mc(lang2), mc is a general semantic domain.
+12. Specific Semantic Domain: Subset of GSD which is sufficiently general for a given context.
+13. Problem: A subset of a semantic domain (ed: which asks some question)
+14. Solution: A spec of a transformer that satisfies the problem. In the problem SD, it maps to a subset of it.
+15. SE Problems: Subset of general problems where the xformer is a sw m/c
+16. Problem Solving can be done with single or multiple xformers. Former is easy, so ignored
+17. Composite xformers:
+	- serial: this explains sequencing of operations. one xformer cannot impact the other unless it executes before it.
+	- ||el: which needs a splitter in front and an aggregator at the end
+18. Machine: vNM has:
+	- input system
+	- vNM executor
+	- Memory: Data and program memory. Usually co-located.
+	- output system
+19. Composing machine:
+	- @vNM instruction	level to form	simple		programs
+	- @procedure		level to form	modular		programs.
+	- @process			level to form	timesliced	programs.
+	- @vNM cluster		level to form	distributed	programs.
+	- @virtual m/c		level to form	HLL			programs. (which can be interpreted or compiled)
+	- @func prgg		level to form	funcitonal	programs.
+	- @OO				level to form	OO			programs.
+20. Comparison of composition models:
+	model		compt		concurrency			ctrl			data			state		st.spc
+				lifecycle						flow			flow			space		scope
+	===================================================================================================
+	vNM instr.	stateless	Single Thread		by register		register		registers	common mem.
+	procedure	stateless	ST, linear ctrl		by call seq		shared mem,		shared mem,	common mem.
+																args & rets		compt mem	
+	process		stateful	1T per process		none			IO bufs			registers	NA
+	cluster		stateless	1T per xform		none			IO bufs			registers	only local mem.
+	virt. mc																				
+	func prog.	stateless	ST, hierarchical,	by call			args & rets		None		NA
+							pseudo-concurrent												
+	OO prog.	stateful	ST, 1T/object		Method call		method call		Obj vars	NA
+21. Mind: requirements for a model of the mind:
+		- explain and predict problem solving
+		-  ''				  HUMAN problem solving
+		- without ignoring our understanding and learning difficulties
+		- concrete and operationalized.
+	thus, ACT-R
+22. Static structure of the mind:
+	Black box: Src lang -> mind -> target lang
+	White Box: it consists of:
+		- input system
+		- sub-symbolic system:
+			- procedural memory
+			- goal memory
+			- declarative memory
+		- output system
+23. Memory's CU's are called chunks. This memory is different from vNM memory in its retrieval delay/forgetting and learning curve.
+24. Declarative memory: its chunks contain facts such as "three and four makes seven". ||| to facts in FOPL
+	Eg: =fact3+4>
+			isa ADD-FACT
+			addend1=three
+			addend2=four
+			sum=seven
+25. Goal Memory: its chunks contain goals. sorta ||| to predicates in FOPL.
+	Eg: =goal>
+			isa ADDITION
+			n1=three
+			n2=four
+			ans=nil
+26. Procedural memory: its chunks are production rules, ||| rules in FOPL/prolog. they have an if/then structure, with the outcome adding a new goal.
+	In general, goal condition (+chunk retrieval) --> goal xform (+action)
+27. input system presents chunks to system. so this is kinda parsed input. of the symbolic kind, not syntactic. v.hi level of abstraction from sensor input
+28. output system is expressed as a v. hi level chunked output, not actual motor actions, etc.
+29. Dynamic structure:
+	- main purpose: attain goals.
+	- to do this: execute procedural rules meeting current goal.
+	Eg: if GM has:
+			=goal>
+				isa ADDITION
+				n1=three
+				n2=four
+				ans=nil
+		and PM has:
+			Add-nos
+				=goal>
+					isa ADDITION
+					n1=three
+					n2=four
+					ans=nil
+				=fact>
+					isa ADD-FACT
+					addend1=num1
+					addend2=num2
+					sum=sum
+			==>
+				=goal>
+					ans=sum
+		and we indeed have a fact in DM that asserts:
+		=fact3+4>
+			isa ADD-FACT
+			addend1=three
+			addend2=four
+			sum=seven
+		... then the mind will output seven as the answer.
+	- this is a simple eg, but more complex ones are:
+		- reasoning by counting
+		- retrieval from memory
+		- retrieval from input system (eg, by reading a book)
+30. Learning: humans learning curve as defined by the reln between memory access time and practice time shows that access time reduces exponentially as practice increases.
+    machines, otoh, have constant retrieval time once memorized.
+	forgetting: similarly, humans forgetfulness as defined by reln between correct retrieval and time from original storage shows that #correct retrievals reduces as time increases
+	machines otoh, have constant #correct retrievals.
+31. External memory: bcos humans have learning and forgetting difficulties, external memory (paper and pencil) increase their performance considerably.
+32. Composing minds: since minds are fixed in their structure, its not possible to compose them differently - at least not now.
+	- @sub-mind		level to form	??		organization: not currently possible.
+	- @multi-mind	level to form social	organization: not in scope for this book; but obviously studied elsewhere
+	- @mind+m/c		level to form Sw engg	organization: pertinent to this book
+
