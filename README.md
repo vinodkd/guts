@@ -36,6 +36,7 @@ This is available in two formats:
 
 Milestones
 ==========
-1. Define Structural Stability for all levels upto application - TBD
-
+1. Define code Size for all levels upto application
+2. Define Structural Stability for all levels upto application - TBD
+3. Start writing the mindmap in book form
 
