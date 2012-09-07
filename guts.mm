@@ -613,7 +613,7 @@
 <node CREATED="1329613576384" ID="ID_1739068988" LINK="http://research.microsoft.com/pubs/68626/unified_theories.pdf" MODIFIED="1329613606080" TEXT="CAR Hoare&apos;s Theories of Software is also a good source"/>
 <node CREATED="1330483365789" ID="ID_1087075760" MODIFIED="1331003227682" TEXT="Found the wonderful &quot;Grand Unified Theory of Software Engineering&quot; book a week ago. Lots of overlap with my ideas.&#xa;Need to figure out how to merge mine with those. Initial thoughts:&#xa; - GUTSE is a much higher level thought process ie encompasses more.&#xa; - Does NOT want to get down to notation and symbols for valid reasons&#xa; - Has some awesome chapters on applying the theory esp using ACT-R. My theory should reach that level for it to be &quot;done&quot;&#xa;      - to clarify, however: not trying to use ACT-R and such like. I just want to use the theory I come up with.&#xa; - Hadnt heard about ACT-R but seems like that would be an awesome tool in and of itself to understand the human side of software."/>
 </node>
-<node CREATED="1346987958052" ID="ID_1527585743" MODIFIED="1346990180787" POSITION="left" TEXT="The GUTS book">
+<node CREATED="1346987958052" FOLDED="true" ID="ID_1527585743" MODIFIED="1346990345791" POSITION="left" TEXT="The GUTS book">
 <node CREATED="1346988095873" ID="ID_1641101045" MODIFIED="1346988099164" TEXT="content ideas">
 <node CREATED="1346987984229" ID="ID_1179744454" MODIFIED="1346987985660" TEXT="size for statement, routine, app"/>
 <node CREATED="1346987994163" ID="ID_798880785" MODIFIED="1346987995492" TEXT="testing out the formula for 99 bottles of beer in multiple languages"/>
@@ -621,7 +621,7 @@
 <node CREATED="1346988013915" ID="ID_655155148" MODIFIED="1346988015221" TEXT="stability for statement, routine, app"/>
 <node CREATED="1346988026166" ID="ID_1468101717" MODIFIED="1346988027429" TEXT="testing out the formula for a small business app - preferably implemented fairly standardly accross multiple languages"/>
 </node>
-<node CREATED="1346988110447" ID="ID_1748144385" MODIFIED="1346988112736" TEXT="toc">
+<node CREATED="1346988110447" FOLDED="true" ID="ID_1748144385" MODIFIED="1346990344177" TEXT="toc">
 <node CREATED="1346988741573" FOLDED="true" ID="ID_441396775" MODIFIED="1346990225989" TEXT="code statics">
 <node CREATED="1346988115685" FOLDED="true" ID="ID_1149304824" MODIFIED="1346990184409" TEXT="code size">
 <node CREATED="1346988123275" ID="ID_1727227104" MODIFIED="1346988127660" TEXT="current notions"/>
@@ -633,7 +633,7 @@
 <node CREATED="1346988157962" ID="ID_387349514" MODIFIED="1346988170507" TEXT="code flexibility"/>
 <node CREATED="1346988171412" ID="ID_1894280181" MODIFIED="1346988200721" TEXT="code complexity/simplicity"/>
 </node>
-<node CREATED="1346988754960" FOLDED="true" ID="ID_1546174016" MODIFIED="1346990218184" TEXT="code dynamics">
+<node CREATED="1346988754960" ID="ID_1546174016" MODIFIED="1346990329154" TEXT="code dynamics">
 <node CREATED="1346988364235" ID="ID_426489750" MODIFIED="1346988367428" TEXT="forces on code"/>
 <node CREATED="1346988374015" ID="ID_1547061536" MODIFIED="1346988380622" TEXT="effect of forces"/>
 <node CREATED="1346990206717" ID="ID_165098568" MODIFIED="1346990215424" TEXT="building/changing code using forces"/>
