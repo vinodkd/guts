@@ -603,7 +603,7 @@
 <node CREATED="1346934940018" ID="ID_1367397133" MODIFIED="1346934964226" TEXT="...is envisioned at the M level"/>
 <node CREATED="1346934946127" ID="ID_1735094407" MODIFIED="1346934954550" TEXT="...and implemented at the B level"/>
 </node>
-<node CREATED="1329387661360" FOLDED="true" ID="ID_237796339" MODIFIED="1346988088635" POSITION="left" STYLE="fork" TEXT="notes">
+<node CREATED="1329387661360" ID="ID_237796339" MODIFIED="1347157935915" POSITION="left" STYLE="fork" TEXT="notes">
 <font NAME="SansSerif" SIZE="12"/>
 <icon BUILTIN="edit"/>
 <node CREATED="1329387665319" ID="ID_928161729" MODIFIED="1329388684376" STYLE="fork" TEXT="Can Bob Martin&apos;s SOLID priniciples be included here?"/>
@@ -612,8 +612,13 @@
 <node CREATED="1329611935312" ID="ID_595069496" LINK="http://blog.johanneslink.net/2009/03/06/a-unified-theory-of-software-design/" MODIFIED="1329611981174" TEXT="Nice idea of modeling change as a &quot;probability p of x changing&quot; from this blog post"/>
 <node CREATED="1329613576384" ID="ID_1739068988" LINK="http://research.microsoft.com/pubs/68626/unified_theories.pdf" MODIFIED="1329613606080" TEXT="CAR Hoare&apos;s Theories of Software is also a good source"/>
 <node CREATED="1330483365789" ID="ID_1087075760" MODIFIED="1331003227682" TEXT="Found the wonderful &quot;Grand Unified Theory of Software Engineering&quot; book a week ago. Lots of overlap with my ideas.&#xa;Need to figure out how to merge mine with those. Initial thoughts:&#xa; - GUTSE is a much higher level thought process ie encompasses more.&#xa; - Does NOT want to get down to notation and symbols for valid reasons&#xa; - Has some awesome chapters on applying the theory esp using ACT-R. My theory should reach that level for it to be &quot;done&quot;&#xa;      - to clarify, however: not trying to use ACT-R and such like. I just want to use the theory I come up with.&#xa; - Hadnt heard about ACT-R but seems like that would be an awesome tool in and of itself to understand the human side of software."/>
+<node CREATED="1347157942911" ID="ID_210810632" MODIFIED="1347157979413" TEXT="Brainwave today: Use Godel numbering to size code and/or Turning Machines">
+<node CREATED="1347157982876" ID="ID_343495508" MODIFIED="1347158014450" TEXT="Godel numbering essentially &quot;size&quot;s code by encoding their contents as huge numbers that are unique to the contents&apos; value"/>
+<node CREATED="1347158015102" ID="ID_56904385" MODIFIED="1347158060359" TEXT="The concept of &quot;Simplest turning machine&quot; could be used to start with a unit machine and build up from there to more complex ones. The NOOP machine could well be the unit of code"/>
 </node>
-<node CREATED="1346987958052" FOLDED="true" ID="ID_1527585743" MODIFIED="1346990345791" POSITION="left" TEXT="The GUTS book">
+<node CREATED="1347158069185" ID="ID_267611638" MODIFIED="1347158103865" TEXT="Similarly: Use &quot;godels&quot; or &quot;alans&quot; or &quot;tm&quot;s as units of size/complexity/whatever :)"/>
+</node>
+<node CREATED="1346987958052" FOLDED="true" ID="ID_1527585743" MODIFIED="1347157934062" POSITION="left" TEXT="The GUTS book">
 <node CREATED="1346988095873" ID="ID_1641101045" MODIFIED="1346988099164" TEXT="content ideas">
 <node CREATED="1346987984229" ID="ID_1179744454" MODIFIED="1346987985660" TEXT="size for statement, routine, app"/>
 <node CREATED="1346987994163" ID="ID_798880785" MODIFIED="1346987995492" TEXT="testing out the formula for 99 bottles of beer in multiple languages"/>
