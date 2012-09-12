@@ -94,7 +94,7 @@ Here's one contrasting program:
 		}
 		// SLOC: 7, Size > Size(Program 1)?
 
-	Aside: Note that Program 2's SLOC went up because `PrintStream` had to be imported in, while Program 1 doesnt need that line because of "platform" affordances. More on such platform implications later.
+> Aside: Note that Program 2's SLOC went up because `PrintStream` had to be imported in, while Program 1 doesnt need that line because of "platform" affordances. More on such platform implications later.
 	
 ... and one more:
 
@@ -128,7 +128,7 @@ Question 2: Is a function call one statement?
 ---------------------------------------------
 A function call is indeed a shortcut to invoke a bunch of statements defined elsewhere. However, is the size of a _call_ the same as the definition? I would say no. As long as we size the _definition_ of the function call separately, the actual call itself should have a non-zero size, but it shouldnt be the same as that of the function itself. So yes, a function call is therefore a statement.
 
-Onto Question #2.
+Onto Question #3.
 
 Question 3: Is a class a statement? What about functions?
 ---------------------------------------------------------
@@ -137,7 +137,7 @@ At first sight, this question seems trivially answerable: line 1 in Program 1 is
 		# program 4
 		println "Hello World"	#SLOC:1, Size: ?
 
-	Note: Yes, I know that this is possible because of "Platform affordances" and that behind the scenes are some intelligent defaults. We'll deal with this "tip of the iceberg"-ness later.
+> Note: Yes, I know that this is possible because of "Platform affordances" and that behind the scenes are some intelligent defaults. We'll deal with this "tip of the iceberg"-ness later.
 	
 Now it seems intuitive that the first program is "larger" than the second one, doesnt it? Or, to contrast in the other direction, what if we wrote our HelloWorld.java like so:
 
@@ -164,6 +164,7 @@ Let's update our formulas from above, therefore:
 			contents	= statements | containers
 
 To summarize so far:
+
 1. _Statement_ is the unit of measure for software size.
 2. _Statement_ can be defined in two ways:
 	* Simple: A statement is whatever appears between two statement separators per the language's grammar. A statement has unit size.
@@ -192,7 +193,7 @@ Next: Size of Statements. We've to try counting in both the simple and exact way
 
 In the Simple way, since one statement cannot be differentiated from another, the best we can do is to assume some standard size for all statements. The simplest standard size would be `1`, but if we emperically have (say, by comparison to exact measurements) an _average size_ that is known, that could be used too. Obviously, this would be a language or platform specific value. Anyway,
 
-		simple_size_unit(statement) 	= 1
+		simple_size_unit(statement)	= 1
 		simple_size_avg(statement)	= Savg	(some emperical value)
 		
 In the Exact way, there are even more difficulties. We do have the ability of differentiating between different types of statements, but how do we ascribe a number to each type of statement? If we have access to the implementation of those statements ( eg, we have access to the source code of the Java compiler and runtime) we could measure the size of that code and apply the `size(container)` formula. But what if we didnt have access to the source, or dont want to go down that rabbit hole?
@@ -204,6 +205,7 @@ We will do exactly that later, but for now, let's see how far we can go without 
 * Finally, we could make a half-hearted attempt at going down the rabbit hole. It works something like this: we pick one statement as the unit statement regardless of its actual size; and then index every other statement's size to the chosen one's. So  
 
 In formula form that would be:
+
 		exact_size_unit(statement) 	= 1
 		exact_size_const(statement)	= Sconst	(some constant value)
 
