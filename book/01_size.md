@@ -1,7 +1,6 @@
-GUTS
-====
-Chapter 1
-=========
+GUTS Chapter 1: Code Size
+========================
+
 ### Outline
 
 current notions of code size - the statement - its size - principle for counting larger bits of code - thus size of a seq - then selection - then iteration - then routine - examples -  - then tree of routines - then graph of routines -  - therefore functions - then procs - then apps -  - examples -  - concept of base - counting size of a multi-language app - example/comparison of some such apps
