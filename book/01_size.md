@@ -106,9 +106,9 @@ Here's one contrasting program:
 		}
 		// SLOC: 6, Size = Size(Program 2)?
 
-Now, both these programs are admittedly contrived, but they are reflective of similar contrasts in real code where either representation would be useful [1](#ftnote1). Program 2 splits out the original line 1 into two, separating the individual steps involved; while Program 3 splits the final function call itself into two while still achieving the same end result. Obviously they're using more steps than Program 1 and therefore must have a bigger size, but in terms of defining a __Statement__ they have only served to muddy the waters. Not only can what we thought of as an atomic thing be broken into smaller bits, but what it *does* can also be broken into smaller bits.
+Now, both these programs are admittedly contrived, but they are reflective of similar contrasts in real code where either representation would be useful [1](#ftnote1). Program 2 splits out the original line 1 into two, separating the individual steps involved; while Program 3 splits the final function call itself into two while still achieving the same end result. Obviously they're using more steps than Program 1 and therefore must have a bigger size, but in terms of defining a __Statement__ they have only served to muddy the waters. The common sense notion of a program statement being the smallest entity in code has been broken: a statement can not only be broken into smaller bits, but what it *does* can also be broken into smaller bits.
 
-It seems, therefore, that there are two ways to answer Question #1:
+It seems at this point, therefore, that we can take one of two stances to answer Question #1:
 
 1. Simple: A statement is whatever appears between two statement separators per the language's grammar.
 2. Exact: A statement is quite literally the simplest statement that could be written in the language; any time you can convert a statement in the language's grammer into a set of smaller statements within that same grammar that effectively does the same thing, it cannot be considered an atomic _Statement_. Its a Compound Statement.
@@ -136,9 +136,9 @@ At first sight, this question seems trivially answerable: line 1 in Program 1 is
 		# program 4
 		println "Hello World"	#SLOC:1, Size: ?
 
-> Note: Yes, I know that this is possible because of "Platform affordances" and that behind the scenes are some intelligent defaults. We'll deal with this "tip of the iceberg"-ness later.
+> Note: Yes, I know that this is possible because of "Platform affordances" and that behind the scenes are some intelligent defaults. I also realize that this is not the same as Java's `System.out`. We'll deal with this "tip of the iceberg"-ness later.
 	
-Now it seems intuitive that the first program is "larger" than the second one, doesnt it? Or, to contrast in the other direction, what if we wrote our HelloWorld.java like so:
+Now it seems intuitive that the first program is "larger" than the second one, doesnt it? Or, to contrast in the other direction, what if we wrote our HelloWorld.java like so?
 
 		// program 5
 		public class HelloWorld{
@@ -194,18 +194,18 @@ So, `IF` and `LOOP`s are containers. We'll defer their calculation to later when
 
 We've to try counting in both the simple and exact way, so here goes.
 
-In the Simple way, since one statement cannot be differentiated from another, the best we can do is to assume some standard size for all statements. The simplest standard size would be `1`, but if we emperically have (say, by comparison to exact measurements) an _average size_ that is known, that could be used too. Obviously, this would be a language or platform specific value. Anyway,
+**In the Simple way**, since one statement cannot be differentiated from another, the best we can do is to assume some standard size for all statements. The simplest standard size would be `1`, but if we emperically have (say, by comparison to exact measurements) an _average size_ that is known, that could be used too. Obviously, this would be a language or platform specific value. Anyway,
 
 		simple_size_unit(statement)	= 1
 		simple_size_avg(statement)	= Savg	(some emperical value)
 		
-In the Exact way, there are even more difficulties. We do have the ability of differentiating between different types of statements, but how do we ascribe a number to each type of statement? If we have access to the implementation of those statements ( eg, we have access to the source code of the Java compiler and runtime) we could measure the size of that code and apply the `size(container)` formula. But what if we didnt have access to the source, or dont want to go down that rabbit hole?
+**In the Exact way**, there are even more difficulties. We do have the ability of differentiating between different types of statements, but how do we ascribe a number to each type of statement? If we have access to the implementation of those statements ( eg, we have access to the source code of the Java compiler and runtime) we could measure the size of that code and apply the `size(container)` formula. But what if we didnt have access to the source, or dont want to go down that rabbit hole?
 
 We will do exactly that later, but for now, let's see how far we can go without doing that. We have a couple of shortcuts:
 
-* Like in the simple way, we could give the exact statements unit size. This is better than the simple way because all those compound statements have been broken down already and will thus have size > 1; but it doesnt count the *actual* size of the exact statements
-* Like the second option in the simple way, we could give all statements a size greater than one. This would be useful to compare codebases written with multiple languages, for example.
-* Finally, we could make a half-hearted attempt at going down the rabbit hole. It works something like this: we pick one statement as the unit statement regardless of its actual size; and then index every other statements' size to the chosen one's, ie, divide their sizes by that of the unit statement. This way, we express size as a number relative to another size and can absolve ourselves from doing any actual measurement by picking a unit statement and guessing the sizes of other statements relative to it.  
+* **Unit Size**: Like in the simple way, we could give the exact statements unit size. This is better than the simple way because all those compound statements have been broken down already and will thus have size > 1; but it doesnt count the *actual* size of the exact statements
+* **Constant Size**: Like the second option in the simple way, we could give all statements a size greater than one. This would be useful to compare codebases written with multiple languages, for example.
+* **Indexed or Relative Size**: Finally, we could make a half-hearted attempt at going down the rabbit hole. It works something like this: we pick one statement as the unit statement regardless of its actual size; and then index every other statements' size to the chosen one's, ie, divide their sizes by that of the unit statement. This way, we express size as a number relative to another size and can absolve ourselves from doing any actual measurement by picking a unit statement and guessing the sizes of other statements relative to it.  I call it indexed because all sizes are indexed to the unit statement's size.
 
 In formula form that would be:
 
@@ -213,8 +213,8 @@ In formula form that would be:
 		exact_size_const(statement)		= Sconst	(some constant value)
 		
 		exact_size_ndx(unit_statement)		= 1
-		exact_size_ndx(other_statement_1)	= n1
-		exact_size_ndx(other_statement_2)	= n2
+		exact_size_ndx(other_statement_1)	= n1		(some number)
+		exact_size_ndx(other_statement_2)	= n2		(some other number)
 
 We'll need some worked examples to grok this better; but let's put a hold on that till after we've defined...
 
@@ -222,7 +222,7 @@ We'll need some worked examples to grok this better; but let's put a hold on tha
 
 As a refresher, the formula for contained code is `size(code) = size(container) + sum(size(contents))`. Let's apply this the primordials and containers of various kinds.
 
-Applying it to `IF`, we get:
+**Applying it to `IF`**, we get:
 
 		size(IF block) 	= size(IF) + sum(size(contents))
 
@@ -230,7 +230,7 @@ Applying it to `IF`, we get:
 
 		size(IF contents) = sum(size(each path))
 
-Next up: `LOOP`. This is the most straight-forward of the containers. Its intrinsic size is unit (because its primordial) and the size of its contents are summed up. Or in formulas:
+**Next up: `LOOP`**. This is the most straight-forward of the containers. Its intrinsic size is unit (because its primordial) and the size of its contents are summed up. Or in formulas:
 
 		size(LOOP) = 1
 		size(LOOP contents) = sum(size(statements in LOOP))
@@ -243,4 +243,4 @@ Footnotes
 ---------
 
 <a id="ftnote1"></a>
-[1]: For eg where you'd split a long chain of method calls into an intermediary value for readability, but this increases size because now you have an additional variable"
+[1]: For eg where you'd split a long chain of method calls into an intermediary value for readability, but this increases size because now you have an additional variable
