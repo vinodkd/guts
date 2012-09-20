@@ -1,6 +1,6 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1329134605664" ID="ID_1305478691" MODIFIED="1346156916374" STYLE="fork">
+<node CREATED="1329134605664" ID="ID_1305478691" MODIFIED="1347358460879" STYLE="fork">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -247,13 +247,13 @@
 <node CREATED="1329298773513" ID="ID_690891581" MODIFIED="1346156916354" POSITION="right" STYLE="fork" TEXT="All definitions are &quot;at a certain level&quot; defined by a human observer called the &quot;user&quot;">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
-<node CREATED="1330084924653" ID="ID_162728351" MODIFIED="1346989576473" POSITION="right" TEXT="code, data and execution are the three basic types of &quot;things&quot; in software">
+<node CREATED="1330084924653" FOLDED="true" ID="ID_162728351" MODIFIED="1347358477338" POSITION="right" TEXT="code, data and execution are the three basic types of &quot;things&quot; in software">
 <font NAME="SansSerif" SIZE="12"/>
 <node CREATED="1346935067724" ID="ID_1177991931" MODIFIED="1346935079840" TEXT="data IS something"/>
 <node CREATED="1346935080249" ID="ID_1709637725" MODIFIED="1346989591226" TEXT="code POTENTIALLY DOES something"/>
 <node CREATED="1346989593351" ID="ID_1109387176" MODIFIED="1346989623978" TEXT="execution converts this potential to actual ACTION"/>
 </node>
-<node CREATED="1330085166007" ID="ID_1095509452" MODIFIED="1346989713064" POSITION="right">
+<node CREATED="1330085166007" FOLDED="true" ID="ID_1095509452" MODIFIED="1347358463796" POSITION="right">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -285,8 +285,7 @@
       code is a structure, a container <b>and a processor</b>; data is what is contained or passes through code
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 <node CREATED="1346989991736" ID="ID_1106600717" MODIFIED="1346990018390" POSITION="right" TEXT="thus code is data with at least one identifiable &quot;command&quot; or action - by some executor"/>
@@ -308,8 +307,7 @@
       <strike>Current answer: all code is data and vice versa. The container/contained dual is sufficient for our purposes</strike>
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <icon BUILTIN="button_ok"/>
 <icon BUILTIN="messagebox_warning"/>
 </node>
@@ -328,7 +326,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1346990057907" POSITION="right" STYLE="fork" TEXT="statements are the atoms of code">
+<node CREATED="1329298743240" FOLDED="true" ID="ID_1248203685" MODIFIED="1347358749618" POSITION="right" STYLE="fork" TEXT="statements are the atoms of code">
 <font NAME="SansSerif" SIZE="12"/>
 <node CREATED="1329298834443" ID="ID_368024794" MODIFIED="1329388684476" STYLE="fork" TEXT="they have context and a user at their level"/>
 <node CREATED="1329298847884" ID="ID_12407724" MODIFIED="1329388684466" STYLE="fork" TEXT="meaning at a level above them"/>
@@ -384,22 +382,22 @@
 <node CREATED="1329303532367" ID="ID_1341171281" MODIFIED="1329388684376" STYLE="fork" TEXT="Quote"/>
 <node CREATED="1329303536887" ID="ID_905807551" MODIFIED="1329388684376" STYLE="fork" TEXT="Eval"/>
 </node>
-<node CREATED="1329301597637" ID="ID_1443429226" MODIFIED="1346934153061" STYLE="fork" TEXT="properties of statements">
-<node CREATED="1329303908525" ID="ID_1350894160" MODIFIED="1346988526150" STYLE="fork" TEXT="static">
-<node CREATED="1329302616557" FOLDED="true" ID="ID_775908008" MODIFIED="1346933517767" STYLE="fork" TEXT="h: height: distance from the base in count of statements">
+<node CREATED="1329301597637" ID="ID_1443429226" MODIFIED="1347358516840" STYLE="fork" TEXT="properties of statements">
+<node CREATED="1329303908525" FOLDED="true" ID="ID_1350894160" MODIFIED="1347358689974" STYLE="fork" TEXT="static">
+<node CREATED="1329302616557" FOLDED="true" ID="ID_775908008" MODIFIED="1347358537987" STYLE="fork" TEXT="h: height: distance from the base in count of statements">
 <node CREATED="1329363894983" ID="ID_757283116" MODIFIED="1329388684456" STYLE="fork" TEXT="1 for statements"/>
 <node CREATED="1329370762630" ID="ID_1889767535" MODIFIED="1329388684456" STYLE="fork" TEXT="statement aggregates will obviously have &gt;1 height"/>
 </node>
-<node CREATED="1329301655139" FOLDED="true" ID="ID_1339697097" MODIFIED="1346933524249" STYLE="fork" TEXT="m: static mass: &quot;amount of space&quot; taken up by the statement">
+<node CREATED="1329301655139" FOLDED="true" ID="ID_1339697097" MODIFIED="1347358540097" STYLE="fork" TEXT="m: static mass: &quot;amount of space&quot; taken up by the statement">
 <node CREATED="1329389288782" ID="ID_557447816" MODIFIED="1330084462407" TEXT="=1 for statements"/>
 </node>
-<node CREATED="1329372695234" FOLDED="true" ID="ID_281595980" MODIFIED="1346933529144" STYLE="fork" TEXT="w: weight: mass x gb">
+<node CREATED="1329372695234" FOLDED="true" ID="ID_281595980" MODIFIED="1347358546838" STYLE="fork" TEXT="w: weight: mass x gb">
 <node CREATED="1329372708475" ID="ID_95823430" MODIFIED="1329388684456" STYLE="fork" TEXT="this just seems cool. but will it be needed? tbd">
 <icon BUILTIN="messagebox_warning"/>
 <icon BUILTIN="attach"/>
 </node>
 </node>
-<node CREATED="1329301651659" FOLDED="true" ID="ID_1700809000" MODIFIED="1346933531435" STYLE="fork" TEXT="s: speed: Big O of the statement wrt the context">
+<node CREATED="1329301651659" FOLDED="true" ID="ID_1700809000" MODIFIED="1347358554635" STYLE="fork" TEXT="s: speed: Big O of the statement wrt the context">
 <node CREATED="1329389004934" ID="ID_1500179884" MODIFIED="1329389031453" TEXT="alternately, using the pipe model, 1/speed would be the resistance to flow"/>
 <node CREATED="1329389040722" ID="ID_550091586" MODIFIED="1329389057832" TEXT="More work on this when I reach the dynamic parts">
 <icon BUILTIN="messagebox_warning"/>
@@ -408,7 +406,7 @@
 <node CREATED="1329303666165" ID="ID_1624160501" MODIFIED="1329392458473" STYLE="fork" TEXT="Fi: fan in: the number of unique inputs to the statement"/>
 <node CREATED="1329303679935" ID="ID_1356335565" MODIFIED="1329392464063" STYLE="fork" TEXT="Fo: fan out: the number of unique outputs to the statement"/>
 <node CREATED="1329303688655" ID="ID_1500910572" MODIFIED="1329392469353" STYLE="fork" TEXT="E: effects: the number of unique side effects due to its execution"/>
-<node CREATED="1329304133162" FOLDED="true" ID="ID_1778094766" MODIFIED="1346934294856" STYLE="fork">
+<node CREATED="1329304133162" FOLDED="true" ID="ID_1778094766" MODIFIED="1347358621291" STYLE="fork">
 <richcontent TYPE="NODE"><html>
   <head>
     
@@ -475,11 +473,11 @@
 <icon BUILTIN="attach"/>
 </node>
 </node>
-<node CREATED="1329304429898" ID="ID_1028255278" MODIFIED="1345878359926" STYLE="fork" TEXT="S: stability">
+<node CREATED="1329304429898" FOLDED="true" ID="ID_1028255278" MODIFIED="1347358683581" STYLE="fork" TEXT="S: stability">
 <node CREATED="1329333342773" ID="ID_1779893464" MODIFIED="1329388684466" STYLE="fork" TEXT="=1 for statements"/>
 <node CREATED="1329333374286" ID="ID_797636524" MODIFIED="1329391426051" STYLE="fork" TEXT="i thought for long about measuing stability of individual statements, but it seems to me after some thought that instability comes from the incorrect/complex combination of statements rather than the statements themselves.&#xa;Hence moving calculated stability to the aggregates"/>
 </node>
-<node CREATED="1329304462685" ID="ID_231771709" MODIFIED="1346933611870" STYLE="fork" TEXT="f: flexibility: Fi/(Fi+Fo+Fe)">
+<node CREATED="1329304462685" FOLDED="true" ID="ID_231771709" MODIFIED="1347358686070" STYLE="fork" TEXT="f: flexibility: Fi/(Fi+Fo+Fe)">
 <node CREATED="1329333342773" ID="ID_1669841278" MODIFIED="1329388885486" STYLE="fork" TEXT="Measured as how many ways there are to influence the output"/>
 <node CREATED="1329388888936" ID="ID_690871127" MODIFIED="1329388904225" TEXT="Therefore, the larger the input options, the larger the flexiblity"/>
 <node CREATED="1329388948475" ID="ID_80861897" MODIFIED="1329389952679" TEXT="This is similar to Bob Martin&apos;s stability definition for classes and packages">
@@ -599,7 +597,7 @@
 <node CREATED="1346934743358" ID="ID_1902726685" MODIFIED="1346934766962" TEXT="..or disassamble them"/>
 <node CREATED="1346934807801" ID="ID_1973373129" MODIFIED="1346934813016" TEXT="but not create statements"/>
 </node>
-<node CREATED="1346934931314" ID="ID_1982732819" MODIFIED="1346934934988" POSITION="right" TEXT="statement creation">
+<node CREATED="1346934931314" FOLDED="true" ID="ID_1982732819" MODIFIED="1347358507542" POSITION="right" TEXT="statement creation">
 <node CREATED="1346934940018" ID="ID_1367397133" MODIFIED="1346934964226" TEXT="...is envisioned at the M level"/>
 <node CREATED="1346934946127" ID="ID_1735094407" MODIFIED="1346934954550" TEXT="...and implemented at the B level"/>
 </node>
@@ -612,11 +610,18 @@
 <node CREATED="1329611935312" ID="ID_595069496" LINK="http://blog.johanneslink.net/2009/03/06/a-unified-theory-of-software-design/" MODIFIED="1329611981174" TEXT="Nice idea of modeling change as a &quot;probability p of x changing&quot; from this blog post"/>
 <node CREATED="1329613576384" ID="ID_1739068988" LINK="http://research.microsoft.com/pubs/68626/unified_theories.pdf" MODIFIED="1329613606080" TEXT="CAR Hoare&apos;s Theories of Software is also a good source"/>
 <node CREATED="1330483365789" ID="ID_1087075760" MODIFIED="1331003227682" TEXT="Found the wonderful &quot;Grand Unified Theory of Software Engineering&quot; book a week ago. Lots of overlap with my ideas.&#xa;Need to figure out how to merge mine with those. Initial thoughts:&#xa; - GUTSE is a much higher level thought process ie encompasses more.&#xa; - Does NOT want to get down to notation and symbols for valid reasons&#xa; - Has some awesome chapters on applying the theory esp using ACT-R. My theory should reach that level for it to be &quot;done&quot;&#xa;      - to clarify, however: not trying to use ACT-R and such like. I just want to use the theory I come up with.&#xa; - Hadnt heard about ACT-R but seems like that would be an awesome tool in and of itself to understand the human side of software."/>
-<node CREATED="1347157942911" ID="ID_210810632" MODIFIED="1347157979413" TEXT="Brainwave today: Use Godel numbering to size code and/or Turning Machines">
+<node CREATED="1347157942911" FOLDED="true" ID="ID_210810632" MODIFIED="1348037167896" TEXT="Brainwave today: Use Godel numbering to size code and/or Turning Machines">
 <node CREATED="1347157982876" ID="ID_343495508" MODIFIED="1347158014450" TEXT="Godel numbering essentially &quot;size&quot;s code by encoding their contents as huge numbers that are unique to the contents&apos; value"/>
 <node CREATED="1347158015102" ID="ID_56904385" MODIFIED="1347158060359" TEXT="The concept of &quot;Simplest turning machine&quot; could be used to start with a unit machine and build up from there to more complex ones. The NOOP machine could well be the unit of code"/>
 </node>
 <node CREATED="1347158069185" ID="ID_267611638" MODIFIED="1347158103865" TEXT="Similarly: Use &quot;godels&quot; or &quot;alans&quot; or &quot;tm&quot;s as units of size/complexity/whatever :)"/>
+<node CREATED="1348037170103" ID="ID_347625496" MODIFIED="1348037186728" TEXT="Some more approaches to software size that I discovered">
+<node CREATED="1348037188304" ID="ID_1184940707" LINK="http://www.virtualmachinery.com/sidebar2.htm" MODIFIED="1348037239994" TEXT="Halstead&apos;s software science that defines length, volume, difficulty etc">
+<node CREATED="1348039160539" ID="ID_886106251" LINK="ref/Software%20Science%20Revisited-%20A%20Critical%20Analysis%20of%20the%20Theory%20and.pdf" MODIFIED="1348039183113" TEXT="One more on Halstead&apos;s metrics"/>
+</node>
+<node CREATED="1348037261500" ID="ID_1753510426" LINK="ref/kearney.pdf" MODIFIED="1348037392737" TEXT="A review of numerous methods of measuring software size from cmu"/>
+<node CREATED="1348037303793" ID="ID_1742755527" LINK="http://en.wikipedia.org/wiki/Kolmogorov_complexity" MODIFIED="1348037490315" TEXT="Kolmogorov complexity as measure of &quot;length&quot; of objects. Can this be used to equate to program length?"/>
+</node>
 </node>
 <node CREATED="1346987958052" FOLDED="true" ID="ID_1527585743" MODIFIED="1347157934062" POSITION="left" TEXT="The GUTS book">
 <node CREATED="1346988095873" ID="ID_1641101045" MODIFIED="1346988099164" TEXT="content ideas">
