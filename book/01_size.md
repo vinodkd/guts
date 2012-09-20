@@ -35,18 +35,18 @@ Statements: the smallest units of code
 All of programming has [famously been depicted](add ref here) as being made of 3 basic operations:
 
 * Sequence, ie steps done in sequence
-* Selection, ie the choice of one step vs the other, aka the IF
-* Iteration, ie the ability to repeat steps that have been executed before, aka the LOOP
+* Selection, ie the choice of one step vs the other, aka the `IF`
+* Iteration, ie the ability to repeat steps that have been executed before, aka the `LOOP`
 
 Assuming we know the "size" of each such operation, the size of the program(s) that contain these operations can be computed as an accumulation of their individual sizes. Thus,
 
-	size(simple program or routine)		= sum(size(statement)) V statements in the program
-	size(program with subroutines + main)	= size(main) + sum(size(subroutine)) V subroutines in program
-	size(app with multiple programs)	= sum(size(program)) V programs in app
+	size(simple program or subroutine)		= sum(size(statement)) for all statements in the program
+	size(program with subroutines + main)	= size(main) + sum(size(subroutine)) for all subroutines in program
+	size(app with multiple programs)	= sum(size(program)) for all programs in app
 
 ... Or more generally
 
-	size(code) 				= sum(size(contents)) V contents in the container
+	size(code) 				= sum(size(contents)) for all contents in the container
 	where
 		container	= routine | program | app | ...
 		contents	= statements | container
@@ -55,9 +55,9 @@ And thus we arrive at the concept of an atomic unit of execution being the basis
 
 	Statement: the smallest unit of code execution in a language
 
-Of course, this immediately is language dependent: a Java __Statement__ will (with intuitive obviousness) not be the same as an Assembly __Statement__; but neither will it be the same as a Ruby __Statement__, or even a C# one (even though the 2 languages are closest to each other in this list). Already, it is thus "inferior" to SLOC. However, it is appealing aesthetically: as programmers we think in packets of logic, not lines of text; so to measure what we build in those terms seems more appropriate.
+Of course, this immediately is language dependent: a Java __Statement__ will (with intuitive obviousness) not be the same as an Assembly __Statement__; but neither will it be the same as a Ruby __Statement__, or even a C# one (even though the 2 languages are closest to each other in this list). Already, it is thus "inferior" to SLOC. However, it is appealing aesthetically: as programmers we think in chunks of logic, not lines of text; so to measure what we build in those terms seems more appropriate.
 
-But what, actually, *IS* a __Statement__? The SSI classification of computational operations doesnt say what the operation actually is; it merely identifies two specific ones as being primoridial - the `IF` and the `LOOP`; and leaves out the actual definition of what each step actually is or does. So not much help there.
+But what, actually, *IS* a __Statement__? The SSI classification of computational operations doesnt say what the operation actually is; it merely identifies two specific ones as being primoridial - the `IF` and the `LOOP`; and leaves out the actual definition of what each step (other than these) actually is or does. So not much help there.
 
 Let's see if an example helps. Here's the standard Hello World in Java:
 
@@ -69,7 +69,7 @@ Let's see if an example helps. Here's the standard Hello World in Java:
 		}
 		// SLOC: 5, Size: ?
 
-Quite a few questions arise (which are equally applicable to other similar languages, by the way, so this is not a Java rant):
+Quite a few questions arise (which are equally applicable to other similar languages, by the way, so this is not a Java-specific discussion; its merely used as an example):
 
 1. Is line 1 a single __Statement__, or does each access of a package/class variable constitute an atomic unit of code execution? 
 2. Similarly, is a function call a single __Statement__, or is it actually an alias for a collection of statements - a compound statement, if you will?
@@ -106,7 +106,7 @@ Here's one contrasting program:
 		}
 		// SLOC: 6, Size = Size(Program 2)?
 
-Now, both these programs are admittedly contrived, but they are reflective of similar contrasts in real code where either representation would be useful [1](#ftnote1). Program 2 splits out the original line 1 into two, separating the individual steps involved; while Program 3 splits the final function call itself into two while still achieving the same end result. Obviously they're using more steps than Program 1 and therefore must have a bigger size, but in terms of defining a __Statement__ they have only served to muddy the waters. The common sense notion of a program statement being the smallest entity in code has been broken: a statement can not only be broken into smaller bits, but what it *does* can also be broken into smaller bits.
+Now, both these programs are admittedly contrived, but they are reflective of similar contrasts in real code where either representation would be useful \[[1]\](#ftnote1). Program 2 splits out the original line 1 into two, separating the individual steps involved; while Program 3 splits the final function call itself into two while still achieving the same end result. Obviously they're using more steps than Program 1 and therefore must have a bigger size, but in terms of defining a __Statement__ they have only served to muddy the waters. The common sense notion of a program statement being the smallest entity in code has been broken: a statement can not only be broken into smaller bits, but what it *does* can also be broken into smaller bits.
 
 It seems at this point, therefore, that we can take one of two stances to answer Question #1:
 
@@ -131,10 +131,10 @@ Onto Question #3.
 
 Question 3: Is a class a statement? What about functions?
 ---------------------------------------------------------
-At first sight, this question seems trivially answerable: line 1 in Program 1 is the only "working" statement, so the others shouldnt carry any weight. However, it becomes really interesting when contrasted with other languages that do not need such containers as a class and its predetermined `main` function. The same hello world in ruby (or Python), for example, would be:
+At first sight, this question seems trivially answerable: line 1 in Program 1 is the only "working" statement, so the others shouldnt have much importance. However, it becomes really interesting when contrasted with other languages that do not need such containers as a class and its predetermined `main` function. The same hello world in ruby (or Python), for example, would be:
 
 		# program 4
-		println "Hello World"	#SLOC:1, Size: ?
+		print "Hello World", "\n"	#SLOC:1, Size: ?
 
 > Note: Yes, I know that this is possible because of "Platform affordances" and that behind the scenes are some intelligent defaults. I also realize that this is not the same as Java's `System.out`. We'll deal with this "tip of the iceberg"-ness later.
 	
@@ -222,7 +222,9 @@ We'll need some worked examples to grok this better; but let's put a hold on tha
 
 As a refresher, the formula for contained code is `size(code) = size(container) + sum(size(contents))`. Let's apply this the primordials and containers of various kinds.
 
-**Applying it to `IF`**, we get:
+In coming up with numbers, however, the definition of the __Exact Statement__ above influences the thought process: can we calculate size of something by first assuming it doesnt exist and calculate the size of statement used to simulate its existence? For eg, can the size of a function container be determined by the number of __Statements__ it would take to mimic function calls without such a facility being available in the language? This thought underlies much of the exposition below.
+
+**First:`IF`**:  Can `IF` be built from other statements? It doesnt seem like it; the ability to compare values and branch based on that comparison **NEEDS** to be part of the platform for it to work in a language. So `IF` is primordial; and applying the formula, we get:
 
 		size(IF block) 	= size(IF) + sum(size(contents))
 
@@ -230,14 +232,29 @@ As a refresher, the formula for contained code is `size(code) = size(container) 
 
 		size(IF contents) = sum(size(each path))
 
-**Next up: `LOOP`**. This is the most straight-forward of the containers. Its intrinsic size is unit (because its primordial) and the size of its contents are summed up. Or in formulas:
+**Next up: `LOOP`**. Again, it doesnt seem like something that can be replaced. Sure, you can unroll loops if you know the number of times you're looping, but in general you dont. So this seems like a safe bet as a primordial. Applying the forumula to the `LOOP` turns out to be most straight-forward of all the containers. Its intrinsic size is unit (because it is primordial) and the size of its contents are summed up. Or in formulas:
 
 		size(LOOP) = 1
 		size(LOOP contents) = sum(size(statements in LOOP))
 		
+**Next:Functions/Procs/Modules/Programs**: Containers exist for a number of reasons: to encapsulate logic, to provide namespaces, to denote process boundaries. Its very possible to visualize the mechanism that is required to keep up the facade of containment because there were machines in the not-too-distant past that didnt have such features. However, the exact way by which the simulation is achieved will certainlny differ from one language to another. Therefore, we're again faced with choices: Do we simplify and treat all containers the same? Do we consider them different, but take a guess as to their sizes? Or is there a "one true" way of universally measuring size of a container?
+If such a way exists, it certainly entails a journey down the aforementioned rabbit hole, so we will talk no more about it here. Instead, we will blindly march onwards with our shortcuts and see where they take us. Our options are:
+
+* All containers are Unit sized
+* All containers have non-trivial size, but that's about all we can say
+* All containers have a constant size
+* One container can be considered the unit container and all others sized in relation to it.
+
+Or in forumulas:
+
+		size_unit(any container) = 1
+		size_nonzero(any container) = C //det by practicioners.
+		
+
 TODO: WORK OUT SIZE OF PGMS
 TODO: RABBIT HOLE
 TODO: UNITS
+TODO: CODE AS A STRUCTURE.
 
 Footnotes
 ---------
