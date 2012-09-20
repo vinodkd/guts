@@ -3,10 +3,12 @@ GUTS Chapter 1: Code Size
 
 ### Outline
 
-current notions of code size - the statement - its size - principle for counting larger bits of code - thus size of a seq - then selection - then iteration - then routine - examples -  - then tree of routines - then graph of routines -  - therefore functions - then procs - then apps -  - examples -  - concept of base - counting size of a multi-language app - example/comparison of some such apps
+current notions of code size - the statement - its size - principle for counting larger bits of code - thus size of a seq - then selection - then iteration - then routine - examples -  then tree of routines - then graph of routines -  therefore functions - then procs - then apps -  examples -  concept of base - counting size of a multi-language app - example/comparison of some such apps
 
 Current notions of code size
 ----------------------------
+TODO: This section is overly myopic in its coverage of existing systems of software metrics. Fix that
+
 **Source lines of code(SLOC)** is currently the most popular way of measuring the size of code. The pros/cons of using such a unit of measure are:
 
 Pros:
@@ -28,9 +30,9 @@ Some other ways of describing code size are:
 * Structure 101's fatness metric.
 * Alan Kay's [Empire state building made of A4 sheets of code] (add ref here)
 
-Obviously, we're a little aways from an actual measure of software size. So let's try to build a natural one.
+Obviously, we're a little aways from an actual measure of software size. So let's try to build ....
 
-Statements: the smallest units of code
+A natural way of measuring code size
 --------------------------------------
 All of programming has [famously been depicted](add ref here) as being made of 3 basic operations:
 
@@ -40,16 +42,16 @@ All of programming has [famously been depicted](add ref here) as being made of 3
 
 Assuming we know the "size" of each such operation, the size of the program(s) that contain these operations can be computed as an accumulation of their individual sizes. Thus,
 
-	size(simple program or subroutine)		= sum(size(statement)) for all statements in the program
-	size(program with subroutines + main)	= size(main) + sum(size(subroutine)) for all subroutines in program
-	size(app with multiple programs)	= sum(size(program)) for all programs in app
+	size(simple program or subroutine)      = sum(size(statement)) for all statements in the program
+	size(program with subroutines + main)   = size(main) + sum(size(subroutine)) for all subroutines in program
+	size(app with multiple programs)        = sum(size(program)) for all programs in app
 
 ... Or more generally
 
-	size(code) 				= sum(size(contents)) for all contents in the container
+	size(code)                              = sum(size(contents)) for all contents in the container
 	where
-		container	= routine | program | app | ...
-		contents	= statements | container
+		container       = routine | program | app | ...
+		contents        = statements | container
 
 And thus we arrive at the concept of an atomic unit of execution being the basis of measurement. It has been variously called operation, step and statement above; so let's standardize on __Statement__.
 
@@ -237,7 +239,7 @@ In coming up with numbers, however, the definition of the __Exact Statement__ ab
 		size(LOOP) = 1
 		size(LOOP contents) = sum(size(statements in LOOP))
 		
-**Next:Functions/Procs/Modules/Programs**: Containers exist for a number of reasons: to encapsulate logic, to provide namespaces, to denote process boundaries. Its very possible to visualize the mechanism that is required to keep up the facade of containment because there were machines in the not-too-distant past that didnt have such features. However, the exact way by which the simulation is achieved will certainlny differ from one language to another. Therefore, we're again faced with choices: Do we simplify and treat all containers the same? Do we consider them different, but take a guess as to their sizes? Or is there a "one true" way of universally measuring size of a container?
+**Next:Functions/Procs/Modules/Programs**: Containers exist for a number of reasons: to encapsulate logic, to provide namespaces, to denote process boundaries. Its very possible to visualize the mechanism that is required to keep up the facade of containment because there were machines in the not-too-distant past that didnt have such features. However, the exact way by which the simulation is achieved will certainlny differ from one language to another. Therefore, we're again f aced with choices: Do we simplify and treat all containers the same? Do we consider them different, but take a guess as to their sizes? Or is there a "one true" way of universally measuring size of a container?
 If such a way exists, it certainly entails a journey down the aforementioned rabbit hole, so we will talk no more about it here. Instead, we will blindly march onwards with our shortcuts and see where they take us. Our options are:
 
 * All containers are Unit sized
