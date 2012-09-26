@@ -400,6 +400,8 @@ In the formulas we've been writing till now, this would be:
 		L* is a final, asymptotic language
 		
 TODO: FINISH THIS. WAS TRYING TO PROVE THAT ASYMTOTE HAS UNIT SIZE, AND OTHERS ARE MULTIPLES.
+OVERRIDE TODO: THE IDEA THAT SIZES CAN BE ADDED UP IS FLAWED BECAUSE I'VE NOT CONSIDERED LOOPS AND IF'S YET.
+STOP AND REWRITE.
 		if s is a statement in S1,
 		size(s) = sum(Ki.size(S2i)) for i: 1 to m
 		        = K1.size(s1) + K2.size(s2) + ... + Km.size(sm)
