@@ -7,9 +7,13 @@ current notions of code size - the statement - its size - principle for counting
 
 What is size anyway?
 --------------------
-The common sense description of size would be: How big something is; or how much of it there is. When applied to code, this essentially means how much code there is; and specifically to the exclusion of ideas like how complex it is, how fit it is to its purpose and so forth.
+The common sense description of size would be: 
 
-Why would we need such a measure? Well, the most common real-world use is in estimation: either in building new software or estimating the cost of changing existing ones. Is there a larger purpose, however, one that serves the practitioner and not just the manager?  I posit that size is one of those basic properties of code that aids in _understanding_ and _knowing_ code as well. We talk routinely of small, well designed codebases that can be understood and used easily; and also of large, unwieldy codebases that are difficult to understand. Here the "large" and "small" parts point to the size of the code and  the "difficult to understand" part points its complexity; and certainly the two are related. Intuitively it seems that complexity increases with size, doesnt it? And surely, simpler code is easier to understand than complex code, so a case might be made that size is the first thing that *should* be understood about the code that might lead to other deeper ways of understanding it. 
+		Size: How big something is. 
+
+Length, area and volume are typical ways of quantifying how big something is. When applied to code, this essentially means how much code there is; and specifically to the exclusion of ideas like how complex it is, how fit it is for its intended purpose and so forth.
+
+Why do we need such a measure? Well, the most common real-world use is in estimation: either in building new software or estimating the cost of changing existing ones. Is there a larger purpose, however - one that serves the practitioner and not just the manager?  I posit that size is one of those basic properties of code that aids in _understanding_ and _knowing_ code as well. We talk routinely of small, well designed codebases that can be understood and used easily; and also of large, unwieldy codebases that are difficult to understand. Here the "small" and "large" parts point to the size of the code and  the "easy" and "difficult" parts point to its complexity; and certainly the two are related. A case might therefore be made that size is the first thing that *should* be understood about the code that might lead to other deeper ways of understanding it.
 
 Current notions of code size
 ----------------------------
@@ -56,7 +60,7 @@ Obviously, neither approach seems comprehensive nor feels right. Wouldn't it be 
 * Was language agnostic,
 * Was indeed measurable,
 * Was extensible to define other properties of code with,
-* And yet easy for humans to understand and use to understand a lot of information in one go?
+* And yet was easy for humans to understand and use to understand a lot of information in one go?
 
 That's what I'd call a natural measure of software size. The rest of this chapter is an attempt to build one.
 
@@ -72,9 +76,176 @@ Let's start with the simplest notion of code. All of programming has [famously][
 [spt]: http://en.wikipedia.org/wiki/Structured_program_theorem
 [vNMArch]: http://en.wikipedia.org/wiki/Von_Neumann_architecture
 
-Assuming we know the "size" of each such operation, the size of the program(s) that contain these operations can be computed as an accumulation of their individual sizes. Thus,
+What can we say about a program that has some collection of these 3 operations? Well, assuming we know the "size" of each such operation, the size of the program(s) that contain these operations can be computed as an accumulation of their individual sizes. Thus,
 
-		size(simple program or subroutine)      = sum(size(statement)) for all statements in the program or subroutine
+		size(program)      = sum(size(statement)) for all statements in the program    --(1)
+		
+Let's try this out on the 3 operations, starting with...
+
+### Sequence
+
+Formula (1) certainly seems appropriate for a simple _Sequential_ programs like "Print 5 superhero names" for example. Depicted here in pseudo-code:
+		// program 1
+		print "Superman"
+		print "Batman"
+		print "Green Lantern"
+		print "Green Arrow"
+		print "Aquaman"
+		// SLOC: 5
+
+Assuming the size of the `print` statement was 1 unit, and using (1):
+	
+		size(program1) = sum(size(5 print statements))
+		               = 1 + 1 + 1 + 1 + 1
+		               = 5*
+		                 (the * is to remind us that size of print being 1 was an assumption)
+		               
+... is 5 units. This is sort of similar to counting lines of code and fits our common sense notion that the code is "5 units long" or "5 units tall".
+
+Would that be long or tall? Here's where a little physical analogy might help. 
+
+![Kid builds a lego tower](lego-tower.jpg "This is your Code")
+![Kids' lego tower falls](lego-tower-falling.jpg "This is your Code crashing")
+
+We talk all the time about "building" software and code building has long been equated to piling Lego blocks on top of each other. And when heavy code breaks it crashes very similarly to how a heavy lego structure does. So let's equate size to height. One break from the normal way of using Legos, though: code legos are indeed built one block at a time, but by sticking each block __under__ the one that's already in place, not on top. That way, program 1 gets built in the order we read it, not from the last statement upwards.
+
+But that was just a _Sequence_. Let's try adding in some ...
+
+### Selection
+
+... by writing a simple program to check if 5 is odd or even. Again, in pseudo code:
+
+		// program 2
+		rem = 5 % 2
+		if rem == 1 then
+			print "5 is odd"
+		else
+			print "5 is even"
+		endif
+		// SLOC: 6
+
+This program is not just tall, it is wide too. Until the `if` is encountered, things are linear, but at that point we could go one of two ways. This can be pictured as as a "left+right" pair or a "down+side" pair. Either way, a second dimension has been added. An `if`, therefore, has not just height but width as well. Since this particular one has two options, its width is 2 units. What about its height? It has to be the height of the code within each of its branches. This particular example of `if` has both branches of height 1, but others may not. Since we're trying to get a hang on the contribution to the overall size that an `if` has, it seems to make sense that we take the height of the tallest branch as the height of the `if` itself. Thus:
+
+		size(IF) = max(height of branches) x # branches     --(2)
+
+How do we calculate the size of program 2? Well, first off, we've to represent all sizes as "areas" now because an `if` is present. So assuming again that the `print` statement was 1 unit tall we should add that it is 1 unit wide, making its size 1 sq. unit. Now the size of program 2 using (1) & (2) is:
+
+		size(program 2) = sum(size(statements))
+		                = size(rem assignment) + size(if)
+		                = 1* + 2 x 1*    assuming the assignment statement is also of size 1.
+		                = 3* sq units
+
+For completeness, lets convert Program 1's size to "area" units as well:
+
+		size(program 1) = 5* sq units
+
+Does our lego block analogy still hold up, though? The `if` requires data to be used, a decision to be made and one of (potentially) many alternate routes to be taken next. This is probably best visualized as something "flowing" from one statement (ie block) to another. Maybe pipes are a better analogy therefore?
+
+![Code as pipes](pipes.jpg "This is your Code's plumbing")
+![Code as pipes](pipes2.jpg "This is your Code's plumbing")
+
+Sorry I couldnt find better pictures, but hope these convey some part of the idea. Every time you see a T-junction or a Cross, think `if` statement; otherwise the flow of liquid represents the Sequence.
+
+Unsatisfying as the pictures are, more so is the analogy. While data does flow from one statement to another, it doesnt flow like a liquid does. Data in a digital computer is discrete and better described as chunked than fluid. Is there a better physical analog? What we need is something that is built using standard parts (like legos) and allows things to flow through them (like pipes) but only allows solid things. Without further ado, I present:
+
+![Code as a marble run, data as marbles](marble-run.jpg "Code = pipes, data = marbles")
+![Marble run pieces](marble-run-pieces.jpg "Note that one piece - the purple one - is a simple logic gate ")
+
+... the marble run! It does everything we would like our physical analog of code to do and then some. It has the standard blocks that link together obviously; but it also has "source" and "sink" pieces, pieces that change direction (not all of which are logically important) and even pieces that have some built-in logic. If you look closely you'll find that one of the purple pieces is a simple flip-flop (aka `IF`)- it sends successive marbles down alternate paths.
+
+So its seems that the marble run is indeed a good choice as our physical analog for code. We will use it only as a mental model in our theory forming activity, but there __are__ [real world marble runs that have been created to do actual computations](http://www.hackerspace.lu/2012/01/21/marble-adder/); so its certainly an apt choice.
+
+Ok, enough fun.Let's try the final operation ...
+
+### _Iteration_
+
+... by writing a simple loop to print 1 to 5. Again in pseudo code:
+
+		// program 3
+		loop i = 1 to 5
+		  print i
+		end loop
+		// SLOC : 3
+
+Written in this form, it seems like the `for` doesnt have width. Indeed, program 3 can be rewritten as:
+
+		// program 3A
+		print 1
+		print 2
+		print 3
+		print 4
+		print 5
+		// SLOC : 5, Size: 5* sq units
+		
+Such "unfolding" of loops is not uncommon; and viewed this way we could conclude that a loop's primary size is its height, which is equal to the number of statements within the loop times the number of times those statements are looped around. Not all loops can b e unfolded thus, however, and a simple example that uses a `do-while` loop or an infinite loop will attest. However, there's an alternate way to express a loop, presented below. This will work for any kind of loop including ones whose number of iterations cannot be determined up front. 
+
+		// program 3B
+		      i=1
+		 top: if i <= 5 
+		          print i
+		          i = i + 1
+		          goto top
+		      else
+		         goto end
+		      end if
+		end:
+		// SLOC : 9, Size : ?
+
+Now the true nature of _Iteration_ becomes obvious: `Iteration = goto + if`. The `if` sets up the conditions for iteration and the `goto` executes it. The `goto` is therefore the key ingredient in getting iteration to work. Its obvious that the `goto` adds to the complexity, but what is its impact on size? 
+
+A `goto` merely connects one piece of code to the other. In one sense, each statement can be considered as hard-wired to _go to_ the next one; a `goto` statement is merely an explicit expression of that transfer of execution to another location than the next statement. If we were to model the machine executing program 3B (or any general computer, for that matter) it can be thought of executing this meta-program:
+
+		// meta program 1
+		1: read a specific location for the address of the next instruction to execute
+		2: execute it
+		3: if step 2 didnt set the next instruction to execute, autoincrement to next address in the same location
+		4: goto 1
+
+If the location in step 1 points to a `goto` statement, the machine would update that location in step 2 and loop back to step 1 and continue execution at wherever the `goto` sent it to. No new statements are added. However, a new "route" is added from one point in the code to another. In this sense the `goto` is like an `if` without a second branch of execution. Since no new blocks are added, it has unit height, but since a new (unconditional) branch is added, it has a width of 1, for a size of 1 sq unit. In formulas, now:
+
+		size(goto) = 1 sq unit   --(3)
+
+To use the marble run analogy, a `goto` block would connect the block that came before it with another block not directly below it. From this POV, all those pieces in the right of the picture of marble run pieces are good candiates. If we could imagine one of them looping back so as to connect with a block somewhere above it, we'd have an actual implementation of a `goto` as well. No new block other than the one providing the goto are added, so there's a net addition of 1. This, of course, is where the analogy breaks down a bit. In the real world, the goto block *does* need to take up space on the other end as well. Since that is not required in code, we will just imagine that the receiving block has infinite capacity to recieve goto connectors :)
+
+Back to program 3, however; for we were trying to determine the size of the loop. In general, the loop in program 3B could be written in template form as:
+
+		// program 3B
+		      <<initialize loop>>
+		 top: if <<loop condition>> 
+		          <<loop body>>
+		          <<increment loop>>
+		          goto top
+		      else
+		         goto end
+		      end if
+		end:
+
+Thus
+		size(loop)                = size(init loop) + size(if)
+		Now, let  size(init loop) = I, some nonzero size depending on the type and number of statements
+		From (2), size(IF)        = max(height of branches) x # branches
+			                  = max(if part, else part) x 2
+		where     size(if part)   = size(loop body) + size(increment loop) + size(goto top)
+			                  =       b         +       p              +    1
+			                    where b is a variable loop body size
+			                    and   p is some nonzero size for the increment step
+		and       size(else part) = 1 because this else always has only a `goto`
+		Thus,
+		size(loop)      = I + max(b + p + 1,1) x 2
+		                = I + (b + p + 1) x 2
+		size(loop)      = I + 2(b + p)+ 2        --(4)
+
+		
+WAS SORTING THIS OUT.
+
+SSI glosses over:
+* Diff types of statements
+* nesting and containment
+* unconditional gotos
+
+old text
+=========
+
 		size(program with subroutines)          = sum(size(subroutine)) for all subroutines in program
 		size(app with multiple programs)        = sum(size(program)) for all programs in app
 
@@ -82,14 +253,26 @@ Assuming we know the "size" of each such operation, the size of the program(s) t
 
 		size(code in container)                 = sum(size(contents)) for all contents in the container
 		where
-			container       = routine | program | app | ...
-			contents        = statements | container
+			container       = routine | class | package | module | program | app | ...
+			routine         = function | procedure | method
+			contents        = statement | container
 
-The smallest unit above is the __Statement__; and therefore, naturally, it should be the basis of measurement.
+Two points to note:
 
-		Statement: the smallest unit of code execution in a language
+* The `| app | ...` in `container`'s definition seems to imply that these "formulas" should hold for things larger than a single program and that is certainly something to aspire for; but for now we will restrict ourselves to the level of a single program so that we can concentrate on defining size in a *single language*.  
+* I've not expanded the definition below the idea of a statement. A statement could definitely be broken down into a command and some arguments without much loss of generality. However, doing so would bring us to a level below the most basic level of execution. A statement is, in general, the smallest unit of code that can be independently executed in a language; and therefore seems like the natural choice as the basis of size measurement. It also has the advantage of being a bit more concrete than the nebulous SSI operations mentioned earlier because it is based on the structure of the language being used.
 
-Of course, this immediately is language dependent: a Java __Statement__ will (with intuitive obviousness) not be the same as an Assembly __Statement__; but neither will it be the same as a Ruby __Statement__, or even a C# one (even though the 2 languages are closest to each other in this list). Already, it is thus "inferior" to SLOC. However, it is appealing aesthetically: as programmers we think in chunks of logic, not lines of text; so to measure what we build in those terms seems more appropriate.
+Thus:
+
+> Axiom 1: The smallest unit of independent code execution in a language is called a Statement; and it is the basis of size measurement because of its atomicity.
+
+Of course, the disadvantage in making a concrete choice of structure-driven unit of size is that it is language dependent: a Java __Statement__ will (with intuitive obviousness) not be the same as an Assembly __Statement__; but neither will it be the same as a Ruby __Statement__, or even a C# one (even though the 2 languages are closest to each other in this list). Already, it is thus "inferior" to some existing ways of measurement, eg, SLOC. However, it is appealing aesthetically: as programmers we think in chunks of logic, not lines of text; so to measure what we build in those terms seems more appropriate.
+
+Note that I've explicitly used the term "structure of the language" and not the much more obvious term "syntax of the language". The reason is that I intend the statement (and other higher structures in code) to be as logically agnostic as possible while retaining the specific qualities of the language that it is written in. For now we can imagine size being measured from the AST of a parsed program instead of the source itself. All ASTs of statements have the command + arguments structure but the specifics are dependent on the language itself.
+
+Of course, all of this presupposes the existence of a language, so let's formalize that notion:
+
+> Axiom 0: All code is written in languages. A language has a finite set of statements that can be used to write code in it with.
 
 But what, actually, *IS* a __Statement__? The SSI classification of computational operations doesnt say what the operation actually is; it merely identifies two specific ones as being primoridial - the `IF` and the `LOOP`; and leaves out the actual definition of what each step (other than these) actually is or does. So not much help there.
 
@@ -103,7 +286,7 @@ Let's see if an example helps. For specificity, I'll use Java, but it is used as
 		}
 		// SLOC: 5, Size: ?
 
-Note that I've also list the source lines of code count for reference. 
+Note that I've also included the source lines of code count for reference. 
 
 Ok, if you're not a Java person, you're going to complain that I chose a bad language to build an example on; and I'd almost agree. There's only one actual line of code in there - the one that prints the message; everything else is ceremony. However, it does help expose the fact that code written in any language eventually has some superstructure; and in that sense Java's requirement to expose the structure is much more useful for our size-measuring purposes than other languages that might "hide" such structure "under the carpet".
 
