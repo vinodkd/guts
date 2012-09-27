@@ -221,6 +221,7 @@ Back to program 3, however; for we were trying to determine the size of the loop
 		end:
 
 Thus
+
 		size(loop)                = size(init loop) + size(if)
 		Now, let  size(init loop) = I, some nonzero size depending on the type and number of statements
 		From (2), size(IF)        = max(height of branches) x # branches
@@ -235,7 +236,8 @@ Thus
 		                = I + (b + p + 1) x 2
 		size(loop)      = I + 2(b + p)+ 2        --(4)
 
-		
+
+
 WAS SORTING THIS OUT.
 
 SSI glosses over:
