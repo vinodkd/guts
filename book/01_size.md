@@ -127,15 +127,57 @@ But that was just a _Sequence_. Let's try adding in some ...
 		endif
 		// SLOC: 6
 
-This program is not just tall, it is wide too. Until the `if` is encountered, things are linear, but at that point we could go one of two ways. This can be pictured as as a "left+right" pair or a "down+side" pair. Either way, a second dimension has been added. An `if`, therefore, has not just height but width as well. Since this particular one has two options, its width is 2 units. What about its height? It has to be the height of the code within each of its branches. This particular example of `if` has both branches of height 1, but others may not. Since we're trying to get a hang on the contribution to the overall size that an `if` has, it seems to make sense that we take the height of the tallest branch as the height of the `if` itself. Thus:
+This program is not just tall, it is wide too. Until the `if` is encountered, things are linear, but at that point we could go one of two ways. This can be pictured as as a "left+right" pair or a "down+side" pair. Either way, a second dimension has been added. An `if`, therefore, has not just height but width as well. Let's see if rewriting program 2 will provide better insight into this dimension:
 
-		size(IF) = max(height of branches) x # branches     --(2)
+		// program 2A
+				rem = 5 % 2
+				if_goto rem == 1 , even 	// if_goto is a special form of if that only can either goto a location or fall through to the next line.
+				print "5 is odd"
+				goto end
+		even:	print "5 is even"
+		end:	stop
+		// SLOC: 6
 
-How do we calculate the size of program 2? Well, first off, we've to represent all sizes as "areas" now because an `if` is present. So assuming again that the `print` operation was 1 unit tall we should add that it is 1 unit wide, making its size 1 sq. unit. Now the size of program 2 using (1) & (2) is:
+
+Now the true nature of the _Selection_ becomes obvious: `Selection = comparison + goto`. The goto certainly addes to the complexity of the code, but what is its impact on the size? A goto is a route from one "block" to another, a connector. Program 2A has 2 obvious kinds of gotos and one that's not that obvious:
+
+1. The conditional goto (which I've called if_goto here) that is tied to a comparison,
+2. The unconditional goto that just jumps to another location
+3. The implicit goto between operations.
+
+The conditional goto alters the flow of execution and skips ahead to another location, adding the "width" to the program; the fact that a check is made before the branch is not important to the size. Thus the new size that it contributes is the size of the body of code that executes when that branch is taken. That is,
+
+		size(cond if) 	= Sum(size of individual branches) --- (2A)
+		size(branch)	= 1 (width) x h (height of branch) 
+
+Like the conditional goto, the unconditional goto alters the flow of execution, but gives no guarantee that the code being branched to will be bound to a measurable height at all. Under ideal circumstances, it should come back to the main line like program 2A above, but it could also become "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it. So while the unconditional goto adds to the size, its not easy to quantify its impact. For now, let's state that each unconditional goto adds some unknown size G to the software.  That is,
+	
+		size(uncond if) = G               					---(2B)
+
+Finally, the implicit gotos: On the "main line" of code, implicit gotos guide the execution of code by stringing successive operations together. In fact the machine executing these programs (or any general computer, for that matter)  can be thought of executing this meta-program:
+
+		// meta program 1
+		1: read a specific location for the address of the next instruction to execute
+		2: execute it
+		3: if step 2 didnt set the next instruction to execute, autoincrement to next address in the same location
+		4: goto 1
+ 
+So the gotos exist, even if we do not depict them in code at the level of normal discourse. However, the clear distinction between these gotos and the others is that they connect one operation to another "by default" i.e, in the most obvious way that they are supposed to be connected. As such, its safe to posit that they do not contribute to the size. That is,
+
+		size(implicit goto) = 0 		     				-- (2C)
+
+
+Now lets apply rules 2A-C to the `if` in program 2. First off, we've to represent all sizes as "areas" now because an `if` is present. So assuming again that the `print` operation was 1 unit tall we should add that it is 1 unit wide, its area would be:
+
+		size(if) = size(cond if) = sum(size of individual branches)
+		         = 1* sq units + 1* sq units
+		         = 2* sq units
+
+ Now the size of program 2 using (1) & (2) is:
 
 		size(program 2) = sum(size(operations))
 		                = size(assignment operation) + size(if)
-		                = 1* + 2 x 1*    assuming the assignment operation is also of size 1.
+		                = 1* + 2*    assuming the assignment operation is also of size 1.
 		                = 3* sq units
 
 For completeness, lets convert Program 1's size to "area" units as well:
