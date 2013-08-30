@@ -92,16 +92,17 @@ Formula (1) certainly seems appropriate for simple _Sequential_ programs like "P
 		print "Green Lantern"
 		print "Green Arrow"
 		print "Aquaman"
-		// SLOC: 5
+		stop
+		// SLOC: 6
 
-Assuming the size of the `print` operation was 1 unit, and using (1):
+Assuming the size of the `print` and `stop` operations were 1 unit, and using (1):
 	
-		size(program1) = sum(size(5 print operations))
-		               = 1* + 1* + 1* + 1* + 1*
-		               = 5*
-		                 (the * is to remind us that size of print being 1 was an assumption)
+		size(program1) = sum(size(5 print operations & 1 stop operation))
+		               = 1* + 1* + 1* + 1* + 1* + 1*
+		               = 6*
+		                 (the * is to remind us that sizes being 1 is an assumption)
 		               
-... is 5* units. This is sort of similar to counting lines of code and fits our common sense notion that the code is "5 units long" or "5 units tall".
+... is 6* units. This is sort of similar to counting lines of code and fits our common sense notion that the code is "6 units long" or "6 units tall".
 
 Would that be long or tall? Here's where a little physical analogy might help. 
 
@@ -125,7 +126,8 @@ But that was just a _Sequence_. Let's try adding in some ...
 		else
 			print "5 is even"
 		endif
-		// SLOC: 6
+		stop
+		// SLOC: 7
 
 This program is not just tall, it is wide too. Until the `if` is encountered, things are linear, but at that point we could go one of two ways. This can be pictured as as a "left+right" pair or a "down+side" pair. Either way, a second dimension has been added. An `if`, therefore, has not just height but width as well. Let's see if rewriting program 2 will provide better insight into this dimension:
 
@@ -205,9 +207,7 @@ For comparison, the size of program 2A would be:
 		                 = size(assignment operation) + size(if) + size(print) + size(stop)
 		                 = 1* + size(cond if without goto) + G + 1* + 1*
 		                 = 3* + 1* sq + G
-		                 = 4* + G
-
-[TODO: ADD STOP OP TO EVERY PROGRAM FOR CONSISTENCY]
+		                 = 4* + G sq units
 
 For completeness, lets convert Program 1's size to "area" units as well:
 
@@ -241,7 +241,8 @@ Ok, enough fun.Let's try the final operation ...
 		loop i = 1 to 5
 		  print i
 		end loop
-		// SLOC : 3
+		stop
+		// SLOC : 4
 
 Written in this form, it seems like the `for` doesnt have width. Indeed, program 3 can be rewritten as:
 
@@ -251,7 +252,8 @@ Written in this form, it seems like the `for` doesnt have width. Indeed, program
 		print 3
 		print 4
 		print 5
-		// SLOC : 5, Size: 5* sq units
+		stop
+		// SLOC : 6, Size: 6* sq units
 		
 Such "unfolding" of loops is not uncommon; and viewed this way we could conclude that a loop's primary size is its height, which is equal to the number of operations within the loop times the number of times those operations are looped around. Not all loops can be unfolded thus, however, as a simple example that uses a `do-while` loop or an infinite loop will attest. However, there's an alternate way to express a loop, presented below. This will work for any kind of loop including ones whose number of iterations cannot be determined up-front. 
 
@@ -264,7 +266,7 @@ Such "unfolding" of loops is not uncommon; and viewed this way we could conclude
 		      else
 		         goto end
 		      end if
-		end:
+		end: stop
 		// SLOC : 9, Size : ?
 
 Now the true nature of _Iteration_ becomes obvious: `Iteration = if + goto`. The `if` sets up the conditions for iteration and the `goto` executes it. The `goto` is therefore the key ingredient in getting iteration to work. This is clearly NOT an unconditional goto, but it is also not the same as the `if_goto` from above. This is another variant where there are only 2 clear destinations to go to: the top of the loop and immediately outside it, i.e., to exit it.
@@ -280,7 +282,7 @@ Back to program 3, however; for we were trying to determine the size of the loop
 		      else
 		         goto end
 		      end if
-		end:
+		end:  stop
 
 Thus
 
