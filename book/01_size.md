@@ -142,17 +142,17 @@ This program is not just tall, it is wide too. Until the `if` is encountered, th
 		// SLOC: 6
 
 
-Now the true nature of the _Selection_ becomes obvious: `Selection = comparison + goto`. The goto certainly addes to the complexity of the code, but what is its impact on the size? A goto is a route from one "block" to another, a connector. Program 2A has 2 obvious kinds of gotos and one that's not that obvious:
+Now the true nature of the _Selection_ becomes obvious: `Selection = comparison + goto`. The goto certainly adds to the complexity of the code, but what is its impact on the size? A goto is a route from one "block" to another, a connector. Program 2A has 2 obvious kinds of gotos and one that's not that obvious:
 
-1. The conditional goto (which I've called if_goto here) that is tied to a comparison,
-2. The unconditional goto that just jumps to another location
+1. The conditional goto (which I've called if_goto here) that is tied to a comparison;
+2. The unconditional goto that just jumps to another location; and
 3. The implicit goto between operations.
 
 The conditional goto alters the flow of execution and skips ahead to another location, adding the "width" to the program; the fact that a check is made before the branch is not important to the size. Thus the new size that it contributes is the size of the body of code that executes when that branch is taken. That is,
 
 		size(cond goto) = sum(size of individual branches)                                    --(2A)
 
-Like the conditional goto, the unconditional goto alters the flow of execution, but gives no guarantee that the code being branched to will be bound to a measurable height at all. Under ideal circumstances, it should come back to the main line like program 2A above, but it could also become "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it. So while the unconditional goto adds to the size, its not easy to quantify its impact. For now, let's state that each unconditional goto adds some unknown size G to the software.  That is,
+Like the conditional goto, the unconditional goto alters the flow of execution, but it gives no guarantee that the code being branched to will be bound to a measurable height at all. Under ideal circumstances, it should come back to the main line like program 2A above, but it could also become "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it. So while the unconditional goto adds to the size, its not easy to quantify its impact. For now, let's state that each unconditional goto adds some unknown size G to the software.  That is,
 	
 		size(uncond goto) = G                                                                 --(2B)
 		where           G = 1 unit height x G1 width  or
@@ -168,7 +168,7 @@ Finally, the implicit gotos: On the "main line" of code, implicit gotos guide th
 		3: if step 2 didnt set the next instruction to execute, autoincrement to next address in the same location
 		4: goto 1
  
-So the gotos exist, even if we do not depict them in code at the level of normal discourse. However, the clear distinction between these gotos and the others is that they connect one operation to another "by default" i.e, in the most obvious way that they are supposed to be connected. As such, its safe to posit that they do not contribute to the size. That is,
+So the gotos exist, even if we do not depict them in code at the level of normal discourse. The difference between these gotos and the others is that they connect one operation to another "by default" i.e, in the most obvious way that they are supposed to be connected. As such, its safe to posit that they do not contribute to the size. That is,
 
 		size(implicit goto) = 0                                                               --(2C)
 
@@ -184,7 +184,7 @@ Written in the form of program 2A, however, it has one conditional goto with a c
 		size(program 2A's if) = size(cond goto)
 		                      = size(default branch) + size(else branch)
 		                      = size(other statements) + size(uncond goto) + size(else branch)
-		                      = size(default branch without goto) + size(else branch)
+		                      = [ size(default branch without goto) + size(else branch) ]
 		                        + size(uncond goto)
 		                      = size(cond if without goto) + G                                --(2E)
 
