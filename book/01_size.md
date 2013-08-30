@@ -132,6 +132,7 @@ This program is not just tall, it is wide too. Until the `if` is encountered, th
 		// program 2A
 				rem = 5 % 2
 				if_goto rem == 1 , even 	// if_goto is a special form of if that only can either goto a location or fall through to the next line.
+											// assembly programmers will see this automatically as the standard "JNZ/JNE" variety of opcode. 
 				print "5 is odd"
 				goto end
 		even:	print "5 is even"
@@ -147,12 +148,15 @@ Now the true nature of the _Selection_ becomes obvious: `Selection = comparison 
 
 The conditional goto alters the flow of execution and skips ahead to another location, adding the "width" to the program; the fact that a check is made before the branch is not important to the size. Thus the new size that it contributes is the size of the body of code that executes when that branch is taken. That is,
 
-		size(cond if) 	= Sum(size of individual branches) --- (2A)
-		size(branch)	= 1 (width) x h (height of branch) 
+		size(cond goto) = sum(size of individual branches)                                    --(2A)
 
 Like the conditional goto, the unconditional goto alters the flow of execution, but gives no guarantee that the code being branched to will be bound to a measurable height at all. Under ideal circumstances, it should come back to the main line like program 2A above, but it could also become "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it. So while the unconditional goto adds to the size, its not easy to quantify its impact. For now, let's state that each unconditional goto adds some unknown size G to the software.  That is,
 	
-		size(uncond if) = G               					---(2B)
+		size(uncond goto) = G                                                                 --(2B)
+		where           G = 1 unit height x G1 width  or
+		                  = 1 unit width x G2 height
+
+That is, while we could measure one or more "dimensions" of the unconditional goto, there will always be one dimension that we cannot quantify and therefore its overall size remains an unknown quantity.
 
 Finally, the implicit gotos: On the "main line" of code, implicit gotos guide the execution of code by stringing successive operations together. In fact the machine executing these programs (or any general computer, for that matter)  can be thought of executing this meta-program:
 
@@ -164,21 +168,46 @@ Finally, the implicit gotos: On the "main line" of code, implicit gotos guide th
  
 So the gotos exist, even if we do not depict them in code at the level of normal discourse. However, the clear distinction between these gotos and the others is that they connect one operation to another "by default" i.e, in the most obvious way that they are supposed to be connected. As such, its safe to posit that they do not contribute to the size. That is,
 
-		size(implicit goto) = 0 		     				-- (2C)
+		size(implicit goto) = 0                                                               --(2C)
 
 
-Now lets apply rules 2A-C to the `if` in program 2. First off, we've to represent all sizes as "areas" now because an `if` is present. So assuming again that the `print` operation was 1 unit tall we should add that it is 1 unit wide, its area would be:
+So what does this mean for the IF itself? Written in the form of program 2, its clearly has a conditional goto and its size is:
+
+		size(program 2's if)  = size(cond if)
+		                      = sum(size of individual branches), and
+		size(branch)	      = 1 (width) x h (height of branch)                              --(2D) 
+
+Written in the form of program 2A, however, it has one conditional goto with a contained unconditional goto. So its size is:
+
+		size(program 2A's if) = size(cond goto)
+		                      = size(default branch) + size(else branch)
+		                      = size(other statements) + size(uncond goto) + size(else branch)
+		                      = size(default branch without goto) + size(else branch)
+		                        + size(uncond goto)
+		                      = size(cond if without goto) + G                                --(2E)
+
+Now lets apply rules 2A-E to the `if` in program 2. First off, we've to represent all sizes as "areas" now because an `if` is present. So assuming again that the `print` operation was 1 unit tall we should add that it is 1 unit wide, its area would be:
 
 		size(if) = size(cond if) = sum(size of individual branches)
 		         = 1* sq units + 1* sq units
 		         = 2* sq units
 
- Now the size of program 2 using (1) & (2) is:
+ Now the size of program 2 using (1) & (2A-E) is:
 
 		size(program 2) = sum(size(operations))
 		                = size(assignment operation) + size(if)
 		                = 1* + 2*    assuming the assignment operation is also of size 1.
 		                = 3* sq units
+
+For comparison, the size of program 2A would be:
+
+		size(program 2A) = sum(size(operations))
+		                 = size(assignment operation) + size(if) + size(print) + size(stop)
+		                 = 1* + size(cond if without goto) + G + 1* + 1*
+		                 = 3* + 1* sq + G
+		                 = 4* + G
+
+[TODO: ADD STOP OP TO EVERY PROGRAM FOR CONSISTENCY]
 
 For completeness, lets convert Program 1's size to "area" units as well:
 
@@ -238,21 +267,7 @@ Such "unfolding" of loops is not uncommon; and viewed this way we could conclude
 		end:
 		// SLOC : 9, Size : ?
 
-Now the true nature of _Iteration_ becomes obvious: `Iteration = if + goto`. The `if` sets up the conditions for iteration and the `goto` executes it. The `goto` is therefore the key ingredient in getting iteration to work. Its obvious that the `goto` adds to the complexity, but what is its impact on size? 
-
-A `goto` merely connects one piece of code to the other. In one sense, each operation can be considered as hard-wired to _go to_ the next one; a `goto` operation is merely an explicit expression of that transfer of execution to another location than the next operation. If we were to model the machine executing program 3B (or any general computer, for that matter) it can be thought of executing this meta-program:
-
-		// meta program 1
-		1: read a specific location for the address of the next instruction to execute
-		2: execute it
-		3: if step 2 didnt set the next instruction to execute, autoincrement to next address in the same location
-		4: goto 1
-
-If the location in step 1 points to a `goto` operation, the machine would update that location in step 2 and loop back to step 1 and continue execution at wherever the `goto` sent it to. No new operations are added. However, a new "route" is added from one point in the code to another. In this sense the `goto` is like an `if` without a second branch of execution. Since no new blocks are added (other than its own, that is), it has unit height, but since a new (unconditional) branch is added, it has a width of 1, for a size of 1 sq unit. In formulas, now:
-
-		size(goto) = 1 sq unit   --(3)
-
-To use the marble run analogy, a `goto` block would connect the block that came before it with another block not directly below it. From this POV, all those pieces in the right of the picture of marble run pieces are good candiates. If we could imagine one of them looping back so as to connect with a block somewhere above it, we'd have an actual implementation of a `goto` as well. No new block other than the one providing the goto are added, so there's a net addition of 1. This, of course, is where the analogy breaks down a bit. In the real world, the goto block *does* need to take up space on the other end as well. Since that is not required in code, we will just imagine that the receiving block has infinite capacity to recieve goto connectors :)
+Now the true nature of _Iteration_ becomes obvious: `Iteration = if + goto`. The `if` sets up the conditions for iteration and the `goto` executes it. The `goto` is therefore the key ingredient in getting iteration to work. This is clearly NOT an unconditional goto, but it is also not the same as the `if_goto` from above. This is another variant where there are only 2 clear destinations to go to: the top of the loop and immediately outside it, i.e., to exit it.
 
 Back to program 3, however; for we were trying to determine the size of the loop. In general, the loop in program 3B could be written in template form as:
 
@@ -271,7 +286,7 @@ Thus
 
 		size(loop)                = size(init loop) + size(if)
 		Now, let  size(init loop) = I, some nonzero size depending on the type and number of operations
-		From (2), size(IF)        = max(height of branches) x # branches
+		From (2), size(IF)        = sum(height of branches) x # branches
 		                          = max(if part, else part) x 2
 		where     size(if part)   = size(loop body) + size(increment loop) + size(goto top)
 		                          =       b         +       p              +    1
