@@ -211,7 +211,7 @@ For comparison, the size of program 2A would be:
 
 For completeness, lets convert Program 1's size to "area" units as well:
 
-		size(program 1) = 5* sq units
+		size(program 1) = 6* sq units
 
 Does our lego block analogy still hold up, though? The `if` requires data to be used, a decision to be made and one of (potentially) many alternate routes to be taken. This is probably best visualized as something "flowing" from one statement (ie block) to another, with control points to direct flow. Maybe pipes are a better analogy therefore?
 
