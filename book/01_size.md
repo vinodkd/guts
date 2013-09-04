@@ -136,7 +136,7 @@ This program is not just tall, it is wide too. Until the `if` is encountered, th
 				if_goto rem == 1 , even 	// if_goto is a special form of if that only can either goto a location or fall through to the next line.
 											// assembly programmers will see this automatically as the standard "JNZ/JNE" variety of opcode. 
 				print "5 is odd"
-				goto end
+				goto end 					// uncond goto
 		even:	print "5 is even"
 		end:	stop
 		// SLOC: 6
@@ -152,7 +152,24 @@ The conditional goto alters the flow of execution and skips ahead to another loc
 
 		size(cond goto) = sum(size of individual branches)                                    --(2A)
 
-Like the conditional goto, the unconditional goto alters the flow of execution, but it gives no guarantee that the code being branched to will be bound to a measurable height at all. Under ideal circumstances, it should come back to the main line like program 2A above, but it could also become "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it. So while the unconditional goto adds to the size, its not easy to quantify its impact. For now, let's state that each unconditional goto adds some unknown size G to the software.  That is,
+Like the conditional goto, the unconditional goto alters the flow of execution, since the branch-off is not checked by a condition, the possibility for an invalid target or that of "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it - arises. In this case, however, the unconditional goto above is well-behaved. It doesnt fly off to kingdoms unknown: it goes back to the end of the if - a very well known spot. 
+
+So its really not that a goto is unconditional that makes its size indeterminate, but that its destination is unknown. Let's call the ones with known, defined destinations like 'top of the loop' as _Bound Goto_s and the ones that are not such as _Unbound Goto_s. Revising formula 2B therefore:
+
+		size(unbound goto) = G                                                                 --(3)
+		where           G = 1 unit height x G1 width  or
+		                  = 1 unit width x G2 height
+
+... and adding a new formula for Bound gotos:
+
+		size(bound goto) = 1* width x N height already counted elsewhere
+		                 = 1* width x 1* height
+		                 = 1* sq units                                                         --(4)
+
+
+
+
+So while the unconditional goto adds to the size, its not easy to quantify its impact. For now, let's state that each unconditional goto adds some unknown size G to the software.  That is,
 	
 		size(uncond goto) = G                                                                 --(2B)
 		where           G = 1 unit height x G1 width  or
@@ -227,7 +244,7 @@ Without further ado, I present:
 ![Code as a marble run, data as marbles](marble-run.jpg "Code = pipes, data = marbles")
 ![Marble run pieces](marble-run-pieces.jpg "Note that one piece - the purple one - is a simple logic gate ")
 
-... the marble run! It does everything we would like our physical analog of code to do and then some. It has the standard blocks that link together obviously; but it also has "source" and "sink" pieces, pieces that change direction (not all of which are logically important) and even pieces that have some built-in logic. If you look closely you'll find that one of the purple pieces is a simple flip-flop (aka `IF`)- it sends successive marbles down alternate paths.
+... the marble run! It does everything we would like our physical analog of code to do and then some. It has the standard blocks that link together obviously (which is a slight difference - that the connectors are fixed to the blocks); but it also has "source" and "sink" pieces, pieces that change direction (not all of which are logically important) and even pieces that have some built-in logic. If you look closely you'll find that one of the purple pieces is a simple flip-flop (aka `IF`)- it sends successive marbles down alternate paths.
 
 So its seems that the marble run is indeed a good choice as our physical analog for code. We will use it only as a mental model in our theory forming activity, but there __are__ [real world marble runs that have been created to do actual computations](http://www.hackerspace.lu/2012/01/21/marble-adder/); so its certainly an apt choice.
 
@@ -273,32 +290,45 @@ Now the true nature of _Iteration_ becomes obvious: `Iteration = if + goto`. The
 
 Back to program 3, however; for we were trying to determine the size of the loop. In general, the loop in program 3B could be written in template form as:
 
-		// program 3B-templated
+		// program 3B-templatized
+			  <<.. steps before loop..>>
 		      <<initialize loop>>
-		 top: if <<loop condition>> 
-		          <<loop body>>
-		          <<increment loop>>
-		          goto top
-		      else
-		         goto end
-		      end if
-		end:  stop
+		 top: if_goto not <<loop condition>>, end
+	          <<loop body>>
+	          <<increment loop>>
+	          goto top
+		end:  <<.. steps after loop..>>
 
-Thus
+Notice how I've negated the loop condition to use the `if_goto` from before. This reduces the body of the if into a conditional goto, but it still has the pesky unconditional goto at the bottom, which makes it - by rules that we've laid down to date - difficult to ascribe a known size to a loop. So let's take a look at that goto again.
+
+It's certainly unconditional, but it doesnt fly off to kingdoms unknown: it goes back to the top of the loop - a very well known spot considering we've been there already (excecutionally speaking, that is). So its really not that a goto is unconditional that makes its size indeterminate, but that its destination is unknown. Let's call the ones with known, defined destinations like 'top of the loop' as _Bound Goto_s and the ones that are not such as _Unbound Goto_s. Revising formula 2B therefore:
+
+		size(unbound goto) = G                                                                 --(3)
+		where           G = 1 unit height x G1 width  or
+		                  = 1 unit width x G2 height
+
+... and adding a new formula for Bound gotos:
+
+		size(bound goto) = 1* width x N height already counted elsewhere
+		                 = 1* width x 1* height
+		                 = 1* sq units                                                         --(4)
+
+Now that we've got that tiny bit handled, lets' get back to sizing up the generic loop:
 
 		size(loop)                = size(init loop) + size(if)
 		Now, let  size(init loop) = I, some nonzero size depending on the type and number of operations
-		From (2), size(IF)        = sum(height of branches) x # branches
-		                          = max(if part, else part) x 2
-		where     size(if part)   = size(loop body) + size(increment loop) + size(goto top)
-		                          =       b         +       p              +    1
+		From (2A-E, 3 & 4), 
+					size(if)      = size(if_goto) 
+
+		where     size(if_goto)   = size(loop body) + size(increment loop) + size(bound goto top)
+		                          =       b         +       p              +    1 
 		                            where b is a variable loop body size
-		                            and   p is some nonzero size for the increment step
+		                            and   P is some variable nonzero size for the increment step
 		and       size(else part) = 1 because this else always has only a `goto`
 		Thus,
-		          size(loop)      = I + max(b + p + 1,1) x 2
-		                          = I + (b + p + 1) x 2
-		          size(loop)      = I + 2(b + p)+ 2        --(4)
+		          size(loop)      = I + b + p + 1 + 1
+		                          = I + b + p + 2
+		          size(loop)      = I + b + p + 2        --(4)
 
 
 Not a very elegant result if you ask me, but it does take all the moving parts in a loop into consideration. Lest you think that this is specific to the type of loop depicted in program 3B-templated, here's the mapping back to the original program 3:
@@ -317,7 +347,8 @@ Not a very elegant result if you ask me, but it does take all the moving parts i
 			<<loop increment>>                      <<loop increment>>
 		end while                                while <<loop condition>>
 		
-All are functionally and structurally equivalent.
+All are functionally equivalent. But are they structurally so? 
+
 
 To answer the specific question of Program 3's size, however, we'll have to apply (4) and make some assumptions on the sizes again. Since both the initialization and increment steps in this case are single operations, we'll assume they're also of size 1 sq unit. The loop body consisting of the single print operation has long been deemed of size 1 sq unit; so applying these values we get:
 
