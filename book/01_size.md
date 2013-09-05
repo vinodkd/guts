@@ -3,7 +3,7 @@ GUTS Chapter 1: Code Size
 
 ### Outline
 
-current notions of code size - the statement - its size - principle for counting larger bits of code - thus size of a seq - then selection - then iteration - then routine - examples -  then tree of routines - then graph of routines -  therefore functions - then procs - then apps -  examples -  concept of base - counting size of a multi-language app - example/comparison of some such apps
+current notions of code size - the statement - its size - principle for counting larger bits of code - - thus size of a seq - then selection, and iteration at structured prgg level (calculate sizes without goto) - then introduce levels of abstraction and goto as an implementation layer for structured prgg - then address the "assumed size" problem as a factor of the level of abstraction - call the smallest indivisible operation at a level 1 turning, and show how to convert from one level to other by breaking down the smallest indivisible operation - then routine - examples -  then tree of routines - then graph of routines -  therefore functions - then procs - then apps -  examples -  concept of base - counting size of a multi-language app - example/comparison of some such apps
 
 What is size anyway?
 --------------------
