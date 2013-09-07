@@ -10,11 +10,15 @@ filename=${1##*/}
 fnroot=${filename%.*}
 outFile=../out/$fnroot.html
 
-echo -n Converting src/$1 to $outFile ...
-
+echo Converting src/$1 to $outFile ...
+echo -n "	md -> html ..."
 cat ../out/top.html > $outFile
 node toHTML.js ../src/$1 >> $outFile
 cat ../out/bot.html >> $outFile
-
 echo done.
+
+echo -n "	copying jpgs ..."
+cp ../src/*.jpg ../out
+echo done.
+
 cd ..
