@@ -93,13 +93,13 @@ Formula (1) certainly seems appropriate for simple _Sequential_ programs like "P
 		print "Green Arrow"
 		print "Aquaman"
 		stop
-		// SLOC: 6
+		// SLOC: 6, Size: 6* units
 
 Assuming the size of the `print` and `stop` operations were 1 unit, and using (1):
 	
 		size(program1) = sum(size(5 print operations & 1 stop operation))
 		               = 1* + 1* + 1* + 1* + 1* + 1*
-		               = 6*
+		               = 6* units
 		                 (the * is to remind us that sizes being 1 is an assumption)
 		               
 ... is 6* units. This is sort of similar to counting lines of code and fits our common sense notion that the code is "6 units long" or "6 units tall".
@@ -127,108 +127,51 @@ But that was just a _Sequence_. Let's try adding in some ...
 			print "5 is even"
 		endif
 		stop
-		// SLOC: 7
+		// SLOC: 7, Size: 5* sq units
 
-This program is not just tall, it is wide too. Until the `if` is encountered, things are linear, but at that point we could go one of two ways. This can be pictured as as a "left+right" pair or a "down+side" pair. Either way, a second dimension has been added. An `if`, therefore, has not just height but width as well. Let's see if rewriting program 2 will provide better insight into this dimension:
+This program is not just tall, it is wide too. Until the `if` is encountered, things are linear, but at that point we could go one of two ways. This can be visualized as as a "left+right" pair or a "down+side" pair, something like so:
 
 		// program 2A
-				rem = 5 % 2
-				if_goto rem == 1 , even 	// if_goto is a special form of if that only can either goto a location or fall through to the next line.
-											// assembly programmers will see this automatically as the standard "JNZ/JNE" variety of opcode. 
-				print "5 is odd"
-				goto end 					// uncond goto
-		even:	print "5 is even"
-		end:	stop
-		// SLOC: 6
+		+----------------+
+		|rem = 5 % 2     |
+		+----------------+-------------------+
+		|rem == 1 ?      |                   |
+		|    true        |    false          |
+		+----------------+-------------------+
+		|print "5 is odd"| print "5 is even" |
+		+----------------+-------------------+
+		|stop            |
+		+----------------+
 
+So, what then, is the size of an `if`? The size of the main branch contributes to the length of the program it's in, while the size of the alternate branch adds to the width of the program. It seems safe to say, therefore, that:
 
-Now the true nature of the _Selection_ becomes obvious: `Selection = comparison + goto`. The goto certainly adds to the complexity of the code, but what is its impact on the size? A goto is a route from one "block" to another, a connector. Program 2A has 2 obvious kinds of gotos and one that's not that obvious:
+		size(if)      = size(condition check) + sum(size of individual branches)
+					  =  c + sum(b)                                                            --(2) 
+		where
+		            c = a non-zero size of the condition check
+		            b = size(branch)  
+		              = 1 (width) x h (height of branch)
 
-1. The conditional goto (which I've called if_goto here) that is tied to a comparison;
-2. The unconditional goto that just jumps to another location; and
-3. The implicit goto between operations.
+Applying this to the `if` in program 2 and assuming the condition check is a size 1 (because there's only one comparison being done), we get:
 
-The conditional goto alters the flow of execution and skips ahead to another location, adding the "width" to the program; the fact that a check is made before the branch is not important to the size. Thus the new size that it contributes is the size of the body of code that executes when that branch is taken. That is,
+		size(program2's if) = size(condition check) + size(if branch) + size(else branch)
+		                    = 1* + 1 x 1* + 1 x 1*
+		                    = 3* sq units
 
-		size(cond goto) = sum(size of individual branches)                                    --(2A)
-
-Like the conditional goto, the unconditional goto alters the flow of execution, since the branch-off is not checked by a condition, the possibility for an invalid target or that of "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it - arises. In this case, however, the unconditional goto above is well-behaved. It doesnt fly off to kingdoms unknown: it goes back to the end of the if - a very well known spot. 
-
-So its really not that a goto is unconditional that makes its size indeterminate, but that its destination is unknown. Let's call the ones with known, defined destinations like 'top of the loop' as _Bound Goto_s and the ones that are not such as _Unbound Goto_s. Revising formula 2B therefore:
-
-		size(unbound goto) = G                                                                 --(3)
-		where           G = 1 unit height x G1 width  or
-		                  = 1 unit width x G2 height
-
-... and adding a new formula for Bound gotos:
-
-		size(bound goto) = 1* width x N height already counted elsewhere
-		                 = 1* width x 1* height
-		                 = 1* sq units                                                         --(4)
-
-
-
-
-So while the unconditional goto adds to the size, its not easy to quantify its impact. For now, let's state that each unconditional goto adds some unknown size G to the software.  That is,
-	
-		size(uncond goto) = G                                                                 --(2B)
-		where           G = 1 unit height x G1 width  or
-		                  = 1 unit width x G2 height
-
-That is, while we could measure one or more "dimensions" of the unconditional goto, there will always be one dimension that we cannot quantify and therefore its overall size remains an unknown quantity.
-
-Finally, the implicit gotos: On the "main line" of code, implicit gotos guide the execution of code by stringing successive operations together. In fact the machine executing these programs (or any general computer, for that matter)  can be thought of executing this meta-program:
-
-		// meta program 1
-		1: read a specific location for the address of the next instruction to execute
-		2: execute it
-		3: if step 2 didnt set the next instruction to execute, autoincrement to next address in the same location
-		4: goto 1
- 
-So the gotos exist, even if we do not depict them in code at the level of normal discourse. The difference between these gotos and the others is that they connect one operation to another "by default" i.e, in the most obvious way that they are supposed to be connected. As such, its safe to posit that they do not contribute to the size. That is,
-
-		size(implicit goto) = 0                                                               --(2C)
-
-
-So what does this mean for the IF itself? Written in the form of program 2, its clearly has a conditional goto and its size is:
-
-		size(program 2's if)  = size(cond if)
-		                      = sum(size of individual branches), and
-		size(branch)	      = 1 (width) x h (height of branch)                              --(2D) 
-
-Written in the form of program 2A, however, it has one conditional goto with a contained unconditional goto. So its size is:
-
-		size(program 2A's if) = size(cond goto)
-		                      = size(default branch) + size(else branch)
-		                      = size(other statements) + size(uncond goto) + size(else branch)
-		                      = [ size(default branch without goto) + size(else branch) ]
-		                        + size(uncond goto)
-		                      = size(cond if without goto) + G                                --(2E)
-
-Now lets apply rules 2A-E to the `if` in program 2. First off, we've to represent all sizes as "areas" now because an `if` is present. So assuming again that the `print` operation was 1 unit tall we should add that it is 1 unit wide, its area would be:
-
-		size(if) = size(cond if) = sum(size of individual branches)
-		         = 1* sq units + 1* sq units
-		         = 2* sq units
-
- Now the size of program 2 using (1) & (2A-E) is:
+To use this result in calculating Program 2's size, we've to represent all sizes as "areas" first. Assuming again that the `print` operation was 1 unit tall, we should add that it is 1 unit wide. Program 2's size(area) therefore becomes:
 
 		size(program 2) = sum(size(operations))
-		                = size(assignment operation) + size(if)
-		                = 1* + 2*    assuming the assignment operation is also of size 1.
-		                = 3* sq units
-
-For comparison, the size of program 2A would be:
-
-		size(program 2A) = sum(size(operations))
-		                 = size(assignment operation) + size(if) + size(print) + size(stop)
-		                 = 1* + size(cond if without goto) + G + 1* + 1*
-		                 = 3* + 1* sq + G
-		                 = 4* + G sq units
+		                = size(assignment operation) + size(if) + size(stop)
+		                - size(modulus op + assignment) + size(if) + size(stop)
+		Now assuming size(modulus op) = 1, we get
+		                = 2* + 3* + 1*   assuming the assignment operation is also of size 1.
+		                = 6* sq units, compared to a SLOC of 7.
 
 For completeness, lets convert Program 1's size to "area" units as well:
 
 		size(program 1) = 6* sq units
+
+Note that program 2 has a SLOC of 7, but a size of 6* sq units. Smaller numerically, but larger by size and semantics.
 
 Does our lego block analogy still hold up, though? The `if` requires data to be used, a decision to be made and one of (potentially) many alternate routes to be taken. This is probably best visualized as something "flowing" from one statement (ie block) to another, with control points to direct flow. Maybe pipes are a better analogy therefore?
 
@@ -259,9 +202,9 @@ Ok, enough fun.Let's try the final operation ...
 		  print i
 		end loop
 		stop
-		// SLOC : 4
+		// SLOC : 4, Size: ?
 
-Written in this form, it seems like the `for` doesnt have width. Indeed, program 3 can be rewritten as:
+Written in this form, it seems like the `for` is a short cut to write out a long sequence of operations. Indeed, program 3 can be rewritten as:
 
 		// program 3A
 		print 1
@@ -276,69 +219,109 @@ Such "unfolding" of loops is not uncommon; and viewed this way we could conclude
 
 		// program 3B
 		      i=1
-		 top: if i <= 5 
+		 top: if not(i <= 5)      // line 1
+		 		  goto end 
+		      else
 		          print i
 		          i = i + 1
-		          goto top
-		      else
-		         goto end
+		          goto top        // line 2
 		      end if
 		end: stop
-		// SLOC : 9, Size : ?
+		// SLOC : 9, Size : 7* sq units
 
-Now the true nature of _Iteration_ becomes obvious: `Iteration = if + goto`. The `if` sets up the conditions for iteration and the `goto` executes it. The `goto` is therefore the key ingredient in getting iteration to work. This is clearly NOT an unconditional goto, but it is also not the same as the `if_goto` from above. This is another variant where there are only 2 clear destinations to go to: the top of the loop and immediately outside it, i.e., to exit it.
+Now the true nature of _Iteration_ becomes obvious: `Iteration = if + goto`. The `if` sets up the conditions for iteration and the `goto` executes it. The `goto` is therefore the key ingredient in getting iteration to work, so let's try to understanding it a little better.
 
-Back to program 3, however; for we were trying to determine the size of the loop. In general, the loop in program 3B could be written in template form as:
+A goto is a route from one "block" to another, a connector. Program 3B has 2 obvious kinds of gotos and one that's not that obvious:
+
+1. The conditional goto that is guarded by a comparison (line 1);
+2. The unconditional goto that just jumps to another location (line 2); and
+3. The implicit goto between operations.
+
+The _Unconditional `goto`_ alters the flow of execution and skips ahead to another location, adding the "width" (or more generally, another dimension) to the program. If the destination of the `goto` is not local to the point of branch off, the impact on size is somewhat difficult to determine.
+
+_Conditional `goto`s_ remove some of that uncertainty by checking a condition before branching. Adding the check reduces the chance of an invalid target or that of "spaghetti code" - an unholy tangle of wild gotos that only makes sense when you write it. 
+
+However, conditional gotos only reduce the chance of indeterminate size, they do not eliminate it. For eg, the `goto end` line in program 3B could lead to some location that is far away from the rest of the code. So the deciding factor for size of a goto is whether or not its destination is known. Let's call the ones with known, defined destinations like 'top of the loop' as _Bound Goto_s and the ones that are not such as _Unbound Goto_s. Their sizes, therefore, are:
+
+		size(bound goto)  = 1* width x N height already counted elsewhere
+		                  = 1* width x 1* height
+		                  = 1* sq units                                                        --(3)
+
+That is, the height of a bound goto exists, but it has typically been already considered as part a "larger structure", so only the contribution of the single goto "block" need be considered.
+
+		size(unbound goto) = G                                                                 --(4)
+		where            G = 1 unit height x G1 width  or
+		                   = 1 unit width x G2 height
+
+That is, while we could measure one or more "dimensions" of the unconditional goto, there will always be one dimension that we cannot quantify and therefore its overall size remains an unknown quantity.
+
+Finally, _Implicit `goto`s_: On the "main line" of code, implicit gotos guide the execution of code by stringing successive operations together. In fact the machine executing these programs (or any general computer, for that matter)  can be thought of executing this meta-program:
+
+		// meta program 1
+		1: read a specific location for the address of the next instruction to execute
+		2: execute it
+		3: if step 2 didnt set the next instruction to execute, autoincrement to next address in the same location
+		4: goto 1
+ 
+So the gotos exist, even if we do not depict them in code at the level of normal discourse. The difference between these gotos and the others is that they connect one operation to another "by default" i.e, in the most obvious way that they are supposed to be connected. As such, its safe to posit that they do not contribute to the size. That is,
+
+		size(implicit goto) = 0                                                                --(5)
+
+In program 3B, both the `goto`s are well-behaved. They dont fly off to kingdoms unknown: they go to the top of the loop or exit it - two very well known spots. So they are clearly bound gotos. So the size of program 3B would be:
+
+		size(program 3B) 	= sum(size(operations))
+							= size(assignment) + size(if) + size(stop)
+							= 1* + size(condition) + size(branches) + 1*
+							= 1* + 1* + (1 x 1* + 3 x 1*) + 1*
+							= 2* + 4* + 1*
+							= 7* sq units
+
+More generallly, the loop in program 3B could be written in template form as:
 
 		// program 3B-templatized
 			  <<.. steps before loop..>>
 		      <<initialize loop>>
-		 top: if_goto not <<loop condition>>, end
-	          <<loop body>>
-	          <<increment loop>>
-	          goto top
+		 top: if not <<loop condition>>
+		 	  then
+		 	  	goto end
+		 	  else
+	            <<loop body>>
+	            <<increment loop>>
+	            goto top
+	          end if
 		end:  <<.. steps after loop..>>
 
-Notice how I've negated the loop condition to use the `if_goto` from before. This reduces the body of the if into a conditional goto, but it still has the pesky unconditional goto at the bottom, which makes it - by rules that we've laid down to date - difficult to ascribe a known size to a loop. So let's take a look at that goto again.
+Thus,
+		size(program 3b loop)     = size(init loop) + size(if)
+		Now, let  size(init loop) = i, some nonzero size depending on the type and number of operations
 
-It's certainly unconditional, but it doesnt fly off to kingdoms unknown: it goes back to the top of the loop - a very well known spot considering we've been there already (excecutionally speaking, that is). So its really not that a goto is unconditional that makes its size indeterminate, but that its destination is unknown. Let's call the ones with known, defined destinations like 'top of the loop' as _Bound Goto_s and the ones that are not such as _Unbound Goto_s. Revising formula 2B therefore:
+			      size(if)        = size(condition) + size(if branch) + size(else branch)
+			                      = size(condition) + size(goto end) + [size(loop body) + size(increment loop) + size(goto top)]
+			                      = c + 1* + [ b  + p + 1* ]
+		                 
+		                 where  c = a nonzero size for the condition check
+		                        b = a variable loop body size
+		                        p is some variable nonzero size for the increment step
 
-		size(unbound goto) = G                                                                 --(3)
-		where           G = 1 unit height x G1 width  or
-		                  = 1 unit width x G2 height
-
-... and adding a new formula for Bound gotos:
-
-		size(bound goto) = 1* width x N height already counted elsewhere
-		                 = 1* width x 1* height
-		                 = 1* sq units                                                         --(4)
-
-Now that we've got that tiny bit handled, lets' get back to sizing up the generic loop:
-
-		size(loop)                = size(init loop) + size(if)
-		Now, let  size(init loop) = I, some nonzero size depending on the type and number of operations
-		From (2A-E, 3 & 4), 
-					size(if)      = size(if_goto) 
-
-		where     size(if_goto)   = size(loop body) + size(increment loop) + size(bound goto top)
-		                          =       b         +       p              +    1 
-		                            where b is a variable loop body size
-		                            and   P is some variable nonzero size for the increment step
-		and       size(else part) = 1 because this else always has only a `goto`
+			                      = c + b + p + 2*
+			                      = c + b + p + 2*
 		Thus,
-		          size(loop)      = I + b + p + 1 + 1
-		                          = I + b + p + 2
-		          size(loop)      = I + b + p + 2        --(4)
+		          size(loop)      = i + c + b + p + 2*                                         --(6)
 
+... which still comes out to a clean enough "sum of parts" type of equation. 
 
-Not a very elegant result if you ask me, but it does take all the moving parts in a loop into consideration. Lest you think that this is specific to the type of loop depicted in program 3B-templated, here's the mapping back to the original program 3:
+Back to program 3, however; for we were trying to determine the size of _that_ loop. Here's its template form:
 
-		// program 3-templated
+		// program 3-templatized
 		loop <<loop init>> to <<loop condition>> <<implicit loop increment>>
 		  <<loop body>>
 		end loop
 
-... and here's the mapping to the other typical versions of the loop: the `while` and the `do-while`:
+At this level of abstraction, all the other elements of the loop are present, but there are no gotos. The gotos are somehow "subsumed" in the mechanism of the loop such that the user of the loop doesnt have to know about it. So at this level, the size of a loop would be:
+
+		size(program 3 loop)   = i + c + b + p                                                 --(7)
+
+What about the other forms of loops that we alluded to earlier? Here's the template form of the other typical versions of the loop: the `while` and the `do-while`:
 
 		// while-template                        // do-while-template
 		<<loop init>>                            <<loop init>>
@@ -347,54 +330,76 @@ Not a very elegant result if you ask me, but it does take all the moving parts i
 			<<loop increment>>                      <<loop increment>>
 		end while                                while <<loop condition>>
 		
-All are functionally equivalent. But are they structurally so? 
+All are functionally equivalent and from inspection its obvious that they have the same size (even if count the `c` piece earlier or later). They are structurally different, but that's not germane to their size. 
 
+So to summarize the discourse on loops:
 
-To answer the specific question of Program 3's size, however, we'll have to apply (4) and make some assumptions on the sizes again. Since both the initialization and increment steps in this case are single operations, we'll assume they're also of size 1 sq unit. The loop body consisting of the single print operation has long been deemed of size 1 sq unit; so applying these values we get:
+		size(loops with goto) = i + c + b + p + 2*
+		size(for loop)        = i + c + b + p
+		size(while loop)      = i + c + b + p
+		size(do while loop)   = i + c + b + p                                                  --(8)
 
-		size(program 3)  = size(loop)
-		                 = I + 2 (b + p) + 2 .... by (4)
-		                 = 1* + 2 (1* + 1*) + 2
-		                 = 1* + 2.2* + 2
-		                 = 7* sq units vs SLOC: 3
+Or more generally,
 
-Admittedly, there's a lot of hand-waving going on here; but the contrast with SLOC is interesting. The 2D-ness of our size unit seems to hint at the structure that goes into a loop better than the "flat" count of lines. On the other hand, a loop is one of the first things that (imperative) programmers learn and a size of 7* seems a bit excessive - especially considering it is the smallest sized loop because we assumed the smallest possible sizes for the unknowns. Which view is correct? Let's table that thought for now and plod on to see if we can reach a conclusion.
+		size(loop)            = i + c + b + p + o
+		              where o = overhead at level of abstraction
+		                          = 0 at SSI level
+		                          = 2* if gotos are explicitly used                            --(9)
+
+To answer the specific question of Program 3's size, however, we'll have to apply (9) and make some assumptions on the sizes again. Since both the initialization and increment steps in this case are single operations, we'll assume they're also of size 1 sq unit. The loop body consisting of the single print operation has long been deemed of size 1 sq unit; and the condition is simple enough so we'll take that tooas a 1; so applying these values we get:
+
+		size(program 3)  = size(loop) + size(stop)
+						 = i  + c  + b  + p  + o + 1*
+						 = 1* + 1* + 1* + 1* + 0 + 1*
+		                 = 5* sq units vs SLOC: 3
+
+Summary
+--------
+
+Let's review: we started off by using the simple SSI model because it was high level and could easily be related to the general nature of code. We focused on sizing programs, wrote 3 programs in pseudo-code and came up with formulas for the 3 operations in the model using a (yet unnamed) new measure of size for them. Here're the sizes that we arrived at using the new formulas and measure:
+
+		size(program 1) = 6* sq units vs SLOC of 6
+		size(program 2) = 6* sq units vs SLOC of 7
+		size(program 3) = 5* sq units vs SLOC of 3
+
+### Comparison to SLOC
+
+Admittedly, there's a lot of hand-waving going on here; but the contrast with SLOC is interesting. The 2D-ness of our size unit seems to hint at the structure that goes into loops and conditionals better than the "flat" count of lines. Program 2's size is smaller compared to its SLOC because the textual "overhead" of denoting loop structure is removed from the equation, while Program 3's textual brevity in having all structural elements of the
+loop contained in the same line is called out, increasing its size when compared to its SLOC.
+
+### Combining Sequence, Selection and Iteration
+
+SSI essentially talks about programs as being *combinations* of sequence, selection and iteration; while we've been doing all our analysis in isolation. Let's fix that. Our formulas for sizes of these individual operations are:
+
+		size(sequence) = sum(size(operation)) for all operations in sequence       --(1') program replaced with sequence
+		size(if)       =  c + sum(b)                                               --(2) 
+		size(loop)     = i + c + b + p + o                                         --(9)
+
+Since all these formulas are additions, we *could* treat the `if`s and `loop`s as "compound" operations that contribute a known size to a larger sequence that is the program; and at this larger level, there is only the sequence. This means that (1') above can be restored back to its original form:
+
+		size(program) = sum(size(operation)) for all operations in program                  --(1)
+		              = sum(size(ifs)) + sum(size(loops)) + sum(size(other operations))     --(10)
+
+This result is interesting. As long as all we're doing is measuing size, the order of operations dont seem to matter - only that they are counted. To use the marble run analogy, the size or color of the blocks dont matter - only their number. Obviously, this will not apply for other measures of code such as complexity: we build code in a particular order explicity so as to effect certain results; but for size this is a Good Thing(TM).
+
+### Levels of Abstraction
+
+The discussion above kept moving between alternate ways of representing things: Program 2 was represented as programs 2A and Program 3 as 3B to depict the same program with different constructs. These 2 ways can be thought of - especially within the Structured Programming context - as two different languages: the former being a pure structured program with no gotos and the latter as a "lower level", unstructured language that DOES have gotos. This hints at two things that we'll explore soon:
+
+* The size of a construct could differ by level of abstraction even if the two representations are the same in terms of function and semantics.
+* Constructs that are considered "atomic" at one level could be "compound" at another.
 
 Moving beyond SSI
 -----------------
 
-Let's review: we started off by using the simple SSI model because it was high level and could easily be related to the general nature of code. It does, however, gloss over quite a few things that we take for granted while coding:
+ The SSI model has been a good starting point, but it glosses over quite a few things that we take for granted while writing code:
 
 * **Different types of operations**: At the level of abstraction that SSI is described, the `if` and the `loop` are the only concepts required to express general computing, so "what each step in a sequence does" is glossed over. To size an actual codebase, however, we do need to consider each such operation and size them. Up until now we've been making assumptions on their size using those pesky asterisks, but they _do_ need to go at some point.
-* **Nesting and containment**: Similarly, nesting of sequences, `if`s and `loop`s is something that the SSI model glosses over. However, they do sound like they would have a considerable impact on size and other properties of code that we'd be interested in.
-* **Higher forms of abstraction** : SSI doesnt talk about modularity either. In the real world we have a plethora of constructs and containers that help us make sense of the code we produce: subroutines, functions, procedures, lambdas, closures, modules, classes, objects, interfaces, services, applications and so on. Intuitively, these are mechanisms that trade an increase in size for a reduction in complexity or comprehensibility; and as such merit analysis.
-* **The environment or platform**: There is a reason for using pseudo-code for all programs in this chapter upto this point: using a real language requires acknowledging somehow that code lives within an environment : I'd have to specify the shell or desktop from which the program is actually executed, or specifiy the cermonial "wrapper", eg, the primordial `main()`. Obviously, the SSI level of abstraction eschews it, but we will have to embace it to make sense of real-world code.
+* **Nesting and containment**: Similarly, the nesting of sequences, `if`s and `loop`s is something that the SSI model glosses over. However, they do sound like they would have a considerable impact on size and other properties of code that we'd be interested in.
+* **Higher forms of abstraction** : SSI doesnt talk about modularity at all. In the real world we have a plethora of constructs and containers that help us make sense of the code we produce: subroutines, functions, procedures, lambdas, closures, modules, classes, objects, interfaces, services, applications and so on. Intuitively, these are mechanisms that trade an increase in size for a reduction in complexity or comprehensibility; and as such merit analysis.
+* **The environment or platform**: There is a reason for using pseudo-code for all programs in this chapter upto this point: using a real language requires acknowledging somehow that code lives within an environment : I'd have to specify the shell or desktop from which the program is actually executed, or specify the cermonial "wrapper", eg, the primordial `main()`. Obviously, the SSI level of abstraction eschews it, but we will have to embace it to make sense of real-world code.
 
 Let's address each of these issues next. Along the way we'll also try to shore up the ideas that have been described somewhat informally above and hopefully arrive at more elegant ways of measuing size.
-
-Combining Sequence, Selection and Iteration
--------------------------------------------
-
-Before we leave SSI, however, there is one additional detail to work out. SSI essentially talks about programs as being *combinations* of sequence, selection and iteration; while we've been doing all our analysis in isolation. Let's fix that.
-
-Our formulas for sizes of these individual operations are:
-
-		size(sequence) = sum(size(operation)) for all operations in sequence       --(1') program replaced with sequence
-		size(if)       = # branches x max(size(branch)) for all branches in if     --(2)
-		size(loop)     = I + 2(b + p)+ 2                                           --(4)
-
-Or more generally,
-
-		size(sequence) = f(size(operation)) for all operations in sequence         --(5)
-		size(if)       = f(branches,size(branch)) for all branches in if           --(6)
-		size(loop)     = f(I,b,p)                                                  --(7)
-	
-This suggests that we *could* treat the `if`s and `loop`s as "compound" operations that contribute a known size to a larger sequence that is the program; and at this larger level, there is only the sequence. This means that (1') above can be restored back to its original form:
-
-		size(program) = sum(size(operation)) for all operations in program                  --(1)
-		              = sum(size(ifs)) + sum(size(loops)) + sum(size(other operations))     --(8)
-
-This result is interesting. As long as all we're doing is measuing size, the order of operations dont seem to matter - only that they are counted. To use the marble run analogy, the size or color of the blocks dont matter - only their number. Obviously, this will not apply for other measures of code such as complexity: we build code in a particular order explicity so as to effect certain results. 
 
 Anyway, time to tackle all those operations that the SSI model is silent about.
 
