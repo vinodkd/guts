@@ -26,17 +26,34 @@ The output is (a hopefully useful) theory that can be used to answer questions l
 Current Status
 ==============
 
+Since this is a theory project, the meat of the project is documents describing it. There is some code that supports conversion of formats (markdown to html, for eg) and there will be code use to test the theory out in the future.
+
+### Thoughts about GUTS
+
 My current state of thought is captured in a Freemind Mindmap
 
 This is available in two formats:
 
-
 - A [Flash enabled one](http://vinodkd.github.com/guts/out/full/guts.html) that's closest to the Freemind experience.
 - A [non-flash, clickable image map version](http://vinodkd.github.com/guts/out/basic/guts.html) that has all the content but is not as directly accessible as the previous one; but works on iPads and such like
 
+### GUTS and GUTSE: A barcamp presentation
+
+In 2012, I presented GUTS and the related-in-principle GUTSE at Barcamp Bangalore. The [presentation slides](https://github.com/vinodkd/bcb12) are available as expository material. That talk is important for two reasons:
+
+* It contains more of the whys and details of GUTS
+* The feedback I got during that session was what prompted me to "Pick one concept and expand on it thoughoughly" - leading directly to the book.
+
+### GUTS - the book
+
+GUTS - the Book is my attempt at delving deep into each of the metrics I proposed in the GUTS mindmap and try to work things out throughly. The book is WIP and the following DRAFT chapter(s) are available.
+
+* [Chapter 1: Size](http://vinodkd.github.com/guts/book/01_size.html).
+
+
 Milestones
 ==========
-1. Define code Size for all levels upto application
+1. Define code Size for all levels upto application - WIP
 2. Define Structural Stability for all levels upto application - TBD
-3. Start writing the mindmap in book form
+3. Start writing the mindmap in book form - WIP
 
