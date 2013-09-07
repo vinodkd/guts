@@ -12,13 +12,15 @@ outFile=../out/$fnroot.html
 
 echo Converting src/$1 to $outFile ...
 echo -n "	md -> html ..."
-cat ../out/top.html > $outFile
+cp ../html/top.html $outFile
 node toHTML.js ../src/$1 >> $outFile
-cat ../out/bot.html >> $outFile
+cat ../html/bot.html >> $outFile
 echo done.
 
-echo -n "	copying jpgs ..."
+echo -n "	copying assets ..."
 cp ../src/*.jpg ../out
+cp ../html/*.css ../out
+
 echo done.
 
 cd ..
