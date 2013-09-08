@@ -39,18 +39,20 @@
 
 this requires:
 
-* move src to top
-* move book under src
-* move files in src to book
-* create src/mmap and move guts.mm there
-* rename toHtml.sh to book2html.sh
-* create readme2index.sh to convert readme.md into index.html
-	- create index.top.html from current gh-pages version
-	- create index.bot.html
-* create web, web/partial
-* mv html/top.html and bot.html to web/partial/book.top.html and bot.html resp
-* mv html/guts.css to web/css/guts.css
-* delete book/html
-* change book2html to use the right directories
+* DONE move src to top
+* DONE move book under src
+* DONE move files in src to book
+* DONE create src/mmap and move guts.mm there
+* DONE rename toHtml.sh to book2html.sh
+* DONEcreate readme2index.sh to convert readme.md into index.html
+	- DONE create index.top.html from current gh-pages version
+	- DONE create index.bot.html
+* DONE create web, web/partial
+* DONE mv html/top.html and bot.html to web/partial/book.top.html and bot.html resp
+* DONE mv html/guts.css to web/css/guts.css
+* DONE delete book/html
+* DONE change book2html to use the right directories
 * create publish.sh that will copy web/out to gh-pages
+
+** Sep-07-2013 19:50 : ** Used http://oli.jp/2011/github-pages-workflow/ for help on gh-pages workflow. esp, how to checkout a file from a different branch.
 
