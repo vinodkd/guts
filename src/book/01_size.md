@@ -106,8 +106,8 @@ Assuming the size of the `print` and `stop` operations were 1 unit, and using (1
 
 Would that be long or tall? Here's where a little physical analogy might help. 
 
-![Kid builds a lego tower](lego-tower.jpg "This is your Code")
-![Kids' lego tower falls](lego-tower-falling.jpg "This is your Code crashing")
+![Kid builds a lego tower](images/lego-tower.jpg "This is your Code")
+![Kids' lego tower falls](images/lego-tower-falling.jpg "This is your Code crashing")
 
 We talk all the time about "building" software and code building has long been equated to piling Lego blocks on top of each other. And when heavy code breaks it crashes very similarly to how a heavy lego structure does. So let's equate size to height. 
 
@@ -175,8 +175,8 @@ Note that program 2 has a SLOC of 7, but a size of 6* sq units. Smaller numerica
 
 Does our lego block analogy still hold up, though? The `if` requires data to be used, a decision to be made and one of (potentially) many alternate routes to be taken. This is probably best visualized as something "flowing" from one statement (ie block) to another, with control points to direct flow. Maybe pipes are a better analogy therefore?
 
-![Code as pipes](pipes.jpg "This is your Code's plumbing")
-![Code as pipes](pipes2.jpg "This is your Code's plumbing")
+![Code as pipes](images/pipes.jpg "This is your Code's plumbing")
+![Code as pipes](images/pipes2.jpg "This is your Code's plumbing")
 
 Sorry I couldnt find better pictures, but hope these convey some part of the idea. Every time you see a T-junction or a Cross, think `if` operation; otherwise the flow of liquid represents the Sequence.
 
@@ -184,8 +184,8 @@ Unsatisfying as the pictures are, more so is the analogy. While data does flow f
 
 Without further ado, I present:
 
-![Code as a marble run, data as marbles](marble-run.jpg "Code = pipes, data = marbles")
-![Marble run pieces](marble-run-pieces.jpg "Note that one piece - the purple one - is a simple logic gate ")
+![Code as a marble run, data as marbles](images/marble-run.jpg "Code = pipes, data = marbles")
+![Marble run pieces](images/marble-run-pieces.jpg "Note that one piece - the purple one - is a simple logic gate ")
 
 ... the marble run! It does everything we would like our physical analog of code to do and then some. It has the standard blocks that link together obviously (which is a slight difference - that the connectors are fixed to the blocks); but it also has "source" and "sink" pieces, pieces that change direction (not all of which are logically important) and even pieces that have some built-in logic. If you look closely you'll find that one of the purple pieces is a simple flip-flop (aka `IF`)- it sends successive marbles down alternate paths.
 
