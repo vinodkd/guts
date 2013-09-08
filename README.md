@@ -34,8 +34,8 @@ My current state of thought is captured in a Freemind Mindmap
 
 This is available in two formats:
 
-- A [Flash enabled one](http://vinodkd.github.com/guts/out/full/guts.html) that's closest to the Freemind experience.
-- A [non-flash, clickable image map version](http://vinodkd.github.com/guts/out/basic/guts.html) that has all the content but is not as directly accessible as the previous one; but works on iPads and such like
+- A [Flash enabled one](http://vinodkd.github.com/guts/mmap/full/guts.html) that's closest to the Freemind experience.
+- A [non-flash, clickable image map version](http://vinodkd.github.com/guts/mmap/basic/guts.html) that has all the content but is not as directly accessible as the previous one; but works on iPads and such like
 
 ### GUTS and GUTSE: A barcamp presentation
 

@@ -52,6 +52,9 @@ this requires:
 * DONE mv html/guts.css to web/css/guts.css
 * DONE delete book/html
 * DONE change book2html to use the right directories
+* DONE move gh-pages/out to gh-pages/mmap
+* DONE create gh-pages/book
+* DONE fixed refs to the mmap in readme.md so that when its published, it will refer to the right location.
 * create publish.sh that will copy web/out to gh-pages
 
 ** Sep-07-2013 19:50 : ** Used http://oli.jp/2011/github-pages-workflow/ for help on gh-pages workflow. esp, how to checkout a file from a different branch.
