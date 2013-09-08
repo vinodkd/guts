@@ -1,0 +1,18 @@
+/* guts.css */
+
+body{
+	font-family: Verdana;
+	font-size: 12 px;
+}
+
+h1{
+	border-bottom: 5px solid black;
+}
+
+h2{
+	border-bottom: 3px solid blue;
+}
+
+h3{
+	border-bottom: 1px solid gray;
+}
