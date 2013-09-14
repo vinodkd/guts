@@ -50,28 +50,47 @@ Let's first look at how size is measured currently. In my cursory review of the 
 [scg]: http://tbd/
 [akay1]: http://tbd/
 
-The emperical measures have the advantages of being:
+Here is a comparison of the pros and cons of these two approaches:
 
-* actually measurable (with some error, but still)
-* language agnostic
-* useful as gross comparison tools.
-* relatively easy to apply to small programs manually; and gracefully upgradable to bigger codebases with automation.
-
-... but they also are not:
-
-* "smart" units of measure in that they dont consider the structure of code *AS CODE*. With the possible exception of the Halstead metrics, the other approaches treat code as either text or conceptual "functions".
-* accurate measures of size per se; just convenient ones.
-* easily extended to other properties of code; the relations are forced and the equations (if any) have emperical constants and pre-conditions attached.
-
-Meanwhile, the descriptive measures have the advantages of being:
-
-* easy for humans to understand a lot of information in one go.
-* able to transcend the implementation language depending on the abstraction chosen.
-
-... but they also do not:
-
-* dont give direct feedback as to what's wrong; a practised user has to interpret the results.
-* do not actually measure anything at all; merely provide a visualization.
+<table>
+	<thead>
+		<tr><th>Approach</th><th>Pros</th><th>Cons</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Emperical</td>
+			<td>
+				<ul>
+					<li> Actually measurable (with some error, but still) </li>
+					<li> Language agnostic</li>
+					<li> Useful as gross comparison tools.</li>
+					<li> Relatively easy to apply to small programs manually; and gracefully upgradable to bigger codebases with automation.</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>Not "smart" units of measure in that they dont consider the structure of code *AS CODE*. With the possible exception of the Halstead metrics, the other approaches treat code as either text or conceptual "functions".</li>
+					<li>Not accurate measures of size per se; just convenient ones.</li>
+					<li>Not easily extended to other properties of code; the relations are forced and the equations (if any) have emperical constants and pre-conditions attached.</li>
+				</ul>
+			</td>
+		</tr>
+			<td>Descriptive</td>
+			<td>
+				<ul>
+					<li> Easy for humans to understand a lot of information in one go. </li>
+					<li> Able to transcend the implementation language depending on the abstraction chosen.</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>Dont give direct feedback as to what's wrong; a practised user has to interpret the results.</li>
+					<li>Do not actually measure anything at all; merely provide a visualization.</li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 Obviously, neither approach seems comprehensive nor feels right. Wouldn't it be nice to have a measure of code size that:
 
