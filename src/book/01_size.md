@@ -11,16 +11,14 @@ Code Size
 * [Sizing up the data](#sizing_data)
 * [A new measure of code size](#turing_unit)
 * [Static vs Dynamic size](#static_v_dynamic)
-* [Engineer's Corner](#ecorner)
-* platform affordances
+* [Engineer's Corner: Implementing Turing sizes](#engg_corner)
 
 <a name="outline"></a>
 Outline
 -------
 
-current notions of code size - the statement - its size - principle for counting larger bits of code - - thus size of a seq - then selection, and iteration at structured prgg level (calculate sizes without goto) - then introduce levels of abstraction and goto as an implementation layer for structured prgg - then address the "assumed size" problem as a factor of the level of abstraction - call the smallest indivisible operation at a level 1 turning, and show how to convert from one level to other by breaking down the smallest indivisible operation - then routine - examples -  then tree of routines - then graph of routines -  therefore functions - then procs - then apps -  examples -  concept of base - counting size of a multi-language app - example/comparison of some such apps
+why count size, compare with sloc and other current ways of counting size, basic structure of code: language, program, operation, sizing up Hello World as an example, therefore compound operations and containers, **still not found size of operations**, therefore SSI, add viz as lego blocks, size of sequence, size of if, add viz as pipes, size of loop, add viz of marble run, **add viz about graphs**, **still not found size of operations other than if and loop**, therefore go down one level, then infinite levels, **therefore resolve that at asymptote of the turing machine all sizes are 1, therefore define that all we need is a relative "base", then introduce the "turing" as the size unit relative to any base, then answer questions about sizing 2 langs relative to a base, then talk about platform affordances, then back up to hello world picking the java language as the base and count size that way, then present comparison with sloc again, then talk about sizing up static data, then talk about static vs dynamic data, then move to engineering and the simple and exact ways of counting size**.
 
-TODO: discuss size in file vs size when realized as process - dynamic programs will have a size different from file when they become processes.
 
 <a name="what_is_size"></a>
 What is size?
@@ -537,6 +535,7 @@ More generallly, the loop in program 8B could be written in template form as:
 		end:  <<.. steps after loop..>>
 
 Thus,
+
 		size(program 8b loop)     = size(init loop) + size(if)
 		Now, let  size(init loop) = i, some nonzero size depending on the type and number of operations
 
