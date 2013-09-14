@@ -17,6 +17,7 @@ body {
   padding: 0px;
   height: 100%;
 
+  counter-reset: chapter;
 }
 
 p {
@@ -29,6 +30,8 @@ h1 {
   padding: .5em 0;
   margin: 2em 0 1em;
 
+  counter-increment: chapter;	/* This has to be moved to a chap1.css when there are more chapters*/
+  counter-reset: section;
 }
 
 
@@ -41,6 +44,8 @@ h2 {
   color: #333;
   margin: 2em auto 1em;
 
+  counter-increment: section;
+  counter-reset: sub-section;
 }
 
 h2 span.step {
@@ -52,8 +57,12 @@ h3 {
   color: #333;
   margin: 1.5em 0 .5em;
 
+  counter-increment: sub-section;
 }
 
+h1:before { content: counter(chapter) ". "; }
+h2:before { content: counter(chapter) "." counter(section)  " "; }
+h3:before { content: counter(chapter) "." counter(section) "." counter(sub-section) " "; }
 
 h5 {
   font-size: 13px;

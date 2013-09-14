@@ -1,5 +1,5 @@
-GUTS Chapter 1: Code Size
-=========================
+Code Size
+=========
 
 * [Outline](outline)
 * [What is size?](#what_is_size)
