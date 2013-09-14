@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<h1>GUTS Chapter 1: Code Size</h1>
+<h1>Code Size</h1>
 <ul>
 <li><a href="outline">Outline</a></li>
 <li><a href="#what_is_size">What is size?</a></li>
@@ -17,13 +17,11 @@
 <li><a href="#sizing_data">Sizing up the data</a></li>
 <li><a href="#turing_unit">A new measure of code size</a></li>
 <li><a href="#static_v_dynamic">Static vs Dynamic size</a></li>
-<li><a href="#ecorner">Engineer&#39;s Corner</a></li>
-<li>platform affordances</li>
+<li><a href="#engg_corner">Engineer&#39;s Corner: Implementing Turing sizes</a></li>
 </ul>
 <p><a name="outline"></a></p>
 <h2>Outline</h2>
-<p>current notions of code size - the statement - its size - principle for counting larger bits of code - - thus size of a seq - then selection, and iteration at structured prgg level (calculate sizes without goto) - then introduce levels of abstraction and goto as an implementation layer for structured prgg - then address the &quot;assumed size&quot; problem as a factor of the level of abstraction - call the smallest indivisible operation at a level 1 turning, and show how to convert from one level to other by breaking down the smallest indivisible operation - then routine - examples -  then tree of routines - then graph of routines -  therefore functions - then procs - then apps -  examples -  concept of base - counting size of a multi-language app - example/comparison of some such apps</p>
-<p>TODO: discuss size in file vs size when realized as process - dynamic programs will have a size different from file when they become processes.</p>
+<p>why count size, compare with sloc and other current ways of counting size, basic structure of code: language, program, operation, sizing up Hello World as an example, therefore compound operations and containers, <strong>still not found size of operations</strong>, therefore SSI, add viz as lego blocks, size of sequence, size of if, add viz as pipes, size of loop, add viz of marble run, <strong>add viz about graphs</strong>, <strong>still not found size of operations other than if and loop</strong>, therefore go down one level, then infinite levels, <strong>therefore resolve that at asymptote of the turing machine all sizes are 1, therefore define that all we need is a relative &quot;base&quot;, then introduce the &quot;turing&quot; as the size unit relative to any base, then answer questions about sizing 2 langs relative to a base, then talk about platform affordances, then back up to hello world picking the java language as the base and count size that way, then present comparison with sloc again, then talk about sizing up static data, then talk about static vs dynamic data, then move to engineering and the simple and exact ways of counting size</strong>.</p>
 <p><a name="what_is_size"></a></p>
 <h2>What is size?</h2>
 <p>The common sense description of size is: </p>
@@ -36,29 +34,47 @@
 <li><strong>Emperical</strong>: The aim here is to have numbers that represent size so that decisions and actions can be taken based on them. <a href="http://tbd/">Source Lines of Code</a>, <a href="http://tbd/">Function Points</a>, <a href="http://tbd/">COCOMO</a>, <a href="http://tbd/">Structure 101&#39;s fatness metric</a> and <a href="http://tbd/">Halstead metrics</a> seem to fit into this catergory.</li>
 <li><strong>Descriptive</strong>: These measures of size do use numbers that are easily derived from the source code, but they are used primarily to visualize it so that humans can grok it and take appropriately intelligent action. Code visualization tools such as <a href="http://tbd/">Code city</a>, <a href="http://tbd/">Software cartography</a> and Alan Kay&#39;s <a href="http://tbd/">Empire state building made of A4 sheets of code</a> are some examples of this type of measure.</li>
 </ol>
-<p>The emperical measures have the advantages of being:</p>
-<ul>
-<li>actually measurable (with some error, but still)</li>
-<li>language agnostic</li>
-<li>useful as gross comparison tools.</li>
-<li>relatively easy to apply to small programs manually; and gracefully upgradable to bigger codebases with automation.</li>
-</ul>
-<p>... but they also are not:</p>
-<ul>
-<li>&quot;smart&quot; units of measure in that they dont consider the structure of code <em>AS CODE</em>. With the possible exception of the Halstead metrics, the other approaches treat code as either text or conceptual &quot;functions&quot;.</li>
-<li>accurate measures of size per se; just convenient ones.</li>
-<li>easily extended to other properties of code; the relations are forced and the equations (if any) have emperical constants and pre-conditions attached.</li>
-</ul>
-<p>Meanwhile, the descriptive measures have the advantages of being:</p>
-<ul>
-<li>easy for humans to understand a lot of information in one go.</li>
-<li>able to transcend the implementation language depending on the abstraction chosen.</li>
-</ul>
-<p>... but they also do not:</p>
-<ul>
-<li>dont give direct feedback as to what&#39;s wrong; a practised user has to interpret the results.</li>
-<li>do not actually measure anything at all; merely provide a visualization.</li>
-</ul>
+<p>Here is a comparison of the pros and cons of these two approaches:</p>
+<table>
+    <thead>
+        <tr><th>Approach</th><th>Pros</th><th>Cons</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Emperical</td>
+            <td>
+                <ul>
+                    <li> Actually measurable (with some error, but still) </li>
+                    <li> Language agnostic</li>
+                    <li> Useful as gross comparison tools.</li>
+                    <li> Relatively easy to apply to small programs manually; and gracefully upgradable to bigger codebases with automation.</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Not &quot;smart&quot; units of measure in that they dont consider the structure of code <em>AS CODE</em>. With the possible exception of the Halstead metrics, the other approaches treat code as either text or conceptual &quot;functions&quot;.</li>
+                    <li>Not accurate measures of size per se; just convenient ones.</li>
+                    <li>Not easily extended to other properties of code; the relations are forced and the equations (if any) have emperical constants and pre-conditions attached.</li>
+                </ul>
+            </td>
+        </tr>
+            <td>Descriptive</td>
+            <td>
+                <ul>
+                    <li> Easy for humans to understand a lot of information in one go. </li>
+                    <li> Able to transcend the implementation language depending on the abstraction chosen.</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Dont give direct feedback as to what&#39;s wrong; a practised user has to interpret the results.</li>
+                    <li>Do not actually measure anything at all; merely provide a visualization.</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <p>Obviously, neither approach seems comprehensive nor feels right. Wouldn&#39;t it be nice to have a measure of code size that:</p>
 <ul>
 <li>Used the structure of the code <strong>AS CODE</strong>,</li>
@@ -382,10 +398,11 @@ Here&#39;s one contrasting program:</p>
             goto top
           end if
     end:  &lt;&lt;.. steps after loop..&gt;&gt;</code></pre>
-<p>Thus,
-        size(program 8b loop)     = size(init loop) + size(if)
-        Now, let  size(init loop) = i, some nonzero size depending on the type and number of operations</p>
-<pre><code>              size(if)        = size(condition) + size(if branch) + size(else branch)
+<p>Thus,</p>
+<pre><code>    size(program 8b loop)     = size(init loop) + size(if)
+    Now, let  size(init loop) = i, some nonzero size depending on the type and number of operations
+
+              size(if)        = size(condition) + size(if branch) + size(else branch)
                               = size(condition) + size(goto end) + [size(loop body) + size(increment loop) + size(goto top)]
                               = c + 1* + [ b  + p + 1* ]
 
