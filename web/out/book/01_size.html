@@ -13,9 +13,9 @@
 <li><a href="#sizing_up_hw">Sizing up Hello World</a></li>
 <li><a href="#ssi">Down to the basics - SSI</a></li>
 <li><a href="#turtles">Turtles all the way</a></li>
-<li><a href="#backup">Back up to SSI/Java</a></li>
-<li><a href="#sizing_data">Sizing up the data</a></li>
+<li><a href="#backup">Back up the rabbit hole</a></li>
 <li><a href="#turing_unit">A new measure of code size</a></li>
+<li><a href="#sizing_data">Sizing up the data</a></li>
 <li><a href="#static_v_dynamic">Static vs Dynamic size</a></li>
 <li><a href="#engg_corner">Engineer&#39;s Corner: Implementing Turing sizes</a></li>
 </ul>
@@ -27,7 +27,8 @@
 <p>The common sense description of size is: </p>
 <pre><code>    Size: How big something is. </code></pre>
 <p>Length, area and volume are typical ways of quantifying how big something is. When applied to code, this essentially means how much code there is; specifically excluding ideas like how complex it is, how fit it is for its intended purpose and so forth.</p>
-<p>Why do we need such a measure? The most common real-world use is estimation: when building new software or changing existing ones we like to estimate the effort involved. Is there a larger purpose, however - one that serves the practitioner and not just the manager?  I posit that size is one of those basic properties of code that aids in <em>understanding</em> and <em>knowing</em> code as well. We talk routinely of small, well designed codebases that can be understood and used easily; and also of large, unwieldy codebases that are difficult to understand. Wouldn&#39;t it be nice to quantify those subjective statements? A case might therefore be made that size is one of the &quot;thing&quot;s that we <em>should</em> understand about code. Also, note that the &quot;small&quot; and &quot;large&quot; parts mentioned above point to the size of the code and  the &quot;easy&quot; and &quot;difficult&quot; parts point to its complexity; and certainly the two are related. So quantifying size might lead to understanding other &quot;thing&quot;s about code.</p>
+<p>The most common real-world use of such a measure is estimation: when building new software or changing existing ones we like to estimate the effort involved. Is there a larger purpose, however - one that serves the practitioner and not just the manager?  </p>
+<p>I posit that size is one of those basic properties of code that aids in <em>understanding</em> and <em>knowing</em> code as well. We talk routinely of small, well designed codebases that can be understood and used easily; and also of large, unwieldy codebases that are difficult to understand. Wouldn&#39;t it be nice to quantify those subjective statements? A case might therefore be made that size is one of the &quot;thing&quot;s that we <em>should</em> understand about code. Also, note that the &quot;small&quot; and &quot;large&quot; parts mentioned above point to the size of the code and  the &quot;easy&quot; and &quot;difficult&quot; parts point to its complexity; and certainly the two are related. So quantifying size might lead to understanding other &quot;thing&quot;s about code.</p>
 <h3>Current notions of code size</h3>
 <p>Let&#39;s first look at how size is measured currently. In my cursory review of the current state of affairs, there are two broad approaches to measuring size:</p>
 <ol>
@@ -94,10 +95,10 @@
                                                                                      --(1)</code></pre>
 <p>Or in BNF-ish syntax:</p>
 <pre><code>    language  :=  operation+
-    program   :=  operation+
+    program   :=  operation+ where operation belongs to language
     operation :=  ....smallest unit of code exec....
                                                                                      --(2)</code></pre>
-<p>... which only highlights the fact that while we have a definition for Operation, we&#39;re not really close to using it to actually measure things. However, <strong>if</strong> we knew how to size operations, this characterization seems to say intuitive that the size of a program is a summation of the size of the operations contained in it. In handwavy formulas, this can be expressed as:</p>
+<p>... which only highlights the fact that while we have a definition for Operation, we&#39;re not really close to using it to actually measure things. However, <strong>if</strong> we knew how to size operations, this characterization seems to intuitively say that the size of a program is a summation of the size of the operations contained in it. In handwavy formulas, this can be expressed as:</p>
 <pre><code>    size(program)      = sum(size(operation)) for all operations in the code
     assuming
     size(operation)    = a known value                                               --(3)</code></pre>
@@ -171,17 +172,16 @@ Here&#39;s one contrasting program:</p>
         }
     }
     // SLOC: 6, Size = Size(Program 2)?</code></pre>
-<p>This Program splits the final function call itself into two while still achieving the same end result. Clearly a statement can not only be broken into smaller bits, but what it <em>does</em> can also be broken into smaller bits. This hints at a couple of things:</p>
+<p>This program splits the final function call itself into two while still achieving the same end result. Clearly an operation can not only be broken into smaller bits, but what it <em>does</em> can also be broken into smaller bits. This hints at a couple of things:</p>
 <ul>
 <li>That a given problem can be solved by multiple programs. It seems intuitive that there&#39;s at least one program that solves it with the least size and that there are potentially more than one programs that solves it with more.</li>
 <li>What a program IS (structure and its size) does not predict what the program DOES (its meaning). We will have to look elsewhere for meaning - either downwards to the platform that it is based on or upwards to the human (or proxy human ie, code generator) that creates it. </li>
 </ul>
-<p>Onto Questions #2.</p>
 <h3>Question 2: Is calling a library function an Operation?</h3>
 <p>While a library function itself is not a language feature, the ability to make a function call certainly is. A function call is essentially a shortcut to invoke a bunch of statements defined elsewhere; and supporting such a feature does require some effort on the language runtime&#39;s part. So Operation it is. In definition form again:</p>
 <pre><code>Defining and calling functions are Operations if the language supports it            --(7)</code></pre>
 <h3>Question 3: Should we count the size of the function if all we&#39;re doing is calling it?</h3>
-<p>The size of the function itself (ie, that of its body) should be different from that of a call to the function, surely. This question and its answer does highlight that these two constructs - the definition and the call to it - are two separate operations that a language supports. The definition is clearly a compound operation, but what about the call? If the language supports the concept of functions and calling them, the operation of calling a function has to be atomic, by definition. Updating the BNF-ish definitions, therefore:</p>
+<p>The size of the function itself (ie, that of its body) should certainly be different from that of a call to the function. This answer highlights the fact that these two constructs - the definition of a function and the call to it - are two separate operations that a language supports. The definition is clearly a compound operation, but what about the call? If the language supports the concept of functions and calling them, the operation of calling a function has to be atomic, by definition. Updating the BNF-ish definitions, therefore:</p>
 <pre><code>    operation   := compound_op | simple_op
     compound_op := function_def | ...other compound ops...
     simple_op   := function_call | ....other smallest units of code exec....         --(8)</code></pre>
@@ -234,8 +234,8 @@ Here&#39;s one contrasting program:</p>
                                                                                      --(12)</code></pre>
 <p>Looking at (11) above, however, how different is a container from another Atomic Operation in terms of contribution to size? Its presence adds to the total size just as another atomic operation and the formula above ensures that its contents&#39; size is accounted for. As long as we retain the <code>+ sum(size(contents))</code> part, we could treat containers as some more atomic operations during analysis.</p>
 <h3>Question #5: So how to numerically calculate size?</h3>
-<p>So how do we put some numbers against these ideas? We&#39;re essentially at an impasse: We dont yet know how to size the atomic statements, nor do we know the size of the the containers themselves. All we have determined so far is: <em>If</em> we know the sizes of the statements and their containers, the overall size is an accumulation of individual sizes.</p>
-<p><code>Hello World</code> is as basic as programs get, but its still proven to be complex and high level enough to prevent us from being able say anything definitive about Operations and their sizes. Maybe we need to look at a simpler model of programming?</p>
+<p>So how do we put some numbers against these ideas? We&#39;re slightly better off than before, but we still dont yet know to size the atomic operations, nor do we know the size of the the containers themselves. All we have determined so far is: <em>If</em> we know the sizes of the operations and their containers, the overall size is an accumulation of individual sizes.</p>
+<p>Maybe a program in a high level language is closer to the application of programming as opposed to its core. Maybe we need to look at a simpler model of programming?</p>
 <p><a name="#ssi"></a></p>
 <h2>Down to the basics - SSI</h2>
 <p>Let&#39;s try the simplest notion of code. All of programming has <a href="http://en.wikipedia.org/wiki/Structured_programming#Low-level_structure_programming">famously</a> <a href="http://en.wikipedia.org/wiki/Structured_program_theorem">been</a> <a href="http://en.wikipedia.org/wiki/Von_Neumann_architecture">depicted</a> as being made of 3 basic operations:</p>
@@ -244,10 +244,9 @@ Here&#39;s one contrasting program:</p>
 <li>Selection, ie the choice of one step vs the other, aka the <code>IF</code></li>
 <li>Iteration, ie the ability to repeat steps that have been already been executed, aka the <code>LOOP</code></li>
 </ul>
-<p>What can we say about a program that has some collection of these 3 operations? Well, assuming we know the &quot;size&quot; of each such operation, the size of the program(s) that contain these operations can be computed as an accumulation of their individual sizes, same as (3) above.</p>
-<p>Let&#39;s try this out on each of the 3 operations, starting with...</p>
+<p>Let&#39;s try sizing up each of these basic operations, starting with...</p>
 <h3>Sequence</h3>
-<p>Formula (3) certainly seems appropriate for simple <em>Sequential</em> programs like &quot;Print 5 superhero names&quot;, depicted here in pseudo-code:</p>
+<p>A Sequence is technically not an operation itself, but a string of them. Let&#39;s plod on, however, to see if we can glean something about operations from a collection of them. Let&#39;s write a simple <em>Sequential</em> program like &quot;Print 5 superhero names&quot;. I&#39;m going to switch to pseudo-code so that we can ignore all platform issues. Here&#39;s the program in a language that somewhat resembles assembly:</p>
 <pre><code>    // program 6
     print &quot;Superman&quot;
     print &quot;Batman&quot;
@@ -256,7 +255,7 @@ Here&#39;s one contrasting program:</p>
     print &quot;Aquaman&quot;
     stop
     // SLOC: 6, Size: 6* units</code></pre>
-<p>Assuming the size of the <code>print</code> and <code>stop</code> operations were 1 unit, and using (3):</p>
+<p>Since we&#39;re at the same impasse of not knowning the sizes of operations, let&#39;s make some assumptions. Assuming the size of the <code>print</code> and <code>stop</code> operations are 1 unit, and using (3):</p>
 <pre><code>    size(program6) = sum(size(5 print operations &amp; 1 stop operation))
                    = 1* + 1* + 1* + 1* + 1* + 1*
                    = 6* units
@@ -267,7 +266,7 @@ Here&#39;s one contrasting program:</p>
 <img src="images/lego-tower-falling.jpg" alt="Kids&#39; lego tower falls" title="This is your Code crashing"></p>
 <p>We talk all the time about &quot;building&quot; software and code building has long been equated to piling Lego blocks on top of each other. And when heavy code breaks it crashes very similarly to how a heavy lego structure does. So let&#39;s equate size to height. </p>
 <p>One break from the normal way of using Legos, though: code legos are indeed stacked one block at a time, but by sticking each block <strong>under</strong> the one that&#39;s already in place, not on top. That way, program 6 gets built in the order we read it, not from the last statement upwards.</p>
-<p>But that was just a <em>Sequence</em>. Let&#39;s try adding in some ...</p>
+<p>But that was just a <em>Sequence</em>. Let&#39;s try some ...</p>
 <h3>Selection</h3>
 <p>... by writing a simple program to check if 5 is odd or even. Again, in pseudo code:</p>
 <pre><code>    // program 7
@@ -291,7 +290,7 @@ Here&#39;s one contrasting program:</p>
     +----------------+-------------------+
     |stop            |
     +----------------+</code></pre>
-<p>So, what then, is the size of an <code>if</code>? The size of the main branch contributes to the length of the program it&#39;s in, while the size of the alternate branch adds to the width of the program. It seems safe to say, therefore, that:</p>
+<p>So, what then, is the size of an <code>if</code>? The size of the main branch contributes to the length of the program it&#39;s in, while the size of the alternate branch can be considered as adding to the width of the program. It seems safe to say, therefore, that:</p>
 <pre><code>    size(if)      = size(condition check) + sum(size of individual branches)
                   =  c + sum(b) 
     where
@@ -456,13 +455,11 @@ loop contained in the same line is called out, increasing its size when compared
 <h4>Combining Sequence, Selection and Iteration</h4>
 <p>SSI essentially talks about programs as being <em>combinations</em> of sequence, selection and iteration; while we&#39;ve been doing all our analysis in isolation. Let&#39;s fix that. Our formulas for sizes of these individual operations are:</p>
 <pre><code>    size(sequence) = sum(size(operation)) for all operations in sequence       --(2&#39;) program replaced with sequence
-    size(if)       =  c + sum(b)                                               --(14) 
+    size(if)       = c + sum(b)                                                --(14) 
     size(loop)     = i + c + b + p + o                                         --(24)</code></pre>
 <p>Since all these formulas are additions, we <em>could</em> treat the <code>if</code>s and <code>loop</code>s as &quot;compound&quot; operations that contribute a known size to a larger sequence that is the program; and at this larger level, there is only the sequence. This means that (2&#39;) above can be restored back to its original form:</p>
 <pre><code>    size(program) = sum(size(operation)) for all operations in program
-
-    Using (26),
-                  = sum(size(ifs)) + sum(size(loops)) + sum(size(other operations))     --(27)</code></pre>
+                  = sum(size(ifs)) + sum(size(loops)) + sum(size(other operations))     --(26)</code></pre>
 <p><em>Now</em> we&#39;re getting somewhere. We started off with the expectation that the size of the whole would be the sum of the size of the parts; and we&#39;ve reached that result for the three primordial operations. If we are able to shore up those pesky asterisks we&#39;ve had to put on the &quot;other&quot; operations also as sums of sizes, we&#39;d be golden.</p>
 <p>Also note that as long as all we&#39;re doing is measuring size, the order of operations dont seem to matter - only that they are counted. To use the marble run analogy, the size or color of the blocks dont matter - only their number. Obviously, this will not apply for other measures of code such as complexity: we build code in a particular order explicity so as to effect certain results; but for size this is a Good Thing(TM).</p>
 <h4>Levels of Abstraction</h4>
@@ -475,13 +472,13 @@ loop contained in the same line is called out, increasing its size when compared
 <p> The SSI model has been a good deep dive into simple operations, but at the level of abstraction that SSI is described, the <code>if</code> and the <code>loop</code> are the only concepts required to express general computing, so &quot;what each step in a sequence does&quot; is glossed over. To size an actual codebase, however, we do need to consider each such operation and size them. Up until now we&#39;ve been making assumptions on their size using those pesky asterisks, but they <em>do</em> need to go.</p>
 <p><a name="turtles"></a></p>
 <h2>Turtles all the way</h2>
-<p>Ok, so its finally time to address the size of operations. To recap: We&#39;ve decided that there are simple and compound operations and have defined the former as operations that cannot be reduced further within a language&#39;s structure. The size of compound operations we declared was the sum of the sizes of the simple operations that made it up, but we were&#39;nt sure how to determine the size of each such simple operation itself. So for example, a snippet like 2.1 (repeated below) has...</p>
+<p>Ok, so its finally time to address the size of operations. Consider a snippet like 2.1 (repeated below):</p>
 <pre><code>    // snippet 2.1
     PrintStream outPS;                 // line 1.1.1
     outPS = System.out;                // line 1.1.2
     outPS.println(&quot;Hello World&quot;);      // line 1.2
     // SLOC : 3, Size : ?</code></pre>
-<p>... a variable declaration (1.1.1), an assignment(1.1.2) and a member access combined with a function call (1.2). Each of these operations dont <em>feel</em> the same size simply because I immediately begin to imagine their implementation and know that they must be inherently different in implementation and therefore of different sizes.</p>
+<p>It has a variable declaration (1.1.1), an assignment(1.1.2) and a member access combined with a function call (1.2). Each of these operations dont <em>feel</em> like they could be the same size simply because I immediately begin to imagine their implementation and know that they must be inherently different in implementation and therefore of different sizes.</p>
 <p>These questions are still within the same language. With real-world code we will have further issues:</p>
 <ol>
 <li>When we start comparing one language with another we will have to answer questions like &quot;How does a Hello World in Java compare to one in Ruby?&quot;, which will quickly devolve into &quot;How many Java print statements equals one Ruby print&quot; and such like.</li>
@@ -492,11 +489,11 @@ loop contained in the same line is called out, increasing its size when compared
 <p>For argument&#39;s sake, let&#39;s say we do have access to the platform and can measure the sizes in that language. Would we be able to say anything more about the size of the program under consideration? Let&#39;s work it out:</p>
 <p>For any language L with n unique Simple operations (including containers) S1, S2, ... Sn (hereafter abbreviated to <L,S,n>), the size of any program P in L is:</p>
 <pre><code>    size(P) = K1.size(S1) + K2.size(S2) + ... + Kn.size(Sn)    
-        = sum(Ki.size(Si)) for i: 1 to n                                             --(28)</code></pre>
+        = sum(Ki.size(Si)) for i: 1 to n                                             --(27)</code></pre>
 <p>since any or all of the unique simple operations (and/or containers) will have to be used in <code>Ki</code> quantities to make the program.</p>
-<p>If a language <L,S,n> is implemented in terms of another language &lt;L&#39;,s,m&gt;, each of its unique simple operations S1...Sn can be themselves expressed as programs in L&#39;. Since the simple operations in L&#39; are s1,s2,....sm, we get:</p>
+<p>If a language <L,S,n> is implemented in terms of another language <L',S',m>, each of <code>L</code>&#39;s unique simple operations S1...Sn can be themselves expressed as programs in L&#39;. Since the simple operations in L&#39; are s1,s2,....sm, we get:</p>
 <pre><code>        size(S1) = sum(Kj.size(sj)) for j: 1 to m
-|||ly,  size(S2) = sum(Kj.size(sj)) for j: 1 to m                                    --(29)</code></pre>
+|||ly,  size(S2) = sum(Kj.size(sj)) for j: 1 to m                                    --(28)</code></pre>
 <p>... and so forth. </p>
 <p>But L&#39; <em>itself</em> is most probably implemented in terms of another language, say L&#39;&#39;. So even if we were able to say anything definitive about the sizes of S1 and S2, it would be in terms of L&#39;&#39; sizes. L&#39;&#39; could very well be built using L&#39;&#39;&#39;. Where will this end?</p>
 <h3>Down Infinite Levels and back</h3>
@@ -508,131 +505,189 @@ loop contained in the same line is called out, increasing its size when compared
 </blockquote>
 </blockquote>
 <p>In other words, if we started this journey down the levels of implementation to try and understand the size of a Java function call, the next immediate step is the JVM source. From there we could proceed onto its Java or C source, the source of the C runtime, the source of the Assembly runtime that follows, onto the CPU, its microcodes and eventually onto the very NAND gates that make up the machine that runs the code. But even at this level, we&#39;d be sizing up something that doesn&#39;t exist physically but is merely modeling (as closely as possible within the 0-5V range) a concept that exists in solely somebody&#39;s head. </p>
-<p>At this asymptote, size has no explicit meaning because all operations just happen and do not need to be broken down further. They do what they do without resorting to further delegation. As such, the MUST all be of the same size. At any level above it, there is merely the combinations of these operations in particular orders to achieve particular effects. Size has the meaning that it is the count of the primordial operations. And thus we could climb back up through the levels culiminating in a Java print function call. </p>
+<p>Why then should we attempt to find absolute size of code? Could we make do with a size that&#39;s relative to a known base below which we will not probe, but is sufficient for us to understand the size of whatever is built above it? Let&#39;s work it out.</p>
 <p>In the formulas we&#39;ve been writing till now, this would be:</p>
-<pre><code>    If &lt;L1,S1,n1&gt;, &lt;L2,S2,n2&gt;, &lt;L3,S,n3&gt;, ... &lt;L*,S*,N*&gt; are a set of languages such that 
-    L1  is implemented in L2
-    L2 is implemented in L3, and so forth till
-    L* is a final, asymptotic language
+<pre><code>    If &lt;L,S,n&gt;, &lt;L&#39;,S&#39;,n&#39;&gt;, &lt;L&#39;&#39;,S&#39;&#39;,n&#39;&#39;&gt;, ... &lt;L*,S*,N*&gt; are a set of languages such that 
+    ... L1  is implemented in L&#39;
+    ... L2 is implemented in L&#39;&#39;, and so forth till
+    ... L* is a base language that we choose to ingnore the implementation of.
 
-    if s is a statement in S1,
-    size(s) = sum(Ki.size(S2i)) for i: 1 to m
-            = K1.size(s1) + K2.size(s2) + ... + Km.size(sm)
-    Now expressing each si in terms of L&#39;&#39;,
-            = K1. sum( Lj.size(tj) for j: 1 to o ) +
-              K1. sum( Mj.size(tj) for j: 1 to o ) +
-              ... +
-              Km. sum( Nj.size(tj) for j: 1 to o )
-    where Lj, Mj and Nj are sets of constants that stand for the count of tj statements used to make each of the si&#39;s.
-    At the level L&#39;, there are m such constants
-    At the level L&#39;&#39;, there are o.m such constants
-    At the level L*, there are </code></pre>
-<p>Ks in terms of binomial selection of s&#39;s
-Even if we reach that asymptocially primordial language, would we have said something about the size?
-ie </p>
-<p>what would the size of statements in Linf be? Such an executor would &quot;just do things&quot; and therefore can be considered to have statements of unit size. Thus all &quot;Javaness&quot; or &quot;Ruby ness is purely from the structure and not meaning?????</p>
-<h1>===============COPIED HW CONTENT HERE ===================</h1>
-<p>REWRITE LINE HERE ===================</p>
-<h2>A natural way of measuring code size</h2>
-<p>conceptual operations to compound statements to derivation of atomic statement</p>
-<h1>old text</h1>
-<p>Like before, let&#39;s try things out and form opinions as we go. We have to come up with numbers for measuring the sizes of:</p>
-<ul>
-<li>The primordial <code>IF</code>s and <code>LOOP</code>s</li>
-<li>Statements in both Simple and Exact methods</li>
-<li>Containers</li>
-</ul>
-<h3>First up: Size of the primoridial <code>IF</code> and <code>LOOP</code>s.</h3>
-<p>Since our discussion about containers, these look suspiciously like containers, dont they? The <code>IF</code> doesnt do anything else other than directing traffic to one sequence of statements or the other, while the <code>LOOP</code> is merely re-running code based on a hidden <code>IF</code>. So we could just apply the rules for containers on them too, right?</p>
-<p>Mostly. We&#39;d be discounting unconditional jumps (such as <code>goto</code>s in in Java or C, or <code>JMP</code> in most assembly languages) and sphagetti code if we did so. It&#39;s entirely possible to model the primordial concepts as even more primordial <code>IF</code> and <code>JUMP</code> &quot;opcodes&quot; to count such code, but we&#39;ll apply the 80-20 here and focus on code that is structurally sound for the most part.</p>
-<p>[TODO: Break primordial concepts into opcodes and allow counting of sphaghetti code.]</p>
-<p>So, <code>IF</code> and <code>LOOP</code>s are containers. We&#39;ll defer their calculation to later when we deal with containers in general, therefore.</p>
-<h3>Next: Size of Statements.</h3>
-<p>We&#39;ve to try counting in both the simple and exact way, so here goes.</p>
-<p><strong>In the Simple way</strong>, since one statement cannot be differentiated from another, the best we can do is to assume some standard size for all statements. The simplest standard size would be <code>1</code>, but if we emperically have (say, by comparison to exact measurements) an <em>average size</em> that is known, that could be used too. Obviously, this would be a language or platform specific value. Anyway,</p>
-<pre><code>    simple_size_unit(statement)    = 1
-    simple_size_avg(statement)    = Savg    (some emperical value)</code></pre>
-<p><strong>In the Exact way</strong>, there are even more difficulties. We do have the ability of differentiating between different types of statements, but how do we ascribe a number to each type of statement? If we have access to the implementation of those statements ( eg, we have access to the source code of the Java compiler and runtime) we could measure the size of that code and apply the <code>size(container)</code> formula. But what if we didnt have access to the source, or dont want to go down that rabbit hole?</p>
-<p>We will do exactly that later, but for now, let&#39;s see how far we can go without doing that. We have a couple of shortcuts:</p>
-<ul>
-<li><strong>Unit Size</strong>: Like in the simple way, we could give the exact statements unit size. This is better than the simple way because all those compound statements have been broken down already and will thus have size &gt; 1; but it doesnt count the <em>actual</em> size of the exact statements</li>
-<li><strong>Constant Size</strong>: Like the second option in the simple way, we could give all statements a size greater than one. This would be useful to compare codebases written with multiple languages, for example.</li>
-<li><strong>Indexed or Relative Size</strong>: Finally, we could make a half-hearted attempt at going down the rabbit hole. It works something like this: we pick one statement as the unit statement regardless of its actual size; and then index every other statements&#39; size to the chosen one&#39;s, ie, divide their sizes by that of the unit statement. This way, we express size as a number relative to another size and can absolve ourselves from doing any actual measurement by picking a unit statement and guessing the sizes of other statements relative to it.  I call it indexed because all sizes are indexed to the unit statement&#39;s size.</li>
-</ul>
-<p>In formula form that would be:</p>
-<pre><code>    exact_size_unit(statement)         = 1
-    exact_size_const(statement)        = Sconst    (some constant value)
+    if s is an operation in S, its size in terms of L&#39; is:
+    size(s)   = sum(Ki.size(S&#39;i)) for i: 1 to n&#39;
+              = K1.size(s&#39;1) + K2.size(s&#39;2) + ... + Kn&#39;.size(s&#39;n&#39;)
+               where Ki are constants as described in (28) above.
 
-    exact_size_ndx(unit_statement)        = 1
-    exact_size_ndx(other_statement_1)    = n1        (some number)
-    exact_size_ndx(other_statement_2)    = n2        (some other number)</code></pre>
-<p>We&#39;ll need some worked examples to grok this better; but let&#39;s put a hold on that till after we&#39;ve defined...</p>
-<h3>Size of Containers</h3>
-<p>As a refresher, the formula for contained code is <code>size(code) = size(container) + sum(size(contents))</code>. Let&#39;s apply this the primordials and containers of various kinds.</p>
-<p>In coming up with numbers, however, the definition of the <strong>Exact Statement</strong> above influences the thought process: can we calculate size of something by first assuming it doesnt exist and calculate the size of statement used to simulate its existence? For eg, can the size of a function container be determined by the number of <strong>Statements</strong> it would take to mimic function calls without such a facility being available in the language? This thought underlies much of the exposition below.</p>
-<p><strong>First:<code>IF</code></strong>:  Can <code>IF</code> be built from other statements? It doesnt seem like it; the ability to compare values and branch based on that comparison <strong>NEEDS</strong> to be part of the platform for it to work in a language. So <code>IF</code> is primordial; and applying the formula, we get:</p>
-<pre><code>    size(IF block)     = size(IF) + sum(size(contents))</code></pre>
-<p><code>IF</code> being a primordial, we can safely set <code>size(IF) = 1</code>. Its contents, however, are the multiple paths that can be taken depending on the condition being tested; and therefore can be of varying sizes. What then, is the size of the contents? Should we consider that some paths might never be executed? If we&#39;re measure size, I&#39;d say NO. <em>Dead code still adds to the size of the code</em>. So,</p>
-<pre><code>    size(IF contents) = sum(size(each path))</code></pre>
-<p><strong>Next up: <code>LOOP</code></strong>. Again, it doesnt seem like something that can be replaced. Sure, you can unroll loops if you know the number of times you&#39;re looping, but in general you dont. So this seems like a safe bet as a primordial. Applying the forumula to the <code>LOOP</code> turns out to be most straight-forward of all the containers. Its intrinsic size is unit (because it is primordial) and the size of its contents are summed up. Or in formulas:</p>
-<pre><code>    size(LOOP) = 1
-    size(LOOP contents) = sum(size(statements in LOOP))</code></pre>
-<p><strong>Next:Functions/Procs/Modules/Programs</strong>: Containers exist for a number of reasons: to encapsulate logic, to provide namespaces, to denote process boundaries. Its very possible to visualize the mechanism that is required to keep up the facade of containment because there were machines in the not-too-distant past that didnt have such features. However, the exact way by which the simulation is achieved will certainlny differ from one language to another. Therefore, we&#39;re again f aced with choices: Do we simplify and treat all containers the same? Do we consider them different, but take a guess as to their sizes? Or is there a &quot;one true&quot; way of universally measuring size of a container?
-If such a way exists, it certainly entails a journey down the aforementioned rabbit hole, so we will talk no more about it here. Instead, we will blindly march onwards with our shortcuts and see where they take us. Our options are:</p>
+    Similarly, size of any operation in S&#39; in terms of L&#39;&#39; is:
+    size(s&#39;1) = sum(Lj.size(s&#39;&#39;j)) for j: 1 to n&#39;&#39;
+              = L1.size(s&#39;&#39;1) + L2.size(s&#39;&#39;2) + ... + Ln&#39;&#39;.size(s&#39;&#39;n&#39;&#39;)
+
+    Thus expressing each S&#39; in terms of L&#39;&#39;,
+    size(s)  = K1  . sum( Lj.size(s&#39;&#39;j) for j: 1 to n&#39;&#39; ) +
+               K2  . sum( Lj.size(s&#39;&#39;j) for j: 1 to n&#39;&#39; ) +
+                ... +
+               Kn&#39; . sum( Lj.size(s&#39;&#39;j) for j: 1 to n&#39;&#39; )
+             = K1.L1. size(s&#39;&#39;1) + K2.L2.size(s&#39;&#39;2) + ... + Kn&#39;.Ln&#39;&#39;.size(s&#39;&#39;n&#39;&#39;)
+
+    If we carried this exercise all the way to L*, the operations in S can be expressed in terms of L* as:
+    size(s)  = K1 L1 ... K*1.size(s*1) + K1 L1 ... K*2.size(s*2) + .... + K1 L1 ... K*n*.size(s*n)
+               where K*i is the set of constants at L* required to build an operation in S
+
+                                                                                     --(29)</code></pre>
+<p>By definition, L* is a language that choose not to break down anymore. At this asymptote, size has no further detailed meaning because all operations just happen. They do what they do without resorting to further delegation. As such, they can all be deemed to be of the same size; the only constraint being that the value chosen should not be zero, since that would nullify the sizes of all operations based on these operations in L*. It therefore makes sense to set the sizes of the operations in L* to a unit size. That is,</p>
+<pre><code>    size(s*i) = 1 for i: 1 to n*                                                     --(30)</code></pre>
+<p>Thus the size of operations in L in terms of L* can be written as:</p>
+<pre><code>    size(s) = K1 L1 ... K*1. 1 + K2 L2 ... K*2. 1 + ... + K1 L1 ... K*n* . 1
+            =      C1          +       C2         + ... +      Cn*                   --(31)</code></pre>
+<p>... which is a &quot;sum or parts&quot; equation. So we have (for the most part) achieved what we set out to - define code size as a sum of sizes of the atomic operations that make it up.</p>
+<p>More importantly, we have also established that:</p>
 <ul>
-<li>All containers are Unit sized</li>
-<li>All containers have non-trivial size, but that&#39;s about all we can say</li>
-<li>All containers have a constant size</li>
-<li>One container can be considered the unit container and all others sized in relation to it.</li>
+<li>There is no absolute size; all size is relative to the &quot;level of abstraction&quot;</li>
+<li>We can pick an arbitrary level to be our &quot;base&quot; and attribute unit sizes to all atomic operations at that level</li>
+<li>Once we have a base, all sizes for code above it - its applications, so to speak - can be measured as sums of the sizes of the atomic operations.</li>
 </ul>
-<p>Or in forumulas:</p>
-<pre><code>    size_unit(any container) = 1
-    size_nonzero(any container) = C //det by practicioners.</code></pre>
-<p>Before we try to answer those questions, let&#39;s consider if it makes sense to &quot;go one level down&quot; in the first place. Can we stop at just one level down? If not, what <em>is</em> the bottom? To illustrate the true nature of this rabbit hole, I present an excerpt from the <a href="http://tbd/">Grand Unified Theory of Software Engineering</a>:</p>
+<p>So we&#39;re gravitating towards a 3-tier model of relative size:</p>
+<pre><code>    app
+     |
+    lang
+     |
+    base</code></pre>
+<p>In BNF-ish definitions and formulas again:</p>
+<pre><code>    app      := program+       ... in potentially multiple languages
+    program  := operation+     ... in one language
+    language := operation+
+    base     := language
+
+    size(app)       = sum(size(program))
+    size(program)   = sum(size(operation))
+    size(operation) = size(program in base)  if language
+                    = 1 unit wrt base        if base
+                                                                                     --(32)</code></pre>
+<p>Note that last bit: the unit no longer can be unadorned, we have to qualify it with &quot;with ... as base&quot; so that we always are comparing apples to apples.</p>
+<p><a name="#backup"></a></p>
+<h2>Back up rabbit hole...</h2>
+<h3>... to SSI</h3>
+<p>So let&#39;s try backing up to where we left off with the SSI model. Depicting the programs that we wrote in that section in the 3 tier model we get:</p>
+<pre><code>program 6      program 7     program 8
+   |              |              |
+   +--------------|--------------+
+                  |
+            SSI pseudo lang
+                  |
+                  ?</code></pre>
+<p>What do we choose as base for the SSI model? Since we explicitly stated it to be pseudo code, we could invent a base language if we wanted to, but we can also safely treat it as <strong>its own base</strong>. Now we can complete equation (27) with the size of operations using the result in (33): </p>
+<pre><code>    size(if)       = c + sum(b)                                                --(14) 
+    size(loop)     = i + c + b + p + o                                         --(24)
+    size(any other operation) = 1                                              --(33)</code></pre>
+<p>Now we can work out the sizes of the programs in pseudo-language units:</p>
+<p>TODO: FILL THIS TABLE OUT</p>
+<table>
+<thead>
+<tr>
+<th>Program</th>
+<th>SLOC</th>
+<th>Size</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>program 6</td>
+<td>6</td>
+<td>6 units</td>
+<td>The same as SLOC for &quot;linear&quot; programs</td>
+</tr>
+<tr>
+<td>program 7</td>
+<td>7</td>
+<td>2+1+(1+1)+1 = 6 sq units</td>
+<td>Less than SLOC, but &quot;wider&quot;</td>
+</tr>
+<tr>
+<td>program 8</td>
+<td>4</td>
+<td>1+1+1+1+0+1 = 5 sq units</td>
+<td>&quot;Wider&quot; than SLOC and thus larger numerically</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the asterisks are now gone.</p>
+<h3>.... to <code>HelloWorld</code></h3>
+<p>Now let&#39;s try backup all the way to where we started: <code>Hello World</code>. Since its a higher level than the simple SSI pseudo language, we have at least two options for a base:</p>
+<pre><code>  Hello world   Hello World
+      |             |
+    Java           Java
+      |             |
+     JVM           Java</code></pre>
+<p>The JVM is the obvious choice; it makes sense hierarchically and is the rightful base. However, if all we&#39;re doing is comparing Java programs, it might be easier to compare at an atomic Java statement level (similar to how we broke things down in that section above) instead of going down to the bytecodes that make up those statements.</p>
+<p>TODO: FILL THIS TABLE OUT</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Size in Java units</th>
+<th>Size in bytecode units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Class</td>
+<td>1</td>
+<td>TBD</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>1</td>
+<td>TBD</td>
+</tr>
+<tr>
+<td>Package import</td>
+<td>1</td>
+<td>TBD</td>
+</tr>
+<tr>
+<td>function call</td>
+<td>1</td>
+<td>TBD</td>
+</tr>
+</tbody>
+</table>
+<p>Now we can calculate the size of the program and compare with SLOC:</p>
+<table>
+<thead>
+<tr>
+<th>Program</th>
+<th>SLOC</th>
+<th>Size in Java units</th>
+<th>Size in bytecode units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>program 6</td>
+<td>5</td>
+<td>1+1+3 = 5 units</td>
+<td>TBD</td>
+</tr>
+</tbody>
+</table>
+<p><a name="turing_unit"></a></p>
+<h2>A new measure of code size</h2>
+<p>Now that we have a way to measure code size, its seems only right to give it a name so we can treat size with some specificity. Of course, this is a relative measure, so it always has to be qualified with &quot;... in base b&quot; or &quot;... with respect to base b&quot;; and it has to be prefixed with the dimension of the size - whether its linear or square or higher; but it still needs a name.</p>
+<p>As we went through the rabbit hole discussion, I didnt mention it, but the one true asmyptotic machine in CS lore is the Turning Machine - that primordial representation of a computer. So what better name for code size than <strong>Turing</strong>?</p>
+<p>I give you therefore:</p>
 <blockquote>
-<p>... Equally frustrating, also these executors of specifications are intangible. To start with, a software process, such as a Java Virtual Machine, is not only a consumer of Java Bytecode specifications, it is also itself an executing program specification, e.g., the file with the name <code>jvm.exe</code>. But if we explain the software process in terms of a specification, then this explanation only brings us back to the intangibility of the specification, so we have gained nothing in concreteness. Perhaps, then, we can become concrete by considering the executor of the executor. Typically, a java Virtual Machine is executed by a hardware processor; surely this must be a firm base on which we can base our discipline. Unfortunately, the relief of finding something tangible is short-lived. Because just like an electic capacitor is constructed as a model of the ideal capacitor, a processor is a (physical) model of an ideal processor. It is not important that the processor in a typical computer is implemented in silicon, for it could have been implemented using vacuum tubes, a small and nimble-fingered preson, or yet another software program. So also the processor is in this sense independent of the medium in which it is constructed. In the words of Edsgar Dijkstra:</p>
-<blockquote>
-<p>Originally I viewed it as the function of the abstract machine to privide a truthful picture of the physical reality. Later, however, I learned to consider the abstract machine as the &quot;true&quot; one, because that is the only one we can &quot;think&quot;; it is the physical machine&#39;s purpose to supply &quot;a working model&quot;, a (hopefully) sufficiently accurate physical simulation of the true, abstract machine.</p>
+<p><strong>Turing</strong>: the unit for size of code. It is dimensional and relative to a base. 
+Symbol: T|b
+        where b is a language that is used as the foundation</p>
 </blockquote>
-</blockquote>
-<p>Even if we reach that asymptocially primordial language, would we have said something about the size?
-ie size(S in L) = size(impl of S in L0) = sum(size(s&#39;s in L-1)) ...... sum(size(sinf in Linf)</p>
-<p>what would the size of statements in Linf be? Such an executor would &quot;just do things&quot; and therefore can be considered to have statements of unit size. Thus all &quot;Javaness&quot; or &quot;Ruby ness is purely from the structure and not meaning?????</p>
-<p>But then what is materially different between a routine and a base platform? Earlier, I defined <code>container</code> as 1routine | program | app | ...` which obviously increases in size, but what if we went further below the statement? This is exactly the question that we&#39;ve to face in coming up with a convincing answer for size of atomic statements.</p>
-<p>Even if we did have access to the platform and measured the sizes in that language, would we have said anything more about the size of the program under consideration? Let&#39;s work it out:</p>
-<pre><code>    Let L  = the language under consideration
-    and L0 = its base language
-    and n  = number of unique statement types in L0
-    and s1,...sn = sizes of unique statement types in L0
-
-    Further,
-    Let S1 and S2 be statements in L that are made up by some combination of statements from L0.
-    Then,
-    size(S1|L0) = sum(size(statements from L0 that make up its implementation))
-                = c1.s1 + c2.s2 +....+ cn.sn
-    where the notation &quot;|L0&quot; should be read as &quot;in terms of L0&quot;,
-    and   the c&#39;s are the # of times each s appears in the implementation of S.
-
-    Similarly,
-    size(S2|L0) = k1.s1 + k2.s2 +....+ kn.sn
-    where the k&#39;s are another set of constants.</code></pre>
-<p>If we now compare S1 and S2, what can we say about their size? If <code>size(S1|L0)</code> is the same, bigger or smaller than <code>size(S2|L0)</code>, does it mean that <code>size(S1|L)</code> is the same, bigger or smaller than <code>size(S2|L)</code>? Maybe, maybe not. Depends on the meaning of S1 and S2 with respect to L. What we can say - at best - is that the sizes wrt the base language influence the language&#39;s statements; the nature of influence is not clear.</p>
-<p>Maybe we could &quot;abstract out&quot; these the Java-ness (or whatever-language-ness) of a statement by ascribing a common size to the base platform itself? An analogy from physics might help: an object has <em>Mass</em>, which is an intrinsic constant property and <em>Weight</em> which is dependent on the gravitational pull that another object exerts on it. So my mass remains the same regardless of the planet that I&#39;m on, but my weight varies from one planet to another. If such a thing were possible, we could indeed say:</p>
-<pre><code>    size(Java Statement of type X) != size(Ruby statement of type X)
-    because 
-        size(Java Statement of type X) = Gjava . 1
-        size(Ruby Statement of type X) = Gjava . 1</code></pre>
-<p>However,  </p>
-<p>So as a pure &quot;isolated black box&quot; exercise, we could treat them as &quot;blocks of the same size&quot; and say that all atomic statements have unit size, ie </p>
-<pre><code>    size(statement) = 1 for a given language L</code></pre>
-<p>TODO: WAS GOING TO MAKE THE JUMP INTO DEFINING WEIGHT VS MASS ETC AT THIS POINT IN CONTRAST WITH TEXT ABOVE AND BELOW.
-Let&#39;s see if some analogy from the physical world helps. We call something big (or small) depending on how much area or volume it takes up. Two things could be of the same size, but one could be heavier than the other if its made of a denser material. The same thing could also be heavier or lighter depending on the planet it is on. In formulas</p>
-<pre><code>    Mass = interial momentum
-    Size = Volume or area
-    Density = Mass / Unit Size
-    Weight = Mass x Gravitational Acceleration due to Planet P</code></pre>
-<p>TODO: UNITS
-TODO: CODE AS A STRUCTURE.</p>
+<p>Acceptable usage of the unit in written text to describe code with linear size 15 with Java as base would be: <code>15T|Java</code> or <code>15T in Java</code> or <code>15 Java turings</code>.</p>
+<h3>Some questions in the brave new world of Turing-sized code</h3>
+<p>Let&#39;s reconsider some questions raised earlier:</p>
+<ol>
+<li>How would we compare a Hello World written in Java vs one written in Ruby, for example?</li>
+<li>If size is reduced to 1 at a base language, will languages become bereft of meaning? Is &quot;Javaness&quot; or &quot;Ruby ness is purely from the structure and not meaning?</li>
+</ol>
+<p>[STOPPED HERE SEP 20 PM]</p>
 <h2>Engineer&#39;s Corner</h2>
 <p>For a small program like the one above, this is fine, but for any non-trivial codebase we cannot expect to get a true count of atomic statements without some medium-to-high complexity parsing of the source - something that might not be acceptable in all cases. If we instead took the shortcut of just considering line 1 a single statement, its size is 1. So: we can take one of two stances to answer Question #1:</p>
 <ol>
@@ -643,21 +698,6 @@ TODO: CODE AS A STRUCTURE.</p>
 <p>The Exact way is good in that it tends towards purity in measurement - code can be sized in terms of the atomic operations supported by the language itself and/or its runtime. It does, however, require non-trivial understanding/parsing of the source by human/tool to arrive at the exact size of code.</p>
 <p>Should we pick one method over the other? The scientific mind suggests discarding the Simple for the Exact. The Simple approach, however, might be useful for &quot;rough estimates&quot;. It could also be that the difference between sizes arrived at by the two methods are statistically close enough for a sufficiently large body of code that we might not want to go through the pain of calculating size exactly.</p>
 <p>So let&#39;s keep both for now.</p>
-<p>[snp fromtop]
-To summarize so far:</p>
-<ol>
-<li><strong>Statement</strong> is the unit of measure for software size.</li>
-<li><strong>Statement</strong> can be defined in two ways:<ul>
-<li>Simple: A statement is whatever appears between two statement separators per the language&#39;s grammar.</li>
-<li>Exact: A statement is the simplest statement that could be written in the language; a statement in the language&#39;s grammer that can be converted into a set of smaller statements within that same grammar is a <strong>Compound Statement</strong> and should be converted to that set of smaller statements to calculate size. Its size is equal to the sum of the individual statement&#39;s sizes.</li>
-</ul>
-</li>
-<li>Code containers such as functions, procedures, modules, programs, etc have non-zero size of their own; in addition to the cumulative size of their contents. As such containers can be treated as atomic statements themselves for size calculations.</li>
-<li>We have yet to figure out how to size the atomic Statements themselves.</li>
-</ol>
-<p>[snp fromtop]</p>
-<p>Well, maybe we dont have to. Instead of actually analyzing atomic statements, we could always fake it, err, make some educated guesstimations :)</p>
-<p>For instance, what if we took the size of the atomic statements and all containers to be 1? What this means in principle is that we dont care what the actual sizes of atomic statements are since we&#39;re not bothered about what happens below the level of the language under consideration. As far as we know, things below that level &quot;just are there&quot; and therefore we will treat all atomic statements as &quot;blocks of the same size&quot;. Similarly, we will treat all containers as being equivalent to single blocks.</p>
 <p>Yes, this does mean that we&#39;re comparing apples to oranges; but let&#39;s see how far it takes us.</p>
 <p>So, applying the formula</p>
 <pre><code>    size(code in container) = size(container) + sum(size(contents)) for all contents in the container</code></pre>
@@ -728,73 +768,47 @@ To summarize so far:</p>
 </tr>
 </table>
 
-<p>A few points that become apparent with this comparison:</p>
-<ul>
-<li>The size measure will have a natural advantage over SLOC because it measures structure and not layout of code. So a program rewritten to be a single line of text would still carry its full size according to this measure, but be treated as a single source line of code. This is true even of the simple method.</li>
-<li>The exact measure should in general give lesser size numbers than SLOC</li>
-<li>The Exact approach has some gotchas. The one apparent from this table is the sizing of Program 3. There are two <code>System.out.println()</code> calls which should be reduced to the 3 lines from snippet 2.1. But since they both do the same thing, we could just reuse lines 1.1.1 and 1.1.2 when reducing the call to <code>print()</code>. This would bring down the effective statement count by 2, resulting in a total of 6 instead of 8. However, should such an optimization be done? We <em>are</em> using the mechanism of breaking down to smallest statements to arrive at the size of a compound statemnt, but what we&#39;re actually measuring is that line1 hs a package access,an object access and a function call. In that sense we should size it at 3. Also, this happens to be a small program where two statements that use the same objects are right next to each other. By allowing such optimizations we make the counting of size non-local and therefore more difficult to understand and apply.</li>
-</ul>
 <p>Ok, that was for the smallest possible programs. What if we did the same exercise for slightly larger programs?</p>
 <p>TODO: COMPARE SIZES OF 2 PROBLEMS IN THE SAME LANGUAGE
 TODO: COMPARE SIZES OF SAME PROBLEM IN 4 LANGUAGES - EITHER 99 BOTTLES OR FIZZBUZZ</p>
 <h2>Footnotes</h2>
 <p><a id="ftnote1"></a>
 [1]: For eg where you&#39;d split a long chain of method calls into an intermediary value for readability, but this increases size because now you have an additional variable</p>
-<hr>
-<p>This structure could be written in a BNF-ish syntax (reading <code>:=</code> as &#39;is made of&#39;) as:</p>
-<pre><code>    program             := class_definition
-    class_definition    := method 
-    method              := statement                                                 --(1)</code></pre>
-<p>... where <code>statement</code> is that single line of code. One immediate thought that comes up is: Should we even count the non-executable bits at all? Put another way, if we knew the size of that statement would that be the size of the program? This question can be answered intuitively by comparing the same program written in another language. For example, here&#39;s the Ruby version of <code>Hello World</code>:</p>
-<pre><code>    # program 2
-    println &quot;Hello World&quot;
-    # SLOC: 1, Size: ?</code></pre>
-<p>Intiutively, therefore, it seems that the two ceremonial containers in Java have GOT to count for some additional size. So we might say something like:</p>
-<pre><code>    size(program)             = size(program construct) + size(its contents) ie, the class def in the case of Hello World
-    size(class_definition)    = size(class construct)   + size(its contents) ie the method 
-    size(method)              = size(method construct)  + size(its contents) ie the statement
-    size(statement)           = ?
-                                                                                     --(2)</code></pre>
-<p>That was just <code>HelloWorld</code>. In general, programs in most languages could be described without much loss in accuracy (or generality) as having containers and contents defined as:</p>
-<pre><code>    code            := container + contents
-    container       := routine | class | package | module | program | app | ... in increasing order of size
-    contents        := statement | container
-    where
-            routine := function | procedure | method                                 --(3)</code></pre>
-<p>Note that:</p>
-<ul>
-<li>The <code>| app | ...</code> in <code>container</code>&#39;s definition seems to imply that these &quot;formulas&quot; should hold for things larger than a single program and that is certainly something to aspire for; but for now we will restrict ourselves to the level of a single program so that we can concentrate on defining size in a <em>single language</em>.</li>
-<li>I&#39;ve made a distinction between a pure container (such as a class or package) and one that contains a callable chunk of code (such as a function, procedure or method). </li>
-<li>The last line hints at recursive containers; but we&#39;ll not go into much detail on that topic till later.</li>
-</ul>
-<p>Those caveats aside, we can describe the size of these constructs as:</p>
-<pre><code>    size(code in container) = size(container construct) + size(contents)
-    size(contents)          = sum(size of statements or containers held within the container)
-                                                                                     --(4)</code></pre>
-<p>Or more specifically:</p>
-<pre><code>    size(app)             = size(app construct)             + sum(size(programs in app))
-    size(program)         = size(program construct)         + sum(size(packages/modules/classes/functions in program))
-    size(package/module)  = size(package/module construct)  + sum(size(classes/functions in module/package))
-    size(class)           = size(class construct)           + sum(size(methods in class))
-    size(function/method) = size(function/method construct) + size(statements in function/method)
-    size(statement)       = ?
-                                                                                     --(4)</code></pre>
-<p>... which is a fake-math way of saying that if we knew the sizes of the containers and the statements that go into them, the size of the code can be a summation of those individual sizes. This would be a nice result to have because it fits out intuitive expectation of &quot;the whole is a sum of the parts&quot;, but it still remains to be determined if size can indeed be characterized this way.</p>
-<p>Let&#39;s set the containers aside for now and focus on the statement. I weasled my way from &quot;line of code&quot; to &quot;statement&quot; pretty quickly because program 1 has only one line of code; but most programs have many lines of code and some expressive languages can &quot;pack a lot of wallop&quot; into a single complicated statement (I&#39;m looking at you, APL). To allow for unambigous counting of statements and their sizes, we need to come up with a definition for the term. So here&#39;s one to start with:</p>
-<blockquote>
-<p>Statement: The smallest unit of independent code execution in a language.
-               It is the basis of size measurement because of its atomicity.
-                                                                                         --(5)</p>
-</blockquote>
-<p>&quot;Smallest unit of code execution&quot; is a concise way of saying the smallest bit of valid code you can write in a language which will execute by itself. This is obviously specific to the structure of the language itself. </p>
-<p>Note that I&#39;ve explicitly used the term &quot;structure of the language&quot; and not the much more obvious term &quot;syntax of the language&quot;. The reason is that I intend the statement (and other higher structures in code) to be as syntax-agnostic as possible while retaining the specific qualities of the language itself. For now we can imagine size as being measured from the AST of a parsed program instead of directly from the source. All ASTs of statements have the command + arguments structure but the specifics are dependent on the language itself.</p>
-<p>The disadvantage in making a concrete choice of structure-driven unit of size is that it is language dependent: a Java <strong>Statement</strong> will (with intuitive obviousness) not be the same as an Assembly <strong>Statement</strong>; but neither will it be the same as a Ruby <strong>Statement</strong>, or even a C# one (even though the 2 languages are closest to each other in this list). Already, it is thus &quot;inferior&quot; to some existing ways of measurement, eg, SLOC. However, it is appealing aesthetically: as programmers we think in chunks of logic, not lines of text; so to measure what we build in those terms seems more appropriate.</p>
-<p>Of course, all of this presupposes the existence of a language, so let&#39;s formalize that notion:</p>
-<blockquote>
-<p>Language: A finite set of statements that can be used to write code.
-              All code is written in languages.
-                                                                                         --(6)</p>
-</blockquote>
+<h2>Not sure if I should delete</h2>
+<p>what would the size of statements in Linf be? Such an executor would &quot;just do things&quot; and therefore can be considered to have statements of unit size. Thus all &quot;Javaness&quot; or &quot;Ruby ness is purely from the structure and not meaning?????</p>
+<p>But then what is materially different between a routine and a base platform? Earlier, I defined <code>container</code> as 1routine | program | app | ...` which obviously increases in size, but what if we went further below the statement? This is exactly the question that we&#39;ve to face in coming up with a convincing answer for size of atomic statements.</p>
+<p>Even if we did have access to the platform and measured the sizes in that language, would we have said anything more about the size of the program under consideration? Let&#39;s work it out:</p>
+<pre><code>    Let L  = the language under consideration
+    and L0 = its base language
+    and n  = number of unique statement types in L0
+    and s1,...sn = sizes of unique statement types in L0
+
+    Further,
+    Let S1 and S2 be statements in L that are made up by some combination of statements from L0.
+    Then,
+    size(S1|L0) = sum(size(statements from L0 that make up its implementation))
+                = c1.s1 + c2.s2 +....+ cn.sn
+    where the notation &quot;|L0&quot; should be read as &quot;in terms of L0&quot;,
+    and   the c&#39;s are the # of times each s appears in the implementation of S.
+
+    Similarly,
+    size(S2|L0) = k1.s1 + k2.s2 +....+ kn.sn
+    where the k&#39;s are another set of constants.</code></pre>
+<p>If we now compare S1 and S2, what can we say about their size? If <code>size(S1|L0)</code> is the same, bigger or smaller than <code>size(S2|L0)</code>, does it mean that <code>size(S1|L)</code> is the same, bigger or smaller than <code>size(S2|L)</code>? Maybe, maybe not. Depends on the meaning of S1 and S2 with respect to L. What we can say - at best - is that the sizes wrt the base language influence the language&#39;s statements; the nature of influence is not clear.</p>
+<p>Maybe we could &quot;abstract out&quot; these the Java-ness (or whatever-language-ness) of a statement by ascribing a common size to the base platform itself? An analogy from physics might help: an object has <em>Mass</em>, which is an intrinsic constant property and <em>Weight</em> which is dependent on the gravitational pull that another object exerts on it. So my mass remains the same regardless of the planet that I&#39;m on, but my weight varies from one planet to another. If such a thing were possible, we could indeed say:</p>
+<pre><code>    size(Java Statement of type X) != size(Ruby statement of type X)
+    because 
+        size(Java Statement of type X) = Gjava . 1
+        size(Ruby Statement of type X) = Gjava . 1</code></pre>
+<p>However,  </p>
+<p>So as a pure &quot;isolated black box&quot; exercise, we could treat them as &quot;blocks of the same size&quot; and say that all atomic statements have unit size, ie </p>
+<pre><code>    size(statement) = 1 for a given language L</code></pre>
+<p>TODO: WAS GOING TO MAKE THE JUMP INTO DEFINING WEIGHT VS MASS ETC AT THIS POINT IN CONTRAST WITH TEXT ABOVE AND BELOW.
+Let&#39;s see if some analogy from the physical world helps. We call something big (or small) depending on how much area or volume it takes up. Two things could be of the same size, but one could be heavier than the other if its made of a denser material. The same thing could also be heavier or lighter depending on the planet it is on. In formulas</p>
+<pre><code>    Mass = interial momentum
+    Size = Volume or area
+    Density = Mass / Unit Size
+    Weight = Mass x Gravitational Acceleration due to Planet P</code></pre>
 
 
 </body>
