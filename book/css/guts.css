@@ -88,12 +88,14 @@ blockquote {
   padding: 0px 20px;
 }
 
-table, tbody, thead, th, tr, td{
-	border: solid black 1px;
-}
 
 table, tr, td, ul, ol {
 	font-size: inherit;
+}
+
+table, th, td{
+  border: solid black 1px;
+  border-spacing: 0px;
 }
 
 dt {
