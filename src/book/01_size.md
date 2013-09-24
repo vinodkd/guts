@@ -17,7 +17,7 @@ Code Size
 Outline
 -------
 
-why count size, compare with sloc and other current ways of counting size, basic structure of code: language, program, operation, sizing up Hello World as an example, therefore compound operations and containers, **still not found size of operations**, therefore SSI, add viz as Lego blocks, size of sequence, size of if, add viz as pipes, size of loop, add viz of marble run, **add viz about graphs**, **still not found size of operations other than if and loop**, therefore go down one level, then infinite levels, therefore resolve that at asymptote of the turing machine all sizes are 1, therefore define that all we need is a relative "base", then introduce the "turing" as the size unit relative to any base, **then answer questions about sizing 2 langs relative to a base, then talk about platform affordances**, then back up to hello world picking the java language as the base and count size that way, then present comparison with sloc again, **then talk about sizing up static data, then talk about static vs dynamic data, then move to engineering and the simple and exact ways of counting size**.
+why count size, compare with sloc and other current ways of counting size, basic structure of code: language, program, operation, sizing up Hello World as an example, therefore compound operations and containers, still not found size of operations, therefore SSI, add viz as Lego blocks, size of sequence, size of if, add viz as pipes, size of loop, add viz of marble run, **add viz about graphs**, **still not found size of operations other than if and loop**, therefore go down one level, then infinite levels, therefore resolve that at asymptote of the turing machine all sizes are 1, therefore define that all we need is a relative "base", then introduce the "turing" as the size unit relative to any base, **then answer questions about sizing 2 langs relative to a base, then talk about platform affordances**, then back up to hello world picking the java language as the base and count size that way, then present comparison with sloc again, **then talk about sizing up static data, then talk about static vs dynamic data, then move to engineering and the simple and exact ways of counting size**.
 
 
 <a name="what_is_size"></a>
@@ -305,7 +305,9 @@ Looking at (11) above, however, how different is a container from another Atomic
 
 So how do we put some numbers against these ideas? We're slightly better off than before, but we still don't yet know to size the atomic operations, nor do we know the size of the containers themselves. All we have determined so far is: *If* we know the sizes of the operations and their containers, the overall size is an accumulation of individual sizes.
 
-Maybe a program in a high level language is closer to the application of programming as opposed to its core. Maybe we need to look at a simpler model of programming?
+### Review
+
+Ok, so `Hello World` helped us understand compound operations and containers, but didnt help much with understanding the nature and size of the operationsMaybe a program in a high level language is closer to the application of programming as opposed to its core. Maybe we need to look at a simpler model of programming?
 
 <a name="ssi"></a>
 Down to the basics - SSI
@@ -445,7 +447,7 @@ Ok, enough fun. Let's try the final operation ...
 		stop
 		// SLOC : 4, Size: ?
 
-Written in this form, it seems like the `for` is a short cut to write out a long sequence of operations. Indeed, program 8 can be rewritten as:
+Written in this form, it seems like the `loop` is a short cut to write out a long sequence of operations. Indeed, program 8 can be rewritten as:
 
 		// program 8A
 		print 1
@@ -668,7 +670,7 @@ For any language L with n unique Simple operations (including containers) S1, S2
 
 since any or all of the unique simple operations (and/or containers) will have to be used in `Ki` quantities to make the program.
 
-If a language <L,S,n> is implemented in terms of another language <L',S',m>, each of `L`'s unique simple operations S1...Sn can be themselves expressed as programs in L'. Since the simple operations in L' are s1,s2,....sm, we get:
+If a language `<L,S,n>` is implemented in terms of another language `<L',S',m>`, each of `L`'s unique simple operations S1...Sn can be themselves expressed as programs in L'. Since the simple operations in L' are s1,s2,....sm, we get:
 
 		    size(S1) = sum(Kj.size(sj)) for j: 1 to m
 	|||ly,  size(S2) = sum(Kj.size(sj)) for j: 1 to m                                    --(28)
@@ -719,7 +721,7 @@ In the formulas we've been writing till now, this would be:
 
 		                                                                                 --(29)
 
-By definition, L\* is a language that choose not to break down anymore. At this asymptote, size has no further detailed meaning because all operations just happen. They do what they do without resorting to further delegation. As such, they can all be deemed to be of the same size; the only constraint being that the value chosen should not be zero, since that would nullify the sizes of all operations based on these operations in L\*. It therefore makes sense to set the sizes of the operations in L\* to a unit size. That is,
+By definition, L\* is a language that we chose not to break down anymore. At this asymptote, size has no further detailed meaning because all operations just happen. They do what they do without resorting to further delegation. As such, they can all be deemed to be of the same size; the only constraint being that the value chosen should not be zero, since that would nullify the sizes of all operations based on these operations in L\*. It therefore makes sense to set the sizes of the operations in L\* to a unit size. That is,
 
 		size(s*i) = 1 for i: 1 to n*                                                     --(30)
 
@@ -838,14 +840,40 @@ I give you therefore:
 
 Acceptable usage of the unit in written text to describe code with linear size 15 with Java as base would be: `15T|Java` or `15T in Java` or `15 Java turings`.
 
-### Some questions in the brave new world of Turing-sized code
+Tying up some loose ends in the brave new world of Turing-sized code
+--------------------------------------------------------------------
+
+### Comparing code across languages
 
 Let's reconsider some questions raised earlier:
 
-1. How would we compare a Hello World written in Java vs one written in Ruby, for example?
-2. If size is reduced to 1 at a base language, will languages become bereft of meaning? Is "Javaness" or "Ruby ness is purely from the structure and not meaning?
+1. How would we compare a Hello World written in Java vs one written in Ruby, for example? __Ans__: This is the real reason for the 3rd tier of the relative model: to compare programs written in different languages. So to compare a Hello World program written in Java vs one in Ruby, we have to reduce them both to a common base, say an x86 instruction set. 
 
-[STOPPED HERE SEP 20 PM]
+	Java Hello World           Ruby Hello World
+	       |                           |
+	      Java                        Ruby
+	       |                           |
+	       +------------+--------------+
+	                    |
+	                  x86 PC   
+Of course, This is hardly easy because the language runtimes are in between and isolating _just those parts of the runtime that this program uses_ is near impossible. However, it is possible to imagine a common conceptual machine, e.g., [the LLVM](TBD) that both run on and derive meaningful results that way. Now that we have a way of comparing that is independent of the source format, its conceiveable that we arrive on a "Standard Turing Machine" with a standard set of operations that will be used to measure all code. 
+2. If size is reduced to 1 at a base language, will languages become bereft of meaning? Is "Javaness" or "Ruby ness is purely from the structure and not meaning? __Ans__: Size is a gross metric. By explicitly setting all operations to have the same size at a chosen level of abstraction, we have chosen to ignore meaning for sizing purposes. So the operations don't loose their meaning, we're just ignoring them for sizing purposes. Of course, complex logic is likely to be larger, but that is as much of their "meaning" that Size will capture.
+
+### Platform affordances
+
+Earlier in this chapter we saw two examples of platform affordances: in Java we dont need to declare a `PrintStream` if we're using the default one, i.e, `System.out` and in Ruby we dont need a class or main method if we're using the default `Class` module that the run time wraps around scripts automatically. These are also decidedly "base" functionality that affects the calculation of size in that counting them in or out could change the size dramatically. Couple of interesting threads lead from here:
+
+1. The icebergness of code: how much is visible and how much submerged? A measure of the top part is the ease of development. A measure of the bottom part is the difficulty to move platforms.
+2. Relative sizes of bases wrt a common grandparent base. thus specific gravity-ish sizes or sizing in steps: size parent wrt grandparent, then size apps wrt parent.
+
+TODO: flesh this out.
+
+[STOPPED HERE SEP 24 AM]
+
+### The dimension of size
+
+linear, squared and cubical size; n-dimensional size. talk about ICs as multi-dimensional size. thus make the connection to Alan Kay's stack of paper.
+TODO: FILL THIS OUT AFTER ADDING THE GRAPH VIZ PIECES, SO IT MAKES SENSE.
 
 Engineer's Corner
 -----------------
