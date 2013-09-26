@@ -55,7 +55,9 @@ this requires:
 * DONE move gh-pages/out to gh-pages/mmap
 * DONE create gh-pages/book
 * DONE fixed refs to the mmap in readme.md so that when its published, it will refer to the right location.
-* create publish.sh that will copy web/out to gh-pages
+* DONE create publish.sh that will copy web/out to gh-pages
 
 ** Sep-07-2013 19:50 : ** Used http://oli.jp/2011/github-pages-workflow/ for help on gh-pages workflow. esp, how to checkout a file from a different branch.
+
+** Sep-25-2013 18:14 : ** : I decided to not expand on the specific gravity idea cos i couldnt find theoretical ground for it. the wish is there, the math doesnt support it. Saved the text to a new file therefore.
 
