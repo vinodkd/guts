@@ -54,12 +54,12 @@ Here is a comparison of the pros and cons of these two approaches:
 
 <table>
 	<thead>
-		<tr><th>Approach</th><th>Pros</th><th>Cons</th></tr>
+		<tr><th width="10%">Approach</th><th width="40%">Empirical</th><th width="40%">Descriptive</th></tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>Empirical</td>
-			<td>
+			<td width="10%">Pros</td>
+			<td width="40%">
 				<ul>
 					<li> Actually measurable (with some error, but still) </li>
 					<li> Language agnostic</li>
@@ -67,22 +67,22 @@ Here is a comparison of the pros and cons of these two approaches:
 					<li> Relatively easy to apply to small programs manually; and gracefully upgradable to bigger codebases with automation.</li>
 				</ul>
 			</td>
-			<td>
+			<td width="40%">
+				<ul>
+					<li> Easy for humans to understand a lot of information in one go. </li>
+					<li> Able to transcend the implementation language depending on the abstraction chosen.</li>
+				</ul>
+			</td>
+		</tr>
+			<td width="10%">Cons</td>
+			<td width="40%">
 				<ul>
 					<li>Not "smart" units of measure in that they don't consider the structure of code *AS CODE*. With the possible exception of the Halstead metrics, the other approaches treat code as either text or conceptual "functions".</li>
 					<li>Not accurate measures of size per se; just convenient ones.</li>
 					<li>Not easily extended to other properties of code; the relations are forced and the equations (if any) have empirical constants and pre-conditions attached.</li>
 				</ul>
 			</td>
-		</tr>
-			<td>Descriptive</td>
-			<td>
-				<ul>
-					<li> Easy for humans to understand a lot of information in one go. </li>
-					<li> Able to transcend the implementation language depending on the abstraction chosen.</li>
-				</ul>
-			</td>
-			<td>
+			<td width="40%">
 				<ul>
 					<li>Don't give direct feedback as to what's wrong; a practiced user has to interpret the results.</li>
 					<li>Do not actually measure anything at all; merely provide a visualization.</li>
@@ -921,13 +921,13 @@ STOPPED HERE SEP 27 AM
 TODO: TALK ABOUT DATA SIZE BOTH STATIC AND DYNAMIC.
 CIRCLE BACK TO HOW CODE SIZE IS DATA SIZE AND VV BCOS CODE SIZE IS MEASURING THE SIZE OF A GRAPH DATA STRUCTURE.
 
-<a name="engr"></a>
+<a name="engg_corner"></a>
 Engineer's Corner
 -----------------
 
 Ok, how do we use Turing sizes in the real world?
 
-For small programs like the ones above, counting operations is fine, but for any non-trivial codebase we cannot expect to get a true count of atomic statements without some medium-to-high complexity parsing of the source - something that might not be acceptable in all cases. If we instead took the shortcut of just considering a source language statement as an operation, we might be able to measure sizes quicker, of not accurately.
+For small programs like the ones above, counting operations is fine, but for any non-trivial codebase we cannot expect to get a true count of atomic statements without some medium-to-high complexity parsing of the source - something that might not be acceptable in all cases. If we instead took the shortcut of just considering a source language statement as an operation, we might be able to measure sizes quicker, if not accurately.
 
 This simple approach is good because it is easily applicable (manually and with tools); and bad in that expressive languages can "pack a lot of wallop" into a single complicated statement (I'm looking at you, APL) which will not be represented truthfully in the size of the program. But it can be considered the next incremental step to counting SLOC - with the statement separator replacing the newlines.
 
