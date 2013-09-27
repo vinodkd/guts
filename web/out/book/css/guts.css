@@ -98,6 +98,10 @@ table, th, td{
   border-spacing: 0px;
 }
 
+th td {
+  text-align: center;
+}
+
 dt {
   font-weight: bold;
 }
