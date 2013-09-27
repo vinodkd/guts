@@ -9,15 +9,15 @@ Code Size
 * [Turtles all the way](#turtles)
 * [Back up the rabbit hole](#back_up)
 * [A new measure of code size](#turing_unit)
+* [Disk vs Process Size and Static vs Dynamic Size](#kinds_of_sizes)
 * [Sizing up the data](#sizing_data)
-* [Static vs Dynamic size](#static_v_dynamic)
 * [Engineer's Corner: Implementing Turing sizes](#engg_corner)
 
 <a name="outline"></a>
 Outline
 -------
 
-why count size, compare with sloc and other current ways of counting size, basic structure of code: language, program, operation, sizing up Hello World as an example, therefore compound operations and containers, still not found size of operations, therefore SSI, add viz as Lego blocks, size of sequence, size of if, add viz as pipes, size of loop, add viz of marble run, **add viz about graphs**, still not found size of operations other than if and loop, therefore go down one level, then infinite levels, therefore resolve that at asymptote of the turing machine all sizes are 1, therefore define that all we need is a relative "base", then back up to hello world picking the java language as the base and count size that way, then present comparison with sloc again, then introduce the "turing" as the size unit relative to any base, then answer questions about sizing 2 langs relative to a base, **then talk about platform affordances**, **then talk about sizing up static data, then talk about static vs dynamic data, then move to engineering and the simple and exact ways of counting size**.
+why count size, compare with sloc and other current ways of counting size, basic structure of code: language, program, operation, sizing up Hello World as an example, therefore compound operations and containers, still not found size of operations, therefore SSI, add viz as Lego blocks, size of sequence, size of if, add viz as pipes, size of loop, add viz of marble run, **add viz about graphs**, still not found size of operations other than if and loop, therefore go down one level, then infinite levels, therefore resolve that at asymptote of the turing machine all sizes are 1, therefore define that all we need is a relative "base", then back up to hello world picking the java language as the base and count size that way, then present comparison with sloc again, then introduce the "turing" as the size unit relative to any base, then answer questions about sizing 2 langs relative to a base, then talk about platform affordances, then talk about static vs dynamic size, **then talk about sizing up data**, then move to engineering and the simple and exact ways of counting size.
 
 
 <a name="what_is_size"></a>
@@ -881,51 +881,83 @@ Earlier in this chapter we saw two examples of platform affordances: in Java we 
 
 ### The dimension of size
 
-We made a natural progression from linear size to two-dimensional size through this chapter. The nature of software is that it could get to higher dimensions - we are limited only by our imagination when creating code to "make the marble run as complex as we want". One good approximation of how complex software can get in real life is IC's - integrated circuits are literal representations of code paths and they routinely stack multiple 3-D layers to build single chips. In one sense, Alan Kay's representation of the Windows code as pages of text is not that far-fetched as a crude 3-D model of code that's size using Turings. 
+We made a natural progression from linear size to two-dimensional size through this chapter. The nature of software is that it could get to higher dimensions - we are limited only by our imagination when creating code to "make the marble run as complex as we want". One good approximation of how complex software can get in real life is ICs - integrated circuits are literal representations of code paths and they routinely stack multiple 3-D layers to build single chips. In one sense, Alan Kay's representation of the Windows code as pages of text is not that far-fetched as a crude 3-D model of code that's sized using Turings.
+
+There is also a natural similarity between code size and physical sizes when measured in Turings - length, area, volume and so forth. The only caveat is to compare sizes at the same power - linear with linear, squared with squared and so forth - as we have done in this chapter.
 
 TODO: FILL THIS OUT AFTER ADDING THE GRAPH VIZ PIECES, SO IT MAKES SENSE.
 
+
+<a name="kinds_of_sizes"></a>
+Disk vs Process Size and Static vs Dynamic Size
+------------------------------------------------
+
+Natural as the Turing may seem as a size measure, code size is always not a fixed value. Code has one size when its on disk, another when its in memory and potentially many more dynamic sizes as it runs. Let's write down some commonly used terms as definitions:
+
+> **Disk/File Size**: The size of code when stored passively (aka "the stored program"). Usually expressed in bytes or its multiples.
+
+> **Process Size**: The size of code when loaded up into memory and ready to execute. This is usually smaller than the Disk size because some metadata is not required in the executable image. Also expressed in bytes or its multiples.
+
+> **Static Size**: The size of code that does not change as it executes. Code written in _Static languages_ mostly have only this kind of size.
+
+> **Dynamic Size**: The size of code (or part of code) that DOES change (or is created) as it executes. The majority of code written in _Dynamic languages_ usually have this kind of size, although Static Languages with dynamic capabilities have some code with dynamic size.
+
+The size that we've been discussing till now is probably closest to the Static size, while counting size using SLOC is probably closest to the Disk/File Size. Can we use the Turing to talk about these different aspects of Code size universally? Lets give it a shot.
+
+* Disk Size can readily be expressed as Turnings because it is close enough to static size.
+* Process Size essentially adds some platform dependencies and removes metadata stored in the persisted form. If we know the size of those operations, the Process size can also be expressed in Turings.
+* Static size is what we've been measuring, so no additional comment there.
+* Dynamic Size can be expressed as Static size plus the additional size added during execution. Since code could potentially be created and destroyed, we would be interested in the maximum size that the code could get to. As a formula, now:
+
+		size(program with dynamic code) = size(program) + max(size(dynamic code))        --(34)
+
+The key point to remember is to always compare two sizes of the same - disk size to disk size and so forth.
+
+<a name="sizing_data"></a>
+Sizing up data
+--------------
+
+STOPPED HERE SEP 27 AM
+TODO: TALK ABOUT DATA SIZE BOTH STATIC AND DYNAMIC.
+CIRCLE BACK TO HOW CODE SIZE IS DATA SIZE AND VV BCOS CODE SIZE IS MEASURING THE SIZE OF A GRAPH DATA STRUCTURE.
+
+<a name="engr"></a>
 Engineer's Corner
 -----------------
 
-Ok, how do we operationalize this measure?
+Ok, how do we use Turing sizes in the real world?
 
-[STOPPED HERE SEP 25 PM]
+For small programs like the ones above, counting operations is fine, but for any non-trivial codebase we cannot expect to get a true count of atomic statements without some medium-to-high complexity parsing of the source - something that might not be acceptable in all cases. If we instead took the shortcut of just considering a source language statement as an operation, we might be able to measure sizes quicker, of not accurately.
 
-For small programs like the ones above, counting operations is fine, but for any non-trivial codebase we cannot expect to get a true count of atomic statements without some medium-to-high complexity parsing of the source - something that might not be acceptable in all cases. If we instead took the shortcut of just considering line 1 a single statement, its size is 1. So: we can take one of two stances to answer Question #1:
+This simple approach is good because it is easily applicable (manually and with tools); and bad in that expressive languages can "pack a lot of wallop" into a single complicated statement (I'm looking at you, APL) which will not be represented truthfully in the size of the program. But it can be considered the next incremental step to counting SLOC - with the statement separator replacing the newlines.
 
-1. __The Simple Way__: A statement is whatever appears between two statement separators per the language's grammar.
-2. __The Exact Way__: A statement is quite literally the simplest statement that could be written in the language; any time you can convert a statement in the language's grammar into a set of smaller statements within that same grammar that effectively does the same thing, it cannot be considered an atomic _Statement_. It's a Compound Statement; and the size of such a statement is the sum of the sizes of all the atomic statements that replace it.
-
-The Simple way is good in that it is easily applicable - both manually and with tools; and bad in that expressive languages can "pack a lot of wallop" into a single complicated statement (I'm looking at you, APL) which will not be represented truthfully in the size of the program. But it can be considered the next incremental step to counting SLOC - with the statement separator replacing the newlines.
-
-The Exact way is good in that it tends towards purity in measurement - code can be sized in terms of the atomic operations supported by the language itself and/or its runtime. It does, however, require non-trivial understanding/parsing of the source by human/tool to arrive at the exact size of code.
+The exact approach (i.e., per the theory above) is good in that it tends towards purity in measurement - code can be sized in terms of the atomic operations supported by the language itself and/or its runtime. It does, however, require non-trivial understanding/parsing of the source by human/tool to arrive at the exact size of code.
 
 Should we pick one method over the other? The scientific mind suggests discarding the Simple for the Exact. The Simple approach, however, might be useful for "rough estimates". It could also be that the difference between sizes arrived at by the two methods are statistically close enough for a sufficiently large body of code that we might not want to go through the pain of calculating size exactly.
 
-So let's keep both for now.
+Let's see how this works in practice by testing it out on the Hello World program again. We need a rule to identify containers, in addition to the statement identifier, so let's use the following rules to parse source:
 
-Yes, this does mean that we're comparing apples to oranges; but let's see how far it takes us.
+	{} = container
+	;  = statement ie atomic operation                                                   --(34)
 
-So, applying the formula
+Using (34) and applying formulas from above to program 1, we get:
 
-		size(code in container) = size(container) + sum(size(contents)) for all contents in the container
+	By the Exact approach,
+		size(program 1) = 5 T|Java
 
-...to program 1, we get:
-
-		size(program1) = size(program) + size(main)
-		               =      1        + size(main)
+	By the Simple approach,
+		size(program 1) = size(class) + size(main)
+		                =      1      + size(main)
 		Now,
-		 size(main)    =      1        + size(statements)
-		 size(stmts)   =      1 if using simple approach
-		               =      3 if using exact  approach
+		 size(main)     =      1      + size(statements)
+		 size(stmts)    =      1 if using simple approach
+
 		Thus,
-		size(program1) = 1 + 1 + 1 = 3 (simple)
-		               = 1 + 1 + 3 = 5 (exact)
+		size(program1)  = 1 + 1 + 1 
+		                = 3 T|Java
 
 Doing the same exercise for all the programs we've written so far gives us:
 
-Table 1
 <table cellpadding="1" border="1">
 <tr align="middle" valign="top">
 	<th align="left"> Program </th>
@@ -959,7 +991,7 @@ Table 1
 	<td align="left"> 
 		Should the two System.outs be expanded with duplication or not? <br/>
 		If yes, each line has size 3; if duplicates are removed, the two lines have a combined size of 4<br/>
-		Ans: Yes, line has size 3. See below for discussion.
+		Ans: Yes, line has size 8. While the 6T size is enticing it represents an optimization that we're not aware happens. So simpler to treat each source operatoin as standalone.
 	</td>
 </tr>
 <tr align="right" valign="top">
