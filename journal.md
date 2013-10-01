@@ -61,3 +61,5 @@ this requires:
 
 ** Sep-25-2013 18:14 : ** : I decided to not expand on the specific gravity idea cos i couldnt find theoretical ground for it. the wish is there, the math doesnt support it. Saved the text to a new file therefore.
 
+** Sep-30-2013 08:22 : ** TODO: figure out how to resume numbering in markdown. required for questions in hw section.
+
