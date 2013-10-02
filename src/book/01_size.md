@@ -451,6 +451,16 @@ Without further ado, I present:
 
 So it seems that the marble run is indeed a good choice as our physical analog for code. We will use it only as a mental model in our theory forming activity, but there __are__ [real world marble runs that have been created to do actual computations](http://www.hackerspace.lu/2012/01/21/marble-adder/); so it's certainly an apt choice.
 
+For the "still young at heart, not so much in mind" reader, may I offer a more staid analogy? The flow chart is a visualization of code that has persisted over the years:
+
+![Flow chart](images/flowchart.png)!
+
+... or if you prefer a more precise analogy, a directed graph:
+
+![Flow chart](images/flowchart.png)!
+
+In fact, the directed graph might well be the best characterization of programs and I hope to use more of it throughout this book, so I'll just introduce it here.
+
 Ok, enough fun. Let's try the final operation ...
 
 ### Iteration
@@ -906,7 +916,7 @@ We made a natural progression from linear size to two-dimensional size through t
 
 There is also a natural similarity between code size and physical sizes when measured in Turings - length, area, volume and so forth. The only caveat is to compare sizes at the same power - linear with linear, squared with squared and so forth - as we have done in this chapter.
 
-TODO: FILL THIS OUT AFTER ADDING THE GRAPH VIZ PIECES, SO IT MAKES SENSE.
+This is also where the graph analogy really comes into force. We can readily apply results from graph theory to analyze code size problems.
 
 
 <a name="kinds_of_sizes"></a>
@@ -937,10 +947,7 @@ The key point to remember is to always compare two sizes of the same - disk size
 <a name="sizing_data"></a>
 Sizing up data
 --------------
-
-STOPPED HERE SEP 27 AM
-TODO: TALK ABOUT DATA SIZE BOTH STATIC AND DYNAMIC.
-CIRCLE BACK TO HOW CODE SIZE IS DATA SIZE AND VV BCOS CODE SIZE IS MEASURING THE SIZE OF A GRAPH DATA STRUCTURE.
+TODO: MOVE TEXT BACK FROM 01_DATA_SIZE.MD ONCE ITS SHAPED UP.
 
 <a name="engg_corner"></a>
 Engineer's Corner
