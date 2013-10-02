@@ -63,3 +63,7 @@ this requires:
 
 ** Sep-30-2013 08:22 : ** TODO: figure out how to resume numbering in markdown. required for questions in hw section.
 
+** Oct-02-2013 08:28 : ** As I start writing out the section on data size, i feel two things: one, that data might be a chapter by itself, and two: that i might have to restructure the size chapter into 3: one about program size - an overview, one about code size (the current chapter 1) and a third about data size. alternatively, i could keep each chapter about one metric and restructure the chapter to read as: sect 1: program = algos + ds, sec2: code size, sec2: data size. i think i'll go with the latter approach, but keep data size separate for now so that folks reviewing the code size text will not have too much churn.
+
+** Oct-02-2013 18:16 : ** create a poc dir and create a `size.sh`. this should apply sloc, turing-simple and turing-exact sizes to a given codebase after figuring out the filetype.
+
