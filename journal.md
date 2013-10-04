@@ -67,3 +67,9 @@ this requires:
 
 ** Oct-02-2013 18:16 : ** create a poc dir and create a `size.sh`. this should apply sloc, turing-simple and turing-exact sizes to a given codebase after figuring out the filetype.
 
+** Oct-03-2013 08:31 : **  decided to change poc to app - the guts app that sizes things. So new cli:
+
+		guts.sh size --all|turing|sloc dir|file
+
+that is, there's a primary guts app, that takes a measure param - currently only size - which then takes another param to include all size measures or just the turing or just the sloc; and a final param for the file or dir to apply the measure on. sloc will be calculated via a call to an external sloc counting tool.
+
