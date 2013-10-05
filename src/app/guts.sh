@@ -10,7 +10,7 @@ src="."
 function main(){
 
 	checkArgs $@
-	calcMeasure $measure $opts $src
+	calcMeasure $measure ${opts[@]} $src
 
 }
 
@@ -25,7 +25,7 @@ function checkArgs(){
 			src=$3
 			;;
 		2)
-			if [[ "$2"=="--all" || "$2"=="--turing" || "$2"=="--sloc" ]]; then
+			if [[ "$2"=="--all" || "$2"~="--turing*" || "$2"=="--sloc" ]]; then
 				echo "error, dir or file needed"
 				usage
 				exit -1
@@ -48,55 +48,82 @@ function checkArgs(){
 
 }
 
-function usage(){
-	echo "Usage:"
-	echo "	guts measure [options] dir|file"
-	echo "	measure = size"
-	echo "	options = --all|turing|sloc. all is default"
-}
-
 function calcMeasure(){
-	measure=$1
-	opts=$2
-	src=$3
 
 	if [[ "$opts" == "--all" ]]; then
-		opts=( "--turing" "--sloc" )
-		echo $opts
+		opts=( "--turing-simple" "--turing-exact" "--sloc" )
 	else
 		opts=( $opts )
 	fi
 
-	if [[ -e $src && -f $src ]]; then
-		echo "file"
-    	calcMeasureOnce $measure $opts $src
-    elif [[ -d $src  ]]; then
-    	echo "dir"
+	printHeader
+	if [[  -e $src && -d $src  ]]; then
+    	#echo "dir"
     	calcMeasureMany $measure $opts $src
+    elif [[ -e $src && -f $src ]]; then
+		#echo "file"
+    	calcMeasureOnce $measure $opts $src
     else
 		    echo "couldnt find $src"    	
     fi
 }
 
-function calcMeasureOnce(){
-	measure=$1
-	opts=$2
-	src=$3
-
-	# todo check if the file command exists and use it if it does. 
-	# my current env doesnt, so using extension sniffing.
-	ftype=${src##*.}
-
-	outp="|"
-	for m in ${opts[*]}; do
-		method=${m##--}
-		ret=$( ${measure}_${method}_$ftype $src ) # using return technique from linuxjournal
-		outp="${outp}${ret}|"
-	 done
-	 echo "|${src}${outp}"
+function usage(){
+	echo "Usage:"
+	echo "	guts measure [options] dir|file"
+	echo "	measure = size"
+	echo "	options = --all|turing-simple|turing-exact|sloc. all is default"
 }
 
-function size_turing_java(){
+function printHeader(){
+	outp="|file|ftype|"
+	for m in ${opts[*]}; do
+		method=${m##--}
+		method=${method/-/_}
+		outp="${outp}${method}|"			
+	done 
+	echo $outp	
+}
+
+function calcMeasureMany(){
+	for f in ${src}*; do
+		#echo "processing: $f, type: ${f##*.}"
+		if [[ -d $f ]]; then
+			calcMeasureMany $measure $opts $f 
+		else
+			calcMeasureOnce $measure $opts $f
+		fi
+	done
+}
+
+function calcMeasureOnce(){
+	# todo check if the file command exists and use it if it does. 
+	# my current env doesnt, so using extension sniffing.
+	local src=$3
+	local ftype=${src##*.}
+
+	outp="|${src}|${ftype}|"
+	for m in ${opts[*]}; do
+		method=${m##--}					# remove leading -- from name of method
+		method=${method/-/_}			# convert - to _ so it maps to function name
+		fn=${measure}_${method}_$ftype
+		if functionExists $fn ; then
+			ret=$( $fn $src ) # using return technique from linuxjournal
+		else
+			ret="unk"
+		fi
+		outp="${outp}${ret}|"
+	 done
+	 echo "${outp}"
+}
+
+
+# from http://stackoverflow.com/questions/85880/determine-if-a-function-exists-in-bash
+function functionExists(){
+	declare -F "$1" >/dev/null;
+}
+
+function size_turing_simple_java(){
 	src=$1
 
 	containers=$(tr -cd { < $src | wc -c)	#TODO: CHECK IF THE OPEN AND CLOSE PARENS MATCH.
@@ -106,8 +133,8 @@ function size_turing_java(){
 
 }
 
-function size_sloc_java(){
-	echo "tbd"
-}
+# function size_sloc_java(){
+# 	echo "tbd"
+# }
 
 main $@
