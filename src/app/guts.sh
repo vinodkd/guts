@@ -133,8 +133,11 @@ function size_turing_simple_java(){
 
 }
 
-# function size_sloc_java(){
-# 	echo "tbd"
-# }
+function size_sloc_java(){
+	src=$1
+
+	size=$( ./cloc-1.60 --quiet --csv $src | tail -1 | cut -f5 -d, )
+	echo $size
+}
 
 main $@
