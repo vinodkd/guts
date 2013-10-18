@@ -73,3 +73,12 @@ this requires:
 
 that is, there's a primary guts app, that takes a measure param - currently only size - which then takes another param to include all size measures or just the turing or just the sloc; and a final param for the file or dir to apply the measure on. sloc will be calculated via a call to an external sloc counting tool.
 
+** Oct-07-2013 08:14 : ** Now that I have basic comparison tools for sloc v turings, i tested it out on a java class and found some interesting observations:
+
+* The sizes were sloc=184, turing=163. so numerically pretty close.
+* since my logic is basic, it had some interesting side effects:
+** anonymous inner classes were considered as statements with containers embedded - as they should. So the simple rule of counting {'s a and ;'s was enough to capture this somewhat corner case and "double count" the ; at the end.
+** semicolons in comments were treated as code. This was interesting in that sometimes code is commented out to avoid it from being executed, but retained in source to "use later" or "reference later". this simple method of counting accidentally measured such "latent" code as well :)
+** the `package` statement was also counted in the size. This is really metadata, not code; so i definitely need to shore up my thoughts about data
+
+
