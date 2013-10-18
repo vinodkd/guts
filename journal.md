@@ -81,4 +81,8 @@ that is, there's a primary guts app, that takes a measure param - currently only
 ** semicolons in comments were treated as code. This was interesting in that sometimes code is commented out to avoid it from being executed, but retained in source to "use later" or "reference later". this simple method of counting accidentally measured such "latent" code as well :)
 ** the `package` statement was also counted in the size. This is really metadata, not code; so i definitely need to shore up my thoughts about data
 
+** Oct-18-2013 08:00 : ** Been thinking about restructuring the book a little bit based on feedback from friends. The original plan was to have one chapter per measure, size being the first. But as I write it i'm finding that its too long and i'm exploring both program size and data size while definiing what those two concepts are in the first place. so maybe the better structure would be to introduce the concepts by themselves first and then refer to that primordial chapter in the other chapters related to each measure?
+
+also was thinking of restructuring the size chapter to begin with the equation `programs = algorithms + data structures` so that it sets the stage for the discourse on both programs and data.
+
 
