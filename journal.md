@@ -1,4 +1,4 @@
-** Sep-07-2013 18:55 : ** Need to reorg dir structure to:
+**Sep-07-2013 18:55 :** Need to reorg dir structure to:
 
 		guts/
 			MASTER:
@@ -57,23 +57,23 @@ this requires:
 * DONE fixed refs to the mmap in readme.md so that when its published, it will refer to the right location.
 * DONE create publish.sh that will copy web/out to gh-pages
 
-** Sep-07-2013 19:50 : ** Used http://oli.jp/2011/github-pages-workflow/ for help on gh-pages workflow. esp, how to checkout a file from a different branch.
+**Sep-07-2013 19:50 :** Used http://oli.jp/2011/github-pages-workflow/ for help on gh-pages workflow. esp, how to checkout a file from a different branch.
 
-** Sep-25-2013 18:14 : ** : I decided to not expand on the specific gravity idea cos i couldnt find theoretical ground for it. the wish is there, the math doesnt support it. Saved the text to a new file therefore.
+**Sep-25-2013 18:14 :** : I decided to not expand on the specific gravity idea cos i couldnt find theoretical ground for it. the wish is there, the math doesnt support it. Saved the text to a new file therefore.
 
-** Sep-30-2013 08:22 : ** TODO: figure out how to resume numbering in markdown. required for questions in hw section.
+**Sep-30-2013 08:22 :** TODO: figure out how to resume numbering in markdown. required for questions in hw section.
 
-** Oct-02-2013 08:28 : ** As I start writing out the section on data size, i feel two things: one, that data might be a chapter by itself, and two: that i might have to restructure the size chapter into 3: one about program size - an overview, one about code size (the current chapter 1) and a third about data size. alternatively, i could keep each chapter about one metric and restructure the chapter to read as: sect 1: program = algos + ds, sec2: code size, sec2: data size. i think i'll go with the latter approach, but keep data size separate for now so that folks reviewing the code size text will not have too much churn.
+**Oct-02-2013 08:28 :** As I start writing out the section on data size, i feel two things: one, that data might be a chapter by itself, and two: that i might have to restructure the size chapter into 3: one about program size - an overview, one about code size (the current chapter 1) and a third about data size. alternatively, i could keep each chapter about one metric and restructure the chapter to read as: sect 1: program = algos + ds, sec2: code size, sec2: data size. i think i'll go with the latter approach, but keep data size separate for now so that folks reviewing the code size text will not have too much churn.
 
-** Oct-02-2013 18:16 : ** create a poc dir and create a `size.sh`. this should apply sloc, turing-simple and turing-exact sizes to a given codebase after figuring out the filetype.
+**Oct-02-2013 18:16 :** create a poc dir and create a `size.sh`. this should apply sloc, turing-simple and turing-exact sizes to a given codebase after figuring out the filetype.
 
-** Oct-03-2013 08:31 : **  decided to change poc to app - the guts app that sizes things. So new cli:
+**Oct-03-2013 08:31 :**  decided to change poc to app - the guts app that sizes things. So new cli:
 
 		guts.sh size --all|turing|sloc dir|file
 
 that is, there's a primary guts app, that takes a measure param - currently only size - which then takes another param to include all size measures or just the turing or just the sloc; and a final param for the file or dir to apply the measure on. sloc will be calculated via a call to an external sloc counting tool.
 
-** Oct-07-2013 08:14 : ** Now that I have basic comparison tools for sloc v turings, i tested it out on a java class and found some interesting observations:
+**Oct-07-2013 08:14 :** Now that I have basic comparison tools for sloc v turings, i tested it out on a java class and found some interesting observations:
 
 * The sizes were sloc=184, turing=163. so numerically pretty close.
 * since my logic is basic, it had some interesting side effects:
@@ -81,7 +81,7 @@ that is, there's a primary guts app, that takes a measure param - currently only
 ** semicolons in comments were treated as code. This was interesting in that sometimes code is commented out to avoid it from being executed, but retained in source to "use later" or "reference later". this simple method of counting accidentally measured such "latent" code as well :)
 ** the `package` statement was also counted in the size. This is really metadata, not code; so i definitely need to shore up my thoughts about data
 
-** Oct-18-2013 08:00 : ** Been thinking about restructuring the book a little bit based on feedback from friends. The original plan was to have one chapter per measure, size being the first. But as I write it i'm finding that its too long and i'm exploring both program size and data size while definiing what those two concepts are in the first place. so maybe the better structure would be to introduce the concepts by themselves first and then refer to that primordial chapter in the other chapters related to each measure?
+**Oct-18-2013 08:00 :** Been thinking about restructuring the book a little bit based on feedback from friends. The original plan was to have one chapter per measure, size being the first. But as I write it i'm finding that its too long and i'm exploring both program size and data size while definiing what those two concepts are in the first place. so maybe the better structure would be to introduce the concepts by themselves first and then refer to that primordial chapter in the other chapters related to each measure?
 
 also was thinking of restructuring the size chapter to begin with the equation `programs = algorithms + data structures` so that it sets the stage for the discourse on both programs and data.
 
