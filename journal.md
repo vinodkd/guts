@@ -85,4 +85,6 @@ that is, there's a primary guts app, that takes a measure param - currently only
 
 also was thinking of restructuring the size chapter to begin with the equation `programs = algorithms + data structures` so that it sets the stage for the discourse on both programs and data.
 
+**Dec-18-2013 17:07 :** Back to guts after a hiatus of 2 exactly months. This time was spent spinning out jmx.js - which was supposed to be a simple "weekend project". Ha!
+
 

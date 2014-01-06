@@ -78,16 +78,13 @@ What if we were to use something closer to the second and third ideas of size? W
 
 		if   1 unit = 2 bytes, and
 		if   datatype A = 1 unit  => datatype A = 2 bytes
-		then datatype B = 2 units => datatype B = 2 x datatype A
-		                             datatype B = 4 bytes
+		then datatype B = 2 units => datatype B = 4 bytes
+		                             datatype B also happens to be 2 x datatype A (not that any meaning should be attached to that fact)
 
-Why would we take this two step process instead of just going with byte? Quite a few reasons:
+Why would we take this two step process instead of just going with byte? Couple of reasons:
 
 1. It treats data as DATA
-2. The conversion from data units to bytes hides the word length of the processor. This in effect abstracts out that implementation detail while stil making it available if required.
-3. It allows for discourse in terms of the application domain. This might be useful if the software is not yet built and the domain models are hazy enough that a mapping to persistent object is premature.
-
-Let's try this out for size (sic) and see how things go.
+2. It allows for discourse in terms of the application domain. This might be useful if the software is not yet built and the domain models are hazy enough that a mapping to persistent object is premature.
 
 ### Sizing up well known primitives
 
@@ -96,39 +93,106 @@ Let's try sizing up some well known and routine data types using this new, yet u
 
 #### Numbers
 
-Since numbers are what computers do best, let's start with them. Immediately we have to aware of the different kinds of numbers: integers, fractions or rational numbers, real numbers and so forth. Since all computers are finite machines, ie, they do not have infinite storage, the "number line" that a computer can express is clearly a subset of the conceptual endless-on-both-sides number line. This is usually expressed as the "Word Length" of the computer - the largest number that it can express without additional help. This is usually expressed in bytes and it would make good sense for our yet-to-be-named natural data size unit to take this size as the unit size. So:
+Since numbers are what computers do best, let's start with them. Immediately we have to be aware of the different kinds of numbers: integers, fractions or rational numbers, real numbers, complex numbers and so forth. What can we say about their size when treated as pure data? Not much. We could possibly enumerate how many of them we might need for a particular application with some domain analysis; and possibly - with some more effort - set bounds on the range of values that these numbers might take in that domain.
 
-		1 unit = 1 word length of the computer in bytes                                  --(A)
+There is an implementation angle to this, however: all computers are finite machines; they do not have infinite storage. The "number line" that a computer can express is clearly a subset of the conceptual endless-on-both-sides number line that we study in school. This - the largest number that a computer can express intinsically - is usually called its"Word Length" and is usually expressed in bytes.
 
-This way, all other primitive data types can be expressed in terms of the word length and yet remain true-er to the data's domain, not the computers'.
+Numbers that are smaller than the word length are readily processed by the machine; operations such as addition and multiplication are available in the instruction set for them. Numbers that are beyond the range, however, need special handling in terms of libraries or special instructions, with resultant reduction in speed.
 
-So, if we assume that a particular computer has a word length of 4 bytes, ie, 
+Regardless, at a human (natural?) level, these are all numbers. We could choose, therefore to equate each such number to one data unit, but we have to qualify it with the "type", so we could say, for example:
 
-		1 unit for computer A = 4 bytes                                                  --(B)
+	An list with 100 numbers has a size of 100 number units
+	or in formula:
 
-it can express integers in the range of `+/- [(2^32)-1]`. Thus integers in this range would be 1 unit, while integers larger than this would be 2 or more units - but they would be Compound data.
+	1 number = 1 number unit
+	Thus, size(list(100 numbers)) = 100 number units
+                                                                                         --(A)
 
-Assuming further that the computer (or more specifically, its CPU) has native capabilities to handle real numbers (fixed or floating point) using the same 4 bytes with 1 byte for the exponenent and 3 for the mantissa, it can express real numbers in the range `TBD`. Thus real numbers in this range would be 1 unit, while real numbers larger (or smaller) than this range would be 2 or more units - but they would be Compound data as well.
+Assuming that these numbers were in the range `+/- [(2^32)-1]`, that list of 100 numbers would take up a different size based on the word length of the actual machine when implemented. For example, here are three computers, A, B & C:
+
+	Computer A's word length = 4 bytes => size(list) = 100 number units = 100 words = 400 bytes
+	Computer B's word length = 2 bytes => size(list) = 100 number units = 200 words = 400 bytes
+	Computer C's word length = 8 bytes => size(list) = 100 number units = 100 words = 800 bytes
+                                                                                         --(B)
+A few points to note here:
+
+* The "number units" measure retained its size regardless of changes in implementation machine.
+** In contrast, Word length did remain constant or even linear: increasing the word length in C didnt increase the total word size for the list in the same way as decreasing the word length did.
+** Similarly, bytes as a measure of data size didnt correlate well either; despite halving the word length between A & B, the size in bytes remained the same; but that didnt hold when moving to C.
+** This is, of course, a direct consequence of using word boundaries, but it does underline the disadvantage with using bytes as a unit of measure to express the natural size of data.
+* We cheated a bit in that "number units" should actually be more accurately termed "numbers between -2^32 and +2^32". To avoid confusion between english (or pure mathematical) meanings of words used to qualify data types, we should probably use a name like "num32". This obviously is reminicient of the similarly named types in languages like C, but it does remove ambiguity. When the domain is sufficiently well-defined, we could probably dispense with this exactness and assume that "everyone knows a number is under 2^32".
+
+We could apply the same sort of logic for other kinds of numbers; for example:
+
+	1 real number = 1 real number unit
+	1 complex number = 1 complex number unit
+	                                                                                     --(C)
+
+.. and so forth. We could even define "number" to include everything from integers to complex numbers and call that a single number unit. Again, the advantage of this "intentional blindness" to the implementation details is that it allows us to think in terms of the domain and not the machine. As demonstrated above, all such abstract units can be readily converted into bytes using the machine's word length as the yardstick when we need to compare sizes in physical terms.
 
 #### Text
 
-As mentioned above, computers handle text by encoding text into a lookup table and storing the indexes as stand-ins for the real textual values. A common encoding is ASCII, which uses 1 byte per character; another is UTF-8 which also takes one byte per character but allows for expression of more human languages than ASCII. Regardless of the encoding used, text is essentially numbers within the computer and calculating their size is a straightforward exercise of comparing the word length to the size required by encoding. To continue with the example from the previous section, therefore, assuming computer A uses ASCII, each character would be:
+Text as we humans use it, is the name for a string of letters or characters. Quite naturally, that can be seen as a compound data item - an ordered list of letters. So we could define, for example:
 
-		1 char = 0.4 units or
-		1 unit = 4 chars
+	size(1 letter or character) = 1 text unit
+	
+	Regular text is a list or array of characters. 
+	Thus size(regular text) = size(character array)
+	                                                                                     --(D)
 
-Of course, when we say text, we usually mean a string of characters, not a single one. We'll address that when we get to compound data.
+As mentioned above, computers handle text by encoding text into a lookup table and storing the indexes as stand-ins for the real textual values. A common encoding is ASCII, which uses 1 byte per character; another is UTF-8 which also takes one byte per character but allows for expression of more human languages than ASCII. Regardless of the encoding used, text is essentially numbers within the computer and have the same inherent disadvantage of varying with the physical machine's word length and the encoding used. 
+
+The machine-agnostic "text unit" measure does not have this disadvantage, but it still needs the same warning about latent meaning in the terms used for the data type.
 
 #### Logical (True/False) values
 
+True/False values are pretty straightforward to think of in terms of a data unit - each one is one logical data unit. Comparisons between this logical data unit and bytes follow similar lines as the discussion for numbers:
+
+	Computer A's word length = 4 bytes => size(boolean value) = 1 bool unit = 4 bytes
+	Computer B's word length = 2 bytes => size(boolean value) = 1 bool unit = 2 bytes
+	Computer C's word length = 8 bytes => size(boolean value) = 1 bool unit = 8 bytes
+                                                                                         --(E)
+
+There are, of course compound data types like bit vectors which store the extra bytes to store additional boolean values and use boolean algebra to update or read this information. If such a data structure were required in the domain of the application, they would still be counted as multiples of a primitive boolean unit instead of fractions of a byte. That is, 
+
+	Computer A's word length = 4 bytes => size(list of 100 bools) = 100 bool units = 4 words (13 up to 16) = 13 bytes (12.5 rounded up) 
+	Computer B's word length = 2 bytes => size(list of 100 bools) = 100 bool units = 7 words (13 up to 14) = 13 bytes (12.5 rounded up) 
+	Computer C's word length = 8 bytes => size(list of 100 bools) = 100 bool units = 2 words (13 up to 16) = 13 bytes (12.5 rounded up) 
+                                                                                         --(F)
+
 #### Enumerations
+
+Enumerations have some natural parallels like days of week, months in a year and so forth, but they are really a programmer's convenience. In terms of natural units, they would be another integer type with the range of values being constrained to the allowed limits and specific one-to-one mappings of name to value. Thus, there is no single "Enumeration type", only specific instances of the pattern like a "days of the week unit" that is allowed the values "Mon, Tue, Wed, Thu, Fri, Sat, Sun". In the realm of the data unit that we're talking about, the exact numeric value that each of these are assigned to (eg, Mon=0 vs Mon=1) is of not much consequence.
 
 #### References and Links
 
+References do not have a direct natural complement - the natural way to refer to something exclusively is to enumerate all the attributes that make it unique. This is, of course, cumbersome as the reference becomes almost as large as the thing itself, if not larger. Natural language appreciates compaction as much as computer representation does, however, so we HAVE come up with ways to refer to things and people without having to describe their every difference from other things and people, two examples being SSNs and Driver's Licence numbers. These are essentially real-world references; they do not actually describe the person, but once assigned, they can be used to refer to (and more importantly retrive information about) a person exclusively.
+
+When natural references are available, creating units for them is straightforward:
+
+	size(1 ref)  = 1 ref unit
+	size(1 link) = 1 ref unit
+	                                                                                     --(G)
+
+That is, the size of a link to something is the same as the size of the reference itself, simply because the link is another reference!
+
+When natural references are not available, however, it is possible to create artificial ones: a particular piece of data could be refered to by its position in the overall collection of data - "the 5th integer", "the 13th player" and so forth; or a particular piece of data could be referred to by how its attributes were recorded in some system of record - "person found in ledger 13, folio 345, line 56" or "psalm 3:16". Whether each such component of the reference should be accounted for separately is a domain concern, but the key point is that they can be considered as separate from the thing that they describe and they have some finite, enumerable size and therefore can be measured.
+
+There is a strong similarity between this latter scheme from the real world and how references and links are represented in computers. References and links in computers are essentially memory addresses. In plain english, they are positional counters from the first addressible memory location. Once assigned (at least for the lifetime of the running program), they are uniquely addressible and allow access to retrieve information about a specific object.
+
+The key question, therefore, is not "How do we ascribe a size to references and links?", but rather: "Will there be links to a particular object and should those links be references?" If the answers to the questions are "Yes and Yes", then we should use (G) above to count their sizes. Where artifical references (or memory addresses) are used, we can call those out as a separate "memory reference/link unit".
 
 ### Sizing up well known compound data
 
-STOPPED HERE OCT 21 AM
+#### Sizing up Arrays & Lists
+
+#### Sizing up Maps
+
+#### Sizing up Trees
+
+#### Sizing up Graphs
+
+STOPPED HERE Jan 6 AM
 
 TODO: TALK ABOUT DATA SIZE BOTH STATIC AND DYNAMIC.
 CIRCLE BACK TO HOW CODE SIZE IS DATA SIZE AND VV BCOS CODE SIZE IS MEASURING THE SIZE OF A GRAPH DATA STRUCTURE.
