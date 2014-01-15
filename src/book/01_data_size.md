@@ -176,23 +176,133 @@ When natural references are available, creating units for them is straightforwar
 
 That is, the size of a link to something is the same as the size of the reference itself, simply because the link is another reference!
 
-When natural references are not available, however, it is possible to create artificial ones: a particular piece of data could be refered to by its position in the overall collection of data - "the 5th integer", "the 13th player" and so forth; or a particular piece of data could be referred to by how its attributes were recorded in some system of record - "person found in ledger 13, folio 345, line 56" or "psalm 3:16". Whether each such component of the reference should be accounted for separately is a domain concern, but the key point is that they can be considered as separate from the thing that they describe and they have some finite, enumerable size and therefore can be measured.
+When natural references are not available, however, it is possible to create artificial ones: a particular piece of data could be refered to by its position in the overall collection of data - "the 5th integer", "the 13th player" and so forth; or a particular piece of data could be referred to by how its attributes were recorded in some system of record - "person found in ledger 13, folio 345, line 56" or "psalm 3:16". Whether each such component of the reference should be accounted for separately is a domain concern, but the key points are that they can be considered as being separate from the thing that they describe and that they have some finite, enumerable size and therefore can be measured.
 
 There is a strong similarity between this latter scheme from the real world and how references and links are represented in computers. References and links in computers are essentially memory addresses. In plain english, they are positional counters from the first addressible memory location. Once assigned (at least for the lifetime of the running program), they are uniquely addressible and allow access to retrieve information about a specific object.
 
 The key question, therefore, is not "How do we ascribe a size to references and links?", but rather: "Will there be links to a particular object and should those links be references?" If the answers to the questions are "Yes and Yes", then we should use (G) above to count their sizes. Where artifical references (or memory addresses) are used, we can call those out as a separate "memory reference/link unit".
 
-### Sizing up well known compound data
+### Sizing up Compound data
 
-#### Sizing up Arrays & Lists
+By definition, compound data is a collection of primitive data items that together form a cohesive whole. As such the size of compound data is the aggregate of sizes of the primitive data items contained in it. If there are data items that are not specific to any individual child item, but pertains to the aggregate itself, these are still (from a size perspective) considered to be contained in that that aggregate as well. Thus:
 
-#### Sizing up Maps
+	size(compound data) = size(compound data attributes) + size(contained itmes)         --(H)
 
-#### Sizing up Trees
+Let's usse this formula on some of the often-used/well-known compound data types.
+
+#### Sizing up Lists
+
+From a natural standpoint, lists are pretty straightforward. They are collections (usually ordered) of things of the same kind. So the default sizing for an list would be:
+
+	size(list) = sum(size(list item))                                                    --(I)
+
+Their representation in computers, however, vary depending on the implementation chosen: if the total number of items and the size of each item is small, contiguous memory could be allocated to the list; if the sizes are huge, references could be stored instead of the item itself; if the items are to be accessed in random order vs sequential order, the implmentation might be a contiguous array of memory vs linked lists; and so forth. How do we reconcile all these differences so that the natural size that we're evolving into actually makes the most sense? 
+
+The answer lies in (I). Regardless of the implementation, the core of size of a list MUST be a sum of the sizes of the items in it. Where the items are not stored as-is, their contribution to the array's size is essentially the size of the references stored in it, not the size of the item itself because that size should be counted elsewhere.
+
+When the implementation uses additional storage outside of each item, for example to store the size of the list in a "length" attribute or store a head pointer, we should account for it using (H):
+
+	size(list) = size(list attributes) + sum(size(list item))                            --(J)
+
+However, we should apply this overhead ONLY when the domain itself has such list-level attributes, not when the implementation alone does. For example, a list of students in a class and the class strength are prime candidates for representation as a list. The "class strength" attribute is an independently recognizable attribute in the domain. An application written to manage schools SHOULD represent this attribute directly. A display of this list might require pagination and each such subset could be considered a list on its own. Its length is most probably controlled by a configuration value, but should NOT be represented in the sizing because it is an attribute created due to the implementation.
+
+All of this parallels a similar discussion on code size where the "level of abstraction" has a bearing on how we count size. When sizing data, therefore, we should determine the domain up-front and all sizes should be stated as relative to it. To go back to the previous example, therefore:
+
+1. If our domain is an application that manages schools, the list of students in a class would have a list attribute called "class strength" and be sized with this addition, but each page of the display of this list would be sized as in (G).
+2. If our domain is a library of array management functions that the application to manage schools is one client of, we could expose two types of arrays: one with a length attribute and one without. Both would use (I) with list attributes = 0 units for the latter. Note that in this case we might just be using bytes as our unit of measure, especially if the library is very specific to a processor or technology stack.
+
+Of course, this is fertile ground for leaning either way - too abstract into the domain end of the spectrum and you can artificially reduce the size; to specific into the implementation domain and you can make the size so specific that it is useless as a generic measure. This issue, however, is inherent with using relative bases. This theory is intended to be used mostly at the level of #1 above and less at #2 because the latter case is not very "natural" by definition. However, it does not preclude application of the theory at that level. The best course would be to reach an agreement (by stating the meanings of each type) amongst the audience of discourse on the level of abstraction.
+
+#### Sizing up records or aggregates
+
+Records are aggregates of data that form a cohesive whole. The individual bits of data - the attributes of the whole - are typically of different types. The size of such a datum can only be expressed as an enumeration of the different kinds of data units.
+
+	size(record) = sum(size(attributes)) expressed as n1 T1 units, n2 T2 units and so forth
+	               where there are n1 number of units of type T1 and so forth
+	                                                                                     --(K)
+
+#### Sizing up Tables
+
+Tabular data in the natural world are used when items in a list have multiple attributes and comparing/contrasting them together is useful. For example, a table comparing features of two brands of a fridge is useful when in the market for one. The defining characteristics of a table are:
+
+* Each row represents one "thing" in the domain, naturally represented as a record of its attributes.
+* Each column represents the attributes of interest for each thing.
+
+The second major use of a table is to lookup information based on attributes. A table of school grades could be browsed to find a particular student's grade if we know his/her name or student ID, for example.
+
+The third major use of tables is to derive new or summary information - combine the information from multiple source tables to form a new one.
+
+These uses of real-world tables are represented in multiple implementation data structures - multi-dimensional arrays, Hashmaps or associate arrays and relational database tables (which are themselves a collection of some complex implementation data structures like BTrees) to give a few examples.
+
+The choice of the actual data structure used in the implementation is usually dependent on how the data is used. For example, the table with student grades is most likely to be queried to find a particular student's grade, so access to the grade given a student ID is optimized most and that governs how the data in the logical table is stored. Duplication, artificial references and links are all valid additions to the implementation data structure to optimize the access path.
+
+For purposes of size, however, how we access the data is immaterial. The data (as understood in its domain, not the implementations') is still rows of records. Therefore we can say with some surety that:
+
+	size(table) = sum(size(record))                                                      --(L)
+
+#### Sizing up Hierarchical Data
+
+Hierarchical data is any collection of data where items are related to each other with a strict parent-child link. Family trees and Cabinet+Folder+files are typical examples. The size of such data can be readily computed as:
+
+	size(hierarchy) = size(root) + size(root's children)
+	size(root)      = size(compound)
+	size(children)  = size(list(child items))
+	                                                                                     --(M)
+Hierarchical data is usually implemented as linked lists (in imperative, per-object environments) or foreign keys (in declarative, per-collection environments). The same points of applying "hierarchy-level attributes" mentioned above for lists apply to hierarchies as well.
 
 #### Sizing up Graphs
 
-STOPPED HERE Jan 6 AM
+Graphs focus on items/objects/entities and the relationships between them. A map of all possible flights in a country is a graph, as is a network of relationships between friends. The key concepts in a graph, therefore, are nodes and edges. The size of a graph can readily be calculated as:
 
-TODO: TALK ABOUT DATA SIZE BOTH STATIC AND DYNAMIC.
-CIRCLE BACK TO HOW CODE SIZE IS DATA SIZE AND VV BCOS CODE SIZE IS MEASURING THE SIZE OF A GRAPH DATA STRUCTURE.
+	size(graph) = sum(size(node)) + sum(size(edge))
+	size(node)  = size(compound)
+	size(edge)  = size(reference to end node)
+	                                                                                     --(N)
+
+Graphs are typically implemented in one of three ways:
+
+* As linked lists, when traversal is the primary application
+* As adjacency lists
+* As nxn matrices
+
+These implementations have their own size characteristics, obviously.
+TODO: FIGURE OUT IF THERE ARE IMPLICATIONS OF THIS SO A BETTER MEASURE IS ADVISED.
+
+
+### Dynamic Size
+
+Like code, data too can vary over time - program execution changes sizes of data structures as do real-world events. At a particular aggregate level, this could be seen as the change in size of that aggregate - its dynamic size.
+
+For most uses of this theory, we'd be interested in the maximum possible dynamic size that some data could achieve. That is,
+
+	dyn_size(data) = max(size(data)) across all instants of time
+	                                                                                     --(O)
+
+Note: There is a difference between static and dynamic data and static and dynamic _sizes_ of data. A program will have both static and dynamic data: the former being data allocated at startup and the latter being data allocated during execution. Both these types of data, however, will  dynamic sizes - their sizes can change over time. For example, an array might be allocated a size of 100 at startup, but only 5 are used with the rest expected to be filled during execution.
+
+(O) is an interesting equation because this is exactly the definition of Big Omega. That theory, of course, takes the next logical step and says that the maximum size is proportional to some attribute of the data, for eg, the number of items in it, usually referred to as `N`. Thus:
+
+	max(size(data)) is proportional to N
+	                                                                                     --(P)
+
+This means all of the theory surrounding algorithms can be readily used to come up with dynamic size of data contained in programs, only with the unit being the new (unnamed) data units.
+
+### Code as Data and vice versa
+
+Part of the reason we embarked on this detour of data size is to size up code when it has data-like properties; especially when its stored in a passive form. So, how would we size up code as data? Well, in its most general depiction, code can be considered a graph. Thus:
+
+	size(code) = size(graph of instructions)
+	                                                                                     --(Q)
+
+This does not, of course, account for dynamic code itself, so an equation similar to (O) could be written for dynamic size of code:
+
+	dyn_size(code) = max(size(code)) across all instants of time
+	                                                                                     --(R)
+
+TODO: DATA AS CODE: READ SICP AGAIN AND SEE IF THERE'S A HAPPY CONVERGENCE OF IDEAS. THIS MIGHT ALSO BRING THE TURING AND CHURCH VERSIONS TOGETHER WITH THIS THEORY.
+
+
+### Name for the data unit
+
+Options for name: Chris Date or Edgar Frank "Ted" Codd. since date is also a datatype, maybe not Date; and Codd seems a little odd. I'm leaning towards Ted.
+STOPPED HERE JAN 13 AM
