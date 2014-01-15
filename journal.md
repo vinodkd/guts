@@ -87,4 +87,18 @@ also was thinking of restructuring the size chapter to begin with the equation `
 
 **Dec-18-2013 17:07 :** Back to guts after a hiatus of 2 exactly months. This time was spent spinning out jmx.js - which was supposed to be a simple "weekend project". Ha!
 
+**Jan-13-2014 17:17 :** Finished up data sizing - almost. Now taking a step back and looking at what I've done so far:
+
+So the story so far is: I started out with "wouldnt it be nice to have a theory for software like we have for physics", created a mindmap of the end state - the overall model, different things that could be measured and so forth; then i presented at barcamp and hareesh gave me the idea to focus on a single measure and try to pin it down to make it concrete. so i started out with size and the notes that i started to write to keep things sane for myself became this book. as i wrote the book it became obvious that the theory cannot be an absolute one. physics is an absolute theory because (within limits of "regular sized objects") there are absolute limits. not so with the mind. thus the theory has become merely a useful one.
+
+typically science works thus: we observe something in the real world and we model it as a theory. the model is an abstraction; so its very focused on certain aspects of the real world and ignores others. however, the net result is that some facts about the real world are captured in the theory. from these initial facts, some rules are proposed, which produce new synthesized facts. Experiments are carried out to check if these synthesized facts are true in the real world. if so, the theory holds and if not, it doesnt.
+
+GUTS is not yet that kind of theory. 
+
+Like the [Dreyfus Model](http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition), however, it is a useful theory in that it *could* be used to compute size (for now, more in future) in a completely implementation-neutral way.
+
+Actually, now that I've been reading up, GUTS is more correctly named as GUMS - Grand Unified Model of Software. Be that as it may, I'm going to continue to call it guts because:
+
+a) its had this name for a while
+b) there is some hope of predictive capability yet :)
 
