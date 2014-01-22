@@ -204,6 +204,10 @@ When the implementation uses additional storage outside of each item, for exampl
 
 	size(list) = size(list attributes) + sum(size(list item))                            --(J)
 
+While this is a simple enough equation, each term needs some discussion on how to apply them.
+
+#### Discussion: list attributes
+
 However, we should apply this overhead ONLY when the domain itself has such list-level attributes, not when the implementation alone does. For example, a list of students in a class and the class strength are prime candidates for representation as a list. The "class strength" attribute is an independently recognizable attribute in the domain. An application written to manage schools SHOULD represent this attribute directly. A display of this list might require pagination and each such subset could be considered a list on its own. Its length is most probably controlled by a configuration value, but should NOT be represented in the sizing because it is an attribute created due to the implementation.
 
 All of this parallels a similar discussion on code size where the "level of abstraction" has a bearing on how we count size. When sizing data, therefore, we should determine the domain up-front and all sizes should be stated as relative to it. To go back to the previous example, therefore:
@@ -213,6 +217,29 @@ All of this parallels a similar discussion on code size where the "level of abst
 
 Of course, this is fertile ground for leaning either way - too abstract into the domain end of the spectrum and you can artificially reduce the size; to specific into the implementation domain and you can make the size so specific that it is useless as a generic measure. This issue, however, is inherent with using relative bases. This theory is intended to be used mostly at the level of #1 above and less at #2 because the latter case is not very "natural" by definition. However, it does not preclude application of the theory at that level. The best course would be to reach an agreement (by stating the meanings of each type) amongst the audience of discourse on the level of abstraction.
 
+##### Discussion: List items
+
+What can we say about the `sum(size(list item))` term? The first thing that stands out is that each list item has a unit attributable to it (eg, a list of numbers would be of type "number unit" and so forth), but the list itself doesnt have a unit of its own.
+
+What it does, however, is provide a container to group data that might otherwise not be. The one type-agnostic measure of size that a list has, therefore, is the count of items in it. Indeed, (J) can be rewritten as:
+
+	size(list) = size(list attributes) + size(list item) x N
+	             where N is the count of list items                                      --(J1)
+
+Applied to a list of 10 grades that are of type "real number unit" and no metadata, therefore,
+
+	size(list of grades) = 0 + size(real number unit) x 10 list slot units
+	                     = 10 real number-list units
+
+A list, therefore is long AND wide - it has two dimensions. Since the data items may be of different types, the squared unit is represented as a hyphenated combination of both the type of the list item and the fact that its in a list. 
+
+What would happen if there were list attributes, however? These attributes are part of the list, but not part of the collection of items in the list - they could be of a type completely different from the contained data, for instance. Thus, a list essentially becomes a record containing list attributes and list items. That is,
+
+	size(list) = size(record(list attrs, list items))                                    --(J2)
+
+(J1) and (J2) can be reconciled with (J) after we size up records.
+
+
 #### Sizing up records or aggregates
 
 Records are aggregates of data that form a cohesive whole. The individual bits of data - the attributes of the whole - are typically of different types. The size of such a datum can only be expressed as an enumeration of the different kinds of data units.
@@ -220,6 +247,24 @@ Records are aggregates of data that form a cohesive whole. The individual bits o
 	size(record) = sum(size(attributes)) expressed as n1 T1 units, n2 T2 units and so forth
 	               where there are n1 number of units of type T1 and so forth
 	                                                                                     --(K)
+
+##### Extrapolation: List as a record
+Now we can go back and reconcile (J2) with (J):
+
+	Using (J2), size(list) = size(record(list attrs, list items))
+	Using (K),             = size(list attrs) and size(list items)
+    Using (J1),            = size(list attrs) and N item type-list units
+
+##### Extrapolation: Program as a record
+
+On a grand-enough scale, a program can be considered a record of code, data and metadata. Thus,
+
+	size(program) = size(code) + size(data) + size(metadata)
+	              = C turings  + D data units + M metadata units                         --(L)
+
+Of course, `program` could be replaced by `application`, `system` or `set of applications` with the same result. Note that this is the "Stored Program Size" that we started off this digression to discover.
+
+There are still some pieces to tie down, however, so lets proceed on to other common compound data types.
 
 #### Sizing up Tables
 
@@ -267,6 +312,26 @@ Graphs are typically implemented in one of three ways:
 
 These implementations have their own size characteristics, obviously.
 TODO: FIGURE OUT IF THERE ARE IMPLICATIONS OF THIS SO A BETTER MEASURE IS ADVISED.
+
+#### Compound items contained within other compound data
+
+TODO: REWRITE THIS AFTER FIXING OTHER SECTIONS TO MAKE THEM 2D
+
+What if the items in the list are themselves compound? In all likelihood, a list of students will have more than one attribute of the student; so the student list item will actually be a record of all such interesting attributes. Using (J):
+
+	size(student list) = 0 + sum(size(student record))
+
+Assuming we have a first name, last name and grade as the record attributes,
+
+	size(student record) = size(first name) + size(last name) + size(grade)
+	                     =  1 name unit     + 1 name unit     + 1 real number unit
+	                     =  2 name units + 1 real number unit.
+
+Thus:
+
+	size(student list) = sum(size(student record))
+	                   = size(student record) x number of students in list
+	                   = [ 2 name units + 1 real number unit] x N,  where N is the number of students in the list
 
 
 ### Dynamic Size
