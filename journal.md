@@ -102,3 +102,50 @@ Actually, now that I've been reading up, GUTS is more correctly named as GUMS - 
 a) its had this name for a while
 b) there is some hope of predictive capability yet :)
 
+For the most impact in terms of convincing people that this theory is useful, however, it needs to have concrete uses. Some that I can think of are:
+
+* Estimating effort of changing an existing application
+* Estimating an new app and validating version 1
+
+Both of which are constrained by the lack of an easy way to do the actual measurement of code itself - key point is: how do I count size of code using turings? loc is easy to do, not so much atomic operations. Especially considering it is defined as "compound op is equivalent to the set of simple ops that has the same effect", not "compound op is equivalent to the number of sub expressions its ast reduces to". can the latter be same as the former, tho? need to consider this, and how to express it in the theory. if that's true, then it would be a easier process to instrument an appropriate parser generator to output counts at the language's statement level.
+
+**Jan-16-2014 17:32 :** Now that I have a way to measure data, i should be able to measure true program size as the combo of code size and data size. this will pave the way to account for the "additional size" that the temporary variables required to convert a compound op into a set of simple ops. Then i could compare with the ast tree of the same compound op like so:
+
+		size(set of simple ops replacing compound op) = data_size(new vars) + code_size(simple ops)
+		size(ast for compound op) = sum(data_size(simple ops that make up the ast))
+
+Converting both to data size, I hope to prove that:
+
+		size(set of simple ops replacing compound ap) - size(new ops) = size(ast for compound op)
+
+Now we can just use regular asts to calculate size. This makes it a tad easier: as long as we have enough grammars written, languages can be sized using a special treewalker that counts size instead of interpreting or compiling the source.
+
+i did look for a parser generator that has a lot of grammars and the ability to plug into specific points; and so far antlr seems to be the best. i still have to look at the llvm set, tho.
+
+For a web app, the bare minimum languages required are: html, css, js, one server language.
+
+**Jan-17-2014 08:00 :**  Also realized that while the code structures are 2d, their corresponding data structures are not. Should this dichotomy hold?
+
+* Yes: data is inherently stored flat and interpreted into memory structures that are potentially non-flat
+* No: regardless of how it is stored, if the conceptual structure has more than one dimension, the data unit should represent that. this also has the happy coincidence of matching with code structures.
+
+I'm tending towards the No. Rewrite of the data size sections are in order, therefore. However, this shows the subjective nature of this theory: i have to explicitly align myself with my previous thoughts so that "everything works out", not that it naturally does.
+
+**Jan-22-2014 08:30 :** While in the midst of installing Java so that i can try out treewalker, I've started a separate rethink of my byte-vs-higher-UOM screed from the top half of data_size.md. It seems a bit contrived, especially when hypenated units are required at higher dimensions. Now reading up on dimensional analysis to see if that can be of help.
+
+**Jan-23-2014 17:14 :** Reading a lot of wiki links:
+http://en.wikipedia.org/wiki/Dimensional_analysis
+http://en.wikipedia.org/wiki/Dimension_(mathematics_and_physics)
+http://en.wikipedia.org/wiki/Inductive_dimension
+http://en.wikipedia.org/wiki/Hausdorff_dimension
+http://en.wikipedia.org/wiki/Minkowski_dimension
+http://en.wikipedia.org/wiki/Fractal_dimension
+http://en.wikipedia.org/wiki/Degrees_of_freedom (as a contrast)
+http://havlin.biu.ac.il/PS/Dimension%20of%20spatially%20embedded%20networks.pdf - very interesting paper as it measures fractal dimension of networks.
+http://en.wikipedia.org/wiki/Quantity_calculus
+
+**Jan-24-2014 17:00 :** Was thinking today morning about container sizes and the units to express them. I currently express them as, for eg, "numbers as list units" which is a very unwieldy way of expressing something. but when we consider containers in real life: there are fixed size containers for sure, but there are also flexible containers that "take the shape of their contents". and while there are transparent containers, there are also "black bag"s or paper packs that you have to open/tear up to see the contents. even if you cannot see the contents, you can size the container as "a brown bag that's a foot wide and deep and 2 feet tall". so why not apply this logic to our data containers? they take the size from their contents and express it as their own size. so we can say "a list 100 tall and 3 numbers+2addresses wide".
+
+This of course brings up the point that it'd be then nice to reduce it further to "a list of size 500 sq teds"
+
+What if we made the theory data-type agnostic? All data is data, so 2 numbers + 2 addresses = 5 pieces of data even if they're of different size. What matters is that they're important to be counted and treated as separate entities. At a lower level of abstraction, it might be required to break an address down into a house number, a street, a zip and so forth, but not at this level.
