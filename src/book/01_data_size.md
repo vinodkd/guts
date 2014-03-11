@@ -56,15 +56,15 @@ Ok, so how do we go about sizing data? It seems intuitive enough to say that the
 
 Since data has infinite variety, sizing it is the quintessential "apples to oranges" task: for example, how do you compare an SSN to an address, to pick a random juxtaposition? In general, we cannot; and natural language reflects that: if a bag contains 3 apples and 2 oranges and we're asked how many things there are in the bag, the only thing we _can_ say is that there are 3 apples and 2 oranges. In formulas now:
 
-	size(bag with 3 apples & 2 oranges) = size(3 apples) and size(2 oranges)                    --(-A1)
+	size(bag with 3 apples & 2 oranges) = size(3 apples) and size(2 oranges)             --(D1)
 
-We _could_ say that there are 5 fruits, but that's by extension of language (that is, the language has invented the term "fruit" as we find it useful) and also because in the context of the question asked, the generalization is appropriate enough. So:
+We _could_ say that there are 5 fruits, but that's by extension of language (that is, we have invented the term "fruit" as we find it useful) and also because in the context of the question asked, the generalization is appropriate enough. So:
 
 	size(bag with 3 apples & 2 oranges) = size(3 fruit and 2 fruit)
 	                                    = size(3 fruit) + size(2 fruit)
 	                                    = 3. size(1 fruit) + 2. size(1 fruit)
 	                                    = 5 . size(1 fruit)
-	                                                                                     --(-A2)
+	                                                                                     --(D2)
 
 There's quite a few interesting bits here:
 
@@ -73,96 +73,123 @@ There's quite a few interesting bits here:
 * We still havent figured out the size of 1 fruit (just as we handnt for apples or oranges), but if we **did** know it, we can safely say that the size of the bag's contents is 5 times that size.
 * We're igoring the fact that the bag itself could have some size of its own for now because we're focusing on the contents.
 
-Now, we **could** continue homogenizing the types of data and call them "things" (like the question above does) and that would allow us to respond with either "fruits" or "things", not to mention being able to count things other than fruit - if they were added to the bag. So let's say a ball is added to the bag, we could say:
+Now, we **could** continue abstracting the types of data and call them "things" (like the question above does) and that would allow us to respond with either "fruits" or "things", not to mention being able to count things other than fruit - if they were added to the bag. So if a ball is added to the bag, we could say:
 
 	size(bag with 3 apples, 2 oranges and 1 ball) = size(3 things and 2 things and 1 thing)
 	                                              = 3 . size(1 thing) + 2 . size(1 thing) + 1 . size(1 thing)
 	                                              = 6 . size(1 thing)
-	                                                                                     --(-A3)
+	                                                                                     --(D3)
 
-If we kept going on, We _could_ end up with something like "there are x billion atoms in the bag"! While accurate, this statement doesnt help us much in understanding exactly what we're talking about; which is brings to light the following:
+If we kept going on, We _could_ end up with something like "there are x billion atoms in the bag"! While accurate, this statement doesnt help us much in understanding exactly what we're talking about; which brings to light the following:
 
 1. There is a spectrum of names that we can ascribe to data items that goes from the very specific to the very generic. The right balance depends on the domain and the specific application.
 2. the scale of abstraction required to find a common term for measurement might be quite large, to the extent that individual data items may not be easily identified with that unit of measure.
 
-These two points speak to the fact that excess abstraction clouds understanding. There is another impact, however, of making things generic: if the unit of measure (like `thing` above) is not a fixed number the measurement is worthless. `thing`, for example could be anything: really small to really big.
+These two points speak to the fact that excess abstraction clouds understanding. There is another impact, however, of making things generic: if the unit of measure (like `thing` above) is not a fixed number, the measurement is worthless: `thing`, for example could be anything - really small or really big - and that doesnt build confidence in it as a unit of measure.
 
-Note, however, that (-A3) can be rewritten in a generic form as:
+With that caveat, (D3) can be rewritten in a generic form as:
 	
 	size(collection of data) = size(collection of type 1) and size(collection of type2)  and size(collection of type3)
 	                           where type1 = apples, type2=oranges and type3=ball
 
-	                         = size(collection of base type1) and size(collectin of base type1)
+	                         = size(collection of base type1) 
+	                           and size(collection of base type1)
+	                           and size(collection of base type1)
+
 	                           where base type1 = thing
 
-	                         = size(collection of base type1) + size(collection of base type1)
-	                         = n1 x size(base type1) + n2 . size(base type1)
-	                         = (n1 + n2) . size(base type1)
-	                         = n . size(base type1)  where n = n1+n2
-	                                                                                     --(-A4)
+	                         = size(collection of base type1) + size(collection of base type1) + size(collection of base type1)
+	                         = n1 x size(base type1) + n2 . size(base type1) + n3 . size(base type1)
+	                         = (n1 + n2 + n3) . size(base type1)
+	                         = n . size(base type1)  where n = n1+n2+n3
+	                                                                                     --(D4)
 
 That is, the size of any data can be expressed as a combination of:
 
 * A count of the number of items of a particular "type"
 * The size of a unit of that type
 
-To make (-A4) more generic:
+Or more generically:
 
 	If a collection of data has n distinct types - T1, T2,....Tn; each in N1, N2, ... Nn amounts,
 	and B is a base type such that T1, T2, ... can also be called B's.
 
 	size(collection) = size(collection of T1) and size(collection of T2) ... and size(collection of Tn)
-	                 = N1 x size(T1) + N2 x size(T2) + ... + Nn x size(Tn)
-	                 = N1 x size( B) + N2 x size( B) + ... + Nn x size( B)
+	                 = N1 x size(T1) and N2 x size(T2) and ... and Nn x size(Tn)
+	                 = N1 x size( B)   + N2 x size( B)   + ...   + Nn x size( B)
 	                    ... because T1, T2, ... Tn are also B's.
 	                 = (N1 + N2 + ... + Nn) . size(B)
-	                                                                                     --(-A5)
+	                                                                                     --(D5)
 
-Our challenge is finding a primordial type that all data can fit under. Like the "atoms in the bag" measure from above, however, it might not make much sense in a particular scenario if the count of things doesnt accurately describe the size when the things being counted are intutively "of different sizes". How can we arrive at a unit of measure that addresses both concerns?
+From the discussion above, its clear that there are potentially many candidates for `B`. In fact we can consider a series of base types `B1,B2,...Bm` of them such that:
+
+	... size(B1) > size(B2) > ... > size(Bm) ...
+	                                                                                     --(D6)
+
+> Note:The ellipses at the beginning and end denote that there could be more on either side of this continuum.
+
+A particular choice might be most appropriate for a particular application, but is one value is likely to be universally appropriate? Our challenge is finding a primordial type that all data can fit under, while still being meaningful and useful. How can we arrive at a unit of measure that addresses both concerns?
 
 ####  Measure using Base and derived types
 
-One option we have is to choose a base type and express every other type in terms of it. This presumes that such a measure can be found, of course. If we do find such a measure, though:
+One option is to choose a base type and express every other type in terms of it. This presumes that such a type can be found, of course; but if we did, like so:
 
-	size(1 base unit) = 1
-	size(1 derived Type1 unit) = C1 x 1 = C1
-	size(1 derived Type2 unit) = C2 x 1 = C2
+	Pick an appropriate k such that Bk is a useful base type for the application at hand. Then:
+	size(1 Bk) = 1
+
+	Then if size(T1) > size(Bk) and size(T2) > size(Bk)
+	size(1 T1) = C1 x 1 = C1
+	size(1 T2) = C2 x 1 = C2
 	   where C1 an C2 are conversion factors for each type
+	                                                                                     --(D7)
 
-Thus, a collection of data that has `n1` data items of type `T1` and `n2` data items of type `T2` can be expressed as:
+... a collection of data that has `n1` data items of type `T1` and `n2` data items of type `T2` can then be expressed as:
 
 	size(collection) = size(n1 items of type T1 and n2 items of type T2)
-	                 = size(n1 items of (C1 items of type base unit) 
-	                    and n2 items of (C2 items of type base unit))
+	                 = size(n1 items of (C1 items of type Bk) 
+	                    and n2 items of (C2 items of type Bk))
 	Now they're of the same type, so we can add them up
-	                 = size(n1 items of (C1 items of type base unit) 
-	                    + n2 items of (C2 items of type base unit))
-	                 = n1 . size(C1 items of base unit) + n2 . size(C2 items of base unit)
-	                 = n1.C1.size(base unit) + n2.C2.size(base unit)
+	                 = size(n1 items of (C1 items of type Bk) 
+	                      + n2 items of (C2 items of type Bk))
+	                 = n1 . size(C1 items of type Bk) + n2 . size(C2 items of type Bk)
+	                 = n1.C1.size(Bk) + n2.C2.size(Bk)
 	                 = (n1C1 + n2C2) . 1
 	                 = n1C1 + n2C2
-	                                                                                       --(A0)
+	                                                                                     --(D8)
 Or more generically,
 
-	size(collection) = sum(nC)                                                           --(-A0)
+	size(collection) = sum(ni Ci)                                                        --(D9)
 
 There are two challenges with this option:
 
 1. Arriving at the conversion factors might takes us closer to the implementation model than the domain model.
 2. The measures still have to be proportional, ie an increase in size in the domain should result in a proportional increase in the measurement. If not, the unit of measure is not a high fidelity one.
 
-STOPPED HERE FEB 3 AM
-
 #### Measure using an Atomic base type
 
-The other option comes from examining equation (A0) again:
+The other option comes from examining equation (D5) again:
 
-	size(collection of data) = n . size(base type1)  where n = n1+n2
-	                                                                                     --(-A4)
-... and say: If `size(base type1)` is small enough, the value of `size(collection of data)` is controlled by `n` - the number of items there are in the collection. So if we could find a measure small enough that the structure of the data matters more than the size of each atomic item, the size could be expressed as a count of the items alone.
+	size(collection of data) = (N1 + N2 + ... + Nn) . size(B)
+	                                                                                     --(D5)
+
+... and realizing that if `size(B)` is small enough, the value of `size(collection of data)` is controlled by `(N1 + N2 + ... + Nn)`- the number of items there are in the collection. So if we could find a measure small enough that the number of data items matters more than the size of each atomic item, the size could be expressed as a count of the items alone.
+
+Another way to think of this is to look at (D6) and say that it actually has an end, like so:
+
+	... size(B1) > size(B2) > ... > size(Bm) ... > size(Bomega)
+	where size(Bomega) = 1
+	                                                                                     --(D10)
+
+Superficially, this seems similar to the "base type + derived" option and indeed we could consider `N1` from (D5) and `n1C1` from (D8) be the same and it **WOULD** be the same. However, there's a subtle difference. With this option, we're saying that even though data is of different size, the 
+
+STOPPED HERE FEB4 AM. WAS GOING TO EXPOUND ON HOW SIZE CAN BE GOT FROM STRUCTURE, NOT SIZE OF ATOMS
+AND CONTRAST WITH CONVERSION FACTOR OPTION ABOVE.
 
 Applying this same logic to 
-STOPPED HERE JAN 31 AM. NEED TO RATIONALIZE THE ARGUMENT OVER THE 2-3 SECTIONS ABOVE. BRING OUT SIZE OF DIFF TYPES WHEN REDUCED TO THEIR SMALLEST FORMS IS A FUNCTION OF THE STRUCTURE AND LESS THAT OF THE SMALLEST FORMS, AND EACH OF THESE FORMS CAN BE CONSIDERED INFINTESIMAL ENOUGH THAT WE DEEM THEM TO BE OF THE SAME UNIFORM SIZE.
+
+STOPPED HERE FEB3 PM. PROOFED TILL HERE AND FIXED FORMULA REFS TOO. BELOW NEEDS CLEANING.
+
+NEED TO RATIONALIZE THE ARGUMENT OVER THE 2-3 SECTIONS ABOVE. BRING OUT SIZE OF DIFF TYPES WHEN REDUCED TO THEIR SMALLEST FORMS IS A FUNCTION OF THE STRUCTURE AND LESS THAT OF THE SMALLEST FORMS, AND EACH OF THESE FORMS CAN BE CONSIDERED INFINTESIMAL ENOUGH THAT WE DEEM THEM TO BE OF THE SAME UNIFORM SIZE.
 
 Between these two ends of the option spectrum, is there a happy middle where data can be just data? Let's consider our options.
 
@@ -179,14 +206,14 @@ The result of this is that there is a gap between the natural notion of size and
 
 	1 number = 1 number unit, let's say.
 	Thus, size(list(100 numbers)) = 100 number units
-                                                                                         --(A)
+                                                                                         --(D9)
 
 Assuming that these numbers were in the range `+/- [(2^32)-1]`, that list of 100 numbers would take up a different size based on the word length of the actual machine when implemented. For example, here are three computers, A, B & C:
 
 	Computer A's word length = 4 bytes => size(list) = 100 number units = 100 words = 400 bytes
 	Computer B's word length = 2 bytes => size(list) = 100 number units = 200 words = 400 bytes
 	Computer C's word length = 8 bytes => size(list) = 100 number units = 100 words = 800 bytes
-                                                                                         --(B)
+                                                                                         --(D10)
 A few points to note here:
 
 * The "number units" measure retained its size regardless of changes in implementation machine.
@@ -209,7 +236,7 @@ So, which one should we pick? In keeping with our goal to arrive at natural meas
 * Be extensible to define other properties of data with,
 * And yet be easy for humans to understand and use to understand a lot of information in one go.
 
-What we need is something akin to the "number units" from (A) above. That unit of measure represents data as data, is language agnostic, measurable, extensible and easy to understand. It has two parts to it: "number" and "unit". The latter allows data to be counted accurately in terms of pieces of information while the former provides the qualification that the data is of a particular type. Depending on the context, either form might be required to help with understanding the system; so we could use both:
+What we need is something akin to the "number units" from (D9) above. That unit of measure represents data as data, is language agnostic, measurable, extensible and easy to understand. It has two parts to it: "number" and "unit". The latter allows data to be counted accurately in terms of pieces of information while the former provides the qualification that the data is of a particular type. Depending on the context, either form might be required to help with understanding the system; so we could use both:
 
 	100 numbers = 100 units of data = 100 number units of data
 
@@ -222,7 +249,7 @@ There's a fine distinction between plain units and "typed" units above. Dependin
 The base of all such units is the "data unit", which homogenizes every primitive type to a single base unit where their sizes are all 1. This unit is useful to understand the gross size of a collection of data as a count of the "things" in the collection regardless of their actual size/volume. In formulas, therefore:
 
 	size(1 data unit) = 1
-	                                                                                     --(C)
+	                                                                                     --(D13)
 
 Should we care that the data unit homogenizes all data? With code, we gave all the primorial operations the same numeric size because we couldnt discern their internal workings any better, but with data there could be multiple basic data types. So should we give weight to the fact that meaning actually emerges above the "data unit" level, while that level is merely a count of the number of atomic data units?
 
@@ -246,12 +273,12 @@ Regardless, at a human (natural?) level, these are all numbers. We could choose,
 
 	1 number = 1 number unit = 1 data unit
 	Thus, size(list(100 numbers)) = 100 number units = 100 data units
-                                                                                         --(D)
+                                                                                         --(D14)
 We could apply the same sort of logic for other kinds of numbers; for example:
 
 	1 real number = 1 real number unit = 1 number unit = 1 data unit
 	1 complex number = 1 complex number unit = 1 number unit = 1 data unit
-	                                                                                     --(E)
+	                                                                                     --(O)
 .. and so forth. We could even define "number" to include everything from integers to complex numbers and call that a single number unit. Again, the advantage of this "intentional blindness" to the implementation details is that it allows us to think in terms of the domain and not the machine.
 
 #### Text
@@ -262,7 +289,7 @@ Text as we humans use it, is the name for a string of letters or characters. Qui
 	
 	Regular text is a list or array of letters. 
 	Thus size(text) = size(list of letters) = N letter units = N data units
-	                                                                                     --(F)
+	                                                                                     --(P)
 
 As mentioned above, computers handle text by encoding text into a lookup table and storing the indexes as stand-ins for the real textual values. A common encoding is ASCII, which uses 1 byte per character; another is UTF-8 which also takes one byte per character but allows for expression of more human languages than ASCII. Regardless of the encoding used, text is essentially numbers within the computer and have the same inherent disadvantage of varying with the physical machine's word length and the encoding used. 
 
@@ -275,23 +302,23 @@ True/False values are pretty straightforward to think of in terms of a data unit
 	Computer A's word length = 4 bytes => size(boolean value) = 1 bool unit = 4 bytes
 	Computer B's word length = 2 bytes => size(boolean value) = 1 bool unit = 2 bytes
 	Computer C's word length = 8 bytes => size(boolean value) = 1 bool unit = 8 bytes
-                                                                                         --(G)
+                                                                                         --(Q)
 
 There are, of course compound data types like bit vectors which store the extra bytes to store additional boolean values and use boolean algebra to update or read this information. If such a data structure were required in the domain of the application, they would still be counted as multiples of a primitive boolean unit instead of fractions of a byte. That is, 
 
 	Computer A's word length = 4 bytes => size(list of 100 bools) = 100 bool units = 4 words (13 up to 16) = 13 bytes (12.5 rounded up) 
 	Computer B's word length = 2 bytes => size(list of 100 bools) = 100 bool units = 7 words (13 up to 14) = 13 bytes (12.5 rounded up) 
 	Computer C's word length = 8 bytes => size(list of 100 bools) = 100 bool units = 2 words (13 up to 16) = 13 bytes (12.5 rounded up) 
-                                                                                         --(H)
+                                                                                         --(R)
 In formula, therefore:
 	
-	size(logical data) = 1 bool unit = 1 data unit                                       --(H1)
+	size(logical data) = 1 bool unit = 1 data unit                                       --(S)
 
 #### Enumerations
 
 Enumerations have some natural parallels like days of week, months in a year and so forth, but they are really a programmer's convenience. In terms of natural units, they would just be a list of names. Thus, there is no single "Enumeration type", only specific instances of the pattern like a "days of the week unit" that is allowed the values "Mon, Tue, Wed, Thu, Fri, Sat, Sun".
 
-	size(enumerated value) = 1 data unit                                                 --(H2)
+	size(enumerated value) = 1 data unit                                                 --(T)
 
 #### References and Links
 
@@ -301,7 +328,7 @@ When natural references are available, creating units for them is straightforwar
 
 	size(1 ref)  = 1 ref unit = 1 data unit
 	size(1 link) = 1 ref unit = 1 data unit
-	                                                                                     --(I)
+	                                                                                     --(U)
 
 That is, the size of a link to something is the same as the size of the reference itself, simply because the link is another reference!
 
@@ -316,7 +343,7 @@ STOPPED HERE JAN 27 PM. WAS PROOFING FOR CONFUSING TEXT AFTER CHANGE TO EVERYTHI
 
 By definition, compound data is a collection of primitive data items that together form a cohesive whole. As such the size of compound data is the aggregate of sizes of the primitive data items contained in it. If there are data items that are not specific to any individual child item, but pertains to the aggregate itself, these are still (from a size perspective) considered to be contained in that that aggregate as well. Thus:
 
-	size(compound data) = size(compound data attributes) + size(contained itmes)         --(J)
+	size(compound data) = size(compound data attributes) + size(contained itmes)         --(V)
 
 Let's use this formula on some of the often-used/well-known compound data types.
 
@@ -324,15 +351,15 @@ Let's use this formula on some of the often-used/well-known compound data types.
 
 From a natural standpoint, lists are pretty straightforward. They are collections (usually ordered) of things of the same kind. So the default sizing for an list would be:
 
-	size(list) = sum(size(list item))                                                    --(K)
+	size(list) = sum(size(list item))                                                    --(D9)
 
 Their representation in computers, however, vary depending on the implementation chosen: if the total number of items and the size of each item is small, contiguous memory could be allocated to the list; if the sizes are huge, references could be stored instead of the item itself; if the items are to be accessed in random order vs sequential order, the implmentation might be a contiguous array of memory vs linked lists; and so forth. How do we reconcile all these differences so that the natural size that we're evolving into actually makes the most sense? 
 
-The answer lies in (K). Regardless of the implementation, the core of size of a list MUST be a sum of the sizes of the items in it. Where the items are not stored as-is, their contribution to the array's size is essentially the size of the references stored in it, not the size of the item itself because that size should be counted elsewhere.
+The answer lies in (D9). Regardless of the implementation, the core of size of a list MUST be a sum of the sizes of the items in it. Where the items are not stored as-is, their contribution to the array's size is essentially the size of the references stored in it, not the size of the item itself because that size should be counted elsewhere.
 
 When the implementation uses additional storage outside of each item, for example to store the size of the list in a "length" attribute or store a head pointer, we should account for it using (J):
 
-	size(list) = size(list attributes) + sum(size(list item))                            --(L)
+	size(list) = size(list attributes) + sum(size(list item))                            --(D10)
 
 While this is a simple enough equation, each term needs some discussion on how to apply them.
 
@@ -343,7 +370,7 @@ However, we should apply this overhead ONLY when the domain itself has such list
 All of this parallels a similar discussion on code size where the "level of abstraction" has a bearing on how we count size. When sizing data, therefore, we should determine the domain up-front and all sizes should be stated as relative to it. To go back to the previous example, therefore:
 
 1. If our domain is an application that manages schools, the list of students in a class would have a list attribute called "class strength" and be sized with this addition, but each page of the display of this list would be sized as in (I).
-2. If our domain is a library of array management functions that the application to manage schools is one client of, we could expose two types of arrays: one with a length attribute and one without. Both would use (K) with list attributes = 0 units for the latter. Note that in this case we might just be using bytes as our unit of measure, especially if the library is very specific to a processor or technology stack.
+2. If our domain is a library of array management functions that the application to manage schools is one client of, we could expose two types of arrays: one with a length attribute and one without. Both would use (D9) with list attributes = 0 units for the latter. Note that in this case we might just be using bytes as our unit of measure, especially if the library is very specific to a processor or technology stack.
 
 Of course, this is fertile ground for leaning either way - too abstract into the domain end of the spectrum and you can artificially reduce the size; to specific into the implementation domain and you can make the size so specific that it is useless as a generic measure. This issue, however, is inherent with using relative bases. This theory is intended to be used mostly at the level of #1 above and less at #2 because the latter case is not very "natural" by definition. However, it does not preclude application of the theory at that level. The best course would be to reach an agreement (by stating the meanings of each type) amongst the audience of discourse on the level of abstraction.
 
@@ -351,10 +378,10 @@ Of course, this is fertile ground for leaning either way - too abstract into the
 
 What can we say about the `sum(size(list item))` term? The first thing that stands out is that each list item has a unit attributable to it (eg, a list of numbers would be of type "number unit" and so forth), but the list itself doesnt have a unit of its own.
 
-What it does, however, is provide a container to group data that might otherwise not be. The one type-agnostic measure of size that a list has, therefore, is the count of items in it. Indeed, (L) can be rewritten as:
+What it does, however, is provide a container to group data that might otherwise not be. The one type-agnostic measure of size that a list has, therefore, is the count of items in it. Indeed, (D10) can be rewritten as:
 
 	size(list) = size(list attributes) + size(list item) x N
-	             where N is the count of list items                                      --(L1)
+	             where N is the count of list items                                      --(D11)
 
 Applied to a list of 10 grades that are of type "real number unit" and no metadata, therefore,
 
@@ -365,9 +392,9 @@ A list, therefore is long AND wide - it has two dimensions. Since the data items
 
 What would happen if there were list attributes, however? These attributes are part of the list, but not part of the collection of items in the list - they could be of a type completely different from the contained data, for instance. Thus, a list essentially becomes a record containing list attributes and list items. That is,
 
-	size(list) = size(record(list attrs, list items))                                    --(L2)
+	size(list) = size(record(list attrs, list items))                                    --(D12)
 
-(J1) and (J2) can be reconciled with (J) after we size up records.
+(D11) and (D12) can be reconciled with (D10) after we size up records.
 
 
 #### Sizing up records or aggregates
@@ -376,21 +403,21 @@ Records are aggregates of data that form a cohesive whole. The individual bits o
 
 	size(record) = sum(size(attributes)) expressed as n1 T1 units, n2 T2 units and so forth
 	               where there are n1 number of units of type T1 and so forth
-	                                                                                     --(M)
+	                                                                                     --(D13)
 
 ##### Extrapolation: List as a record
-Now we can go back and reconcile (L2) with (L):
+Now we can go back and reconcile (D12) with (D10):
 
-	Using (L2), size(list) = size(record(list attrs, list items))
-	Using (M),             = size(list attrs) and size(list items)
-    Using (L1),            = size(list attrs) and N item type-list units
+	Using (D12), size(list) = size(record(list attrs, list items))
+	Using (D13),             = size(list attrs) and size(list items)
+    Using (D11),           = size(list attrs) and N item type-list units
 
 ##### Extrapolation: Program as a record
 
 On a grand-enough scale, a program can be considered a record of code, data and metadata. Thus,
 
 	size(program) = size(code) + size(data) + size(metadata)
-	              = C turings  + D data units + M metadata units                         --(N)
+	              = C turings  + D data units + M metadata units                         --(D14)
 
 Of course, `program` could be replaced by `application`, `system` or `set of applications` with the same result. Note that this is the "Stored Program Size" that we started off this digression to discover.
 
@@ -447,7 +474,7 @@ TODO: FIGURE OUT IF THERE ARE IMPLICATIONS OF THIS SO A BETTER MEASURE IS ADVISE
 
 TODO: REWRITE THIS AFTER FIXING OTHER SECTIONS TO MAKE THEM 2D
 
-What if the items in the list are themselves compound? In all likelihood, a list of students will have more than one attribute of the student; so the student list item will actually be a record of all such interesting attributes. Using (L):
+What if the items in the list are themselves compound? In all likelihood, a list of students will have more than one attribute of the student; so the student list item will actually be a record of all such interesting attributes. Using (D10):
 
 	size(student list) = 0 + sum(size(student record))
 
