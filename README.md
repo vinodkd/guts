@@ -49,7 +49,7 @@ In 2012, I presented GUTS and the related-in-principle GUTSE at Barcamp Bangalor
 GUTS - the Book is my attempt at delving deep into each of the metrics I proposed in the GUTS mindmap and try to work things out throughly. The book is WIP and the following DRAFT chapter(s) are available.
 
 * [Chapter 1: Size](http://vinodkd.github.com/guts/book/01_size.html).
-
+	* * [Chapter 1: Data Size Section](http://vinodkd.github.com/guts/book/01_data_size.html).
 
 Milestones
 ==========
