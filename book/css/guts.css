@@ -86,6 +86,8 @@ a:active {
 blockquote {
   margin:0 -5px;
   padding: 0px 20px;
+  font-weight: bolder;
+  background-color: aliceblue;
 }
 
 
