@@ -73,6 +73,21 @@ this requires:
 
 that is, there's a primary guts app, that takes a measure param - currently only size - which then takes another param to include all size measures or just the turing or just the sloc; and a final param for the file or dir to apply the measure on. sloc will be calculated via a call to an external sloc counting tool.
 
+**Mar-11-2014 18:20 :** Coming back to the jorunal after a long time cos of Splash/Onward. This conference is set for October, and I'm planning to present an essay about Guts in it. This requires a 14-page extract to be submitted by Mar 29th.
+
+Outline:
+	- Why something like guts?
+		- A note on the name
+	- The grand vision
+		- precursor:GUTSE
+		- GUTS
+		- More of a model, not a theory.
+	- Current state
+	- Size as the first measure to be expanded on.
+		- Code size
+		- Data size
+	- Appendix: GUTSE
+
 **Oct-07-2013 08:14 :** Now that I have basic comparison tools for sloc v turings, i tested it out on a java class and found some interesting observations:
 
 * The sizes were sloc=184, turing=163. so numerically pretty close.
@@ -149,3 +164,5 @@ http://en.wikipedia.org/wiki/Quantity_calculus
 This of course brings up the point that it'd be then nice to reduce it further to "a list of size 500 sq teds"
 
 What if we made the theory data-type agnostic? All data is data, so 2 numbers + 2 addresses = 5 pieces of data even if they're of different size. What matters is that they're important to be counted and treated as separate entities. At a lower level of abstraction, it might be required to break an address down into a house number, a street, a zip and so forth, but not at this level.
+
+**Mar-18-2014 17:12 :** started working on paper. Using st as the base editor and then inputting into word cos the 2 column layout is irritating.
