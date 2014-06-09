@@ -1,0 +1,25 @@
+Software Development as it stands today is part science, part craft. There are many theories that explain parts of the process by which we produce software and the qualities of the artifacts produced themselves. However, there is no single unifying set of concepts/principles that allows practitioners and theorists talk about the process and the end result in a useful way. This project is an exercise in that direction.
+
+It is still a work-in-progress, which is why the title starts with "Towards a..". However, it is at the point where two central ideas will be presented: 
+1. A "near-physical" model of software
+2. Including humans in the model
+
+As practitioners, we routinely equate the software development process to building a physical object like a house or a bridge; and the outcome to those corresponding objects. The central idea of this project is to take such analogies to their natural conclusion - forming a near-physical model of software. This means treating code as blocks with "physical" properties like height and weight so that useful properties about aggregate software can be derived from such atomic assumptions. Of course, each property would have a meaning appropriate to the software concept being modeled, not the meaning in physics; so for example, "height" could be 1 code unit, with 100 code units resulting in a code block of height 100 units; not 100 inches. Similarly, code could have area (or volume) but it would be similar, not the same as the area or volume of physical objects. The point is to be able to use what we're familiar with and give it a clear meaning in the realm of software.
+
+This talk will take one software attribute - its size - and expand on how such a model can be created for software size. It then presents a new "code as code" way of measuring code size. It will also attempt to arrive at a code-data equivalence through the theory.
+
+The second idea of this project is to include humans in the model. Using a near-physical model for software brings into sharp relief the fact that software is limited only by our imagination. This is good in that it allows the limitless variety of software to be developed, but it also hinders us in that the lack of "hard limits" prevents us from settling on a set of reusable components. The theory includes humans in the model and attempts to predict how human behavior affects the software produced as well as how humans understand software.
+
+This talk will touch briefly upon the "human limits" and comprehensibility of software.
+
+Comments
+
+I presented an very early version of this about 1.5+ years ago at a Barcamp in Bangalore, India. I have been working on the feedback I got there since then and this talk will focus on that work. Most of it is a deep dive into modeling software size as something more meaning full than "lines of code" - a true code size if you will. I will present this new way and use it in some examples.
+
+More than anything else, I'm looking to present the concepts and get useful feedback. So honestly, I'm not sure if I want all of the 40 minutes to expound; I'd much rather there be healthy debate - even a debunking of my ideas.
+
+BIO
+
+I am a software developer with 15+ years of experience. My employer is Cognizant Technology Solutions, and through them I currently work as a Solution Architect at Orbitz Worldwide, Inc.
+
+My employment or consulting has no bearing on this project - this is a personal project that I've been working on in my spare time.
