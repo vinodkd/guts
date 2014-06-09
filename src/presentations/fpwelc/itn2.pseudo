@@ -1,0 +1,32 @@
+// program 8B
+      i=1
+ top: if not(i <= 5)      // line 1
+           goto end 
+      else
+          print i
+          i = i + 1
+          goto top        // line 2
+      end if
+end: stop
+// SLOC : 9, Size : ?
+
+// loop = if + goto
+
+size(program 8b loop)     = size(init loop) + size(if)
+Now, let  size(init loop) = i, some nonzero size depending on the type and number of operations
+
+          size(if)        = size(condition) + size(if branch) 
+                            + size(else branch)
+                          = size(condition) + size(goto end) + 
+                            [size(loop body) + size(increment loop) 
+                              + size(goto top)]
+                          = c + 1* + [ b  + p + 1* ]
+
+                 where  c = a nonzero size for the condition check
+                        b = a variable loop body size
+                        p is some variable nonzero size for the increment step
+
+                          = c + b + p + 2*
+                          = c + b + p + 2*
+Thus,
+          size(loop)      = i + c + b + p + 2*  

@@ -1,0 +1,29 @@
+title:Sizing code as code: towards a unified theory of software
+
+abstract:
+Software Development today is part science, part craft. There are many theories that explain parts of the process of producing software and the qualities of the artifacts produced themselves. However, there is no single unifying set of concepts/principles that allows practitioners and theorists talk about the process and the end result in a useful way. This project is attempts to do so.
+
+It is still a work-in-progress, hence the title that starts with "Towards a..". However, it is at the point where two central ideas are formed: 
+1. A "near-physical" model of software
+2. Including humans in the model
+
+As practitioners, we routinely equate the software development process to building a physical object like a house or a bridge; and the outcome to those corresponding objects. The central idea of this project is to take such analogies to their natural conclusion - forming a near-physical model of software. 
+
+This means treating code as blocks with "physical" attributes like height and weight so that useful properties about aggregate software can be derived from such atomic assumptions. Of course, each property would have a software meaning, not the meaning in physics; so for example, "height" could be 1 code unit, with 100 code units resulting in a code block of height 100 units; not 100 inches. Similarly, code could have area (or volume) but it would be similar, not the same as the area or volume of physical objects. The point is to be able to use what we're familiar with and give it a clear meaning in the software realm.
+
+This talk will take one software attribute - its size - and expand on how such a model can be created for it. It then presents a new "code as code" way of measuring code size. It will also attempt to arrive at a code-data equivalence through the theory.
+
+The second idea of this project is to include humans in the model. Using a near-physical model for software brings into sharp relief the fact that software is limited only by our imagination. This is good in that it allows the limitless variety of software to be developed, but it also hinders us in that the lack of "hard limits" prevents us from settling on a set of reusable components. The theory includes humans in the model and attempts to predict how human behavior affects the software produced as well as how humans understand software.
+
+
+video: https://vimeo.com/97685053
+
+feedback:
+
+As I mention in my concluding remarks. I really am looking forward to some feedback and to find the "niche of researchers (academic and otherwise) who are interested in this topic. I have submitted this video even though it doesnt meet the exact requirements of "running demo" because the concept of writer's workshop (or its programming equivalent) sounds exactly like what I need now - and hopefully this topic is interesting enough for participants there.
+
+That said, I have already presented the whys and wherefores earlier (see http://www.slideshare.net/vinod_dinakaran/a-grand-unified-theory-of-software-14082038), so I could present this as the current state of a project as well - if it fits the Strangeloop event's format.
+
+Note: I was unaware that uploading videos (and making them, actually) is this time consuming. I will hopefully be able to update my video before the deadline.
+
+PS: Not sure if 11 pm is EST/CST or PST.

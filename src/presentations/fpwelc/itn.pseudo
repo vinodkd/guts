@@ -1,0 +1,11 @@
+// program 8
+loop i = 1 to 5
+  print i
+end loop
+stop
+// SLOC : 4, Size: ?
+
+size(program 8)  = size(loop) + size(stop)
+                     = i  + c  + b  + p  + o + 1*
+                     = 1* + 1* + 1* + 1* + 0 + 1*
+                     = 5* sq. units vs SLOC: 3

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sizing Code as Code: Vinod Dinakaran</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+     @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Droid Serif';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-number { display: none; }
+      .remark-slide-content h1 { font-size: 3em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: inverse, center, middle
+
+# Sizing code as **code** 
+towards a **Unified theory of Software**
+
+#### Vinod Dinakaran
+##### Jun 2014 - for Strangeloop/SPLASH's FPWxELC
+---
+
+class: inverse, middle
+
+- .red[Overview]
+- A new way of sizing code - by treating them like .red[actual legos] (almost)
+- Some backstory and why this is a good idea
+- Next steps and Links
+
+---
+
+class: inverse, center, middle
+
+# What if we treated code as 
+# .red[physical objects]... 
+# ... and had a .red[Unified theory for software]
+
+... like there is one for physics?
+
+### The overall project attempts to answer this question
+
+---
+
+class: inverse, center, middle
+
+# Can we create a theory for 
+#.red[Software Size] 
+# and a way to measure it
+
+... as a first step towards the Unified Theory?
+
+### This presentation attempts to answer this question
+
+---
+
+class: inverse, middle
+
+.left-column[# Note
+# However...
+]
+
+.right-column[
+- This is a theory project; thus no running demo .red[*]  _per se_ .
+
+- I **WILL** walk through the theory and <ins>demo</ins> its use on programs
+- it **definitely** __explores the frontiers of programming__ and (hopefully) has __new ideas that could radically improve the practice of programming__
+- If fruitful, it would change the way IDEs work and programmers think of code - existing and new.
+]
+
+.footnote[.red[*] I will demo .red[**some** code], but that is a simple tool that applies the theory]
+
+---
+
+class: inverse, center, middle
+
+# What is size?
+
+## How .red[big] something is
+
+---
+
+class: inverse, center, middle
+
+# What is code size?
+
+##  How .red[much] code there is
+
+
+... to the exclusion of things like how .red[complex] it is, how .red[fit] it is for its .red[intended purpose] and so forth.
+
+---
+
+class: inverse, middle
+
+# We usually measure code size in....
+
+.right-column[
+* Lines of code
+* Sometimes in Function points
+* .... or Halstead metrics
+
+** But mostly in .red[LOC] **
+]
+---
+
+class: inverse, middle, center
+
+# ... but what if we measured the size of code...
+
+# ... .red[AS CODE] ?
+
+---
+
+class: inverse, middle
+
+- Overview
+- .red[A new way of sizing code in a near-physical way]
+  - Simple: Hello World
+  - Simpler: SSI
+  - Turtles all the way... and back
+  - What's Alan got to do with this?
+  - A simple size tool
+- Some backstory and why this is a good idea
+- Next steps and Links
+
+---
+
+class: inverse, middle
+
+# A Simple view of code
+
+## If...
+
+### .red[Operations/Statments]: The smallest unit of independent code execution
+### .red[Languages]: A finite set of Operations/Statements that can be used to write programs.
+### .red[Programs]: use languages to do useful work.
+
+---
+
+class: inverse,middle
+
+## Then...
+
+### .red[size(program)]      = sum(size(operation))  <sub>__for all operations in the code__</sub>
+
+...assuming...
+### size(operation)    = .red[a known value]
+
+---
+
+class: inverse, middle
+
+- Overview
+- A new way of sizing code in a near-physical way
+  - Simple: Hello World
+  - .red[Simpler: SSI]
+  - Turtles all the way... and back
+  - What's Alan got to do with this?
+  - A simple size tool
+- Some backstory and why this is a good idea
+- Next steps and Links
+
+---
+
+class: inverse, middle
+
+# Simpler: SSI
+
+## .red[Sequence], i.e. steps done in sequence
+## .red[Selection], i.e. the choice of one step vs the other, aka the IF
+## .red[Iteration], i.e. the ability to repeat steps that have been already been executed, aka the LOOP
+
+---
+
+class: inverse
+
+# Finally! Legos
+
+![Kid builds a Lego tower](lego-tower.jpg "This is your Code")
+![Kids' Lego tower falls](lego-tower-falling.jpg "This is your Code crashing")
+
+
+---
+
+class: inverse
+
+# ... or more like a Fluid circuit
+<img src="fluidcircuit.jpg" width="700" height="500"/>
+
+---
+
+class: inverse
+
+# ... or more accurately - the .red[Marble run]
+
+![](marble-run.jpg)
+
+---
+
+class: inverse
+
+# ... To sum
+
+## size(program 6) = 6* sq. units vs SLOC of 6
+## size(program 7) = 6* sq. units vs SLOC of 7
+## size(program 8) = 5* sq. units vs SLOC of 3  
+
+---
+
+class: inverse
+
+# So what have we learnt so far?
+
+## size(sequence) = sum(size(operation)) <sub>for all operations in sequence</sub>
+### size(if)       = c + sum(b)
+### size(loop)     = i + c + b + p + o
+### size(program) = size(sequence)
+
+## That is, 
+
+### size(program) = sum(size(ifs)) + sum(size(loops)) + sum(size(.red[other operations]))
+
+---
+
+class: inverse, middle
+
+- Overview
+- A new way of sizing code in a near-physical way
+  - Simple: Hello World
+  - Simpler: SSI
+  - .red[Turtles all the way... and back]
+  - What's Alan got to do with this?
+  - A simple size tool
+- Some backstory and why this is a good idea
+- Next steps and Links
+
+---
+
+class: inverse, middle
+
+# What's Alan got to do with it?
+
+## .red[Turing]: the unit for size of code. 
+It is dimensional and relative to a base. 
+
+- Symbol: ` T | b ` where ` b ` is a language that is used as the foundation
+- Eg: ` 15T | Java ` or ` 15T in Java ` or ` 15 Java turings `
+
+    </textarea>
+    <script src="http://gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

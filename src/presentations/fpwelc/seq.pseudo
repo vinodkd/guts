@@ -1,0 +1,13 @@
+// program 6
+print "Superman"
+print "Batman"
+print "Green Lantern"
+print "Green Arrow"
+print "Aquaman"
+stop
+// SLOC: 6, Size: ?
+
+size(program6) = sum(size(5 print operations & 1 stop operation))
+                   = 1* + 1* + 1* + 1* + 1* + 1*
+                   = 6* units
+    (the * is to remind us that sizes being 1 is an assumption)

@@ -1,0 +1,17 @@
++----------------+
+|rem = 5 % 2     |
++----------------+-------------------+
+|rem == 1 ?      |                   |
+|    true        |    false          |
++----------------+-------------------+
+|print "5 is odd"| print "5 is even" |
++----------------+-------------------+
+|stop            |
++----------------+
+
+size(if)      = size(condition check) + sum(size of individual branches)
+              =  c + sum(b) 
+where
+            c = a non-zero size of the condition check
+            b = size(branch)  
+              = 1 (width) x h (height of branch) 
